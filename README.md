@@ -40,6 +40,7 @@ javascript:(function(){var s=document.createElement('SCRIPT');s.type='text/javas
       * Giveaways
       * New Releases
       * Lists
+      * book page, *Books by AUTHOR*
       * other user bookshelves
 * reviews
    * filter to show only italian ones
