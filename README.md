@@ -25,17 +25,24 @@ javascript:(function(){var s=document.createElement('SCRIPT');s.type='text/javas
 
 ### :soon: TODO next features
 * book page-search italian editions
-   * default sort by year\publisher
-   * possibility to change sorting algorithm
-* possibility to replace on those books lists, for every book, with the corresponding italian edition
-   * Recommendations
-   * Choice Awards
-   * Giveaways
-   * New Releases
-   * Lists
-   * other user bookshelves
-* filter reviews to show only italian ones
-
+   * sort
+      * default by year\publisher
+      * possibility to change by year
+   * filter
+      * by type (paperback\ebook\audiobook\...)
+   * language
+      * possibility to include editions without language defined (checkbox, default included, they must be evidenced in some way)
+      * possibility to choose other language than italian (browser language as default?)
+* book list: possibility to replace, for every book, with the corresponding italian edition
+   * on those list
+      * Recommendations
+      * Choice Awards
+      * Giveaways
+      * New Releases
+      * Lists
+      * other user bookshelves
+* reviews
+   * filter to show only italian ones
 
 
 # :construction: DEVELOPERS TODO
@@ -45,7 +52,7 @@ javascript:(function(){var s=document.createElement('SCRIPT');s.type='text/javas
    * load source code versions on *src/js*
 * code improvements, next steps
    * menu icon initialization: css transitions background-color
-   * check possibility to create a link that automatically add bookmark
+   * bookmarklet creation: check possibility to automatically add bookmark with a link
    * remove *SAMO* reference
    * externalize citations in separate file
-   * search for only Italian editions -> possibility to choose language (browser language as default?)
+   * intenazionalization messages and labels
