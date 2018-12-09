@@ -57,6 +57,5 @@ javascript:(function(){var s=document.createElement('SCRIPT');s.type='text/javas
 * code improvements, next steps
    * menu icon initialization: css transitions background-color
    * bookmarklet creation: check possibility to automatically add bookmark with a link
-   * remove *SAMO* reference
    * externalize citations in separate file
    * intenazionalization messages and labels
