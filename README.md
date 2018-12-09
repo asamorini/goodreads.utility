@@ -23,7 +23,7 @@ javascript:(function(){var s=document.createElement('SCRIPT');s.type='text/javas
 
 
 
-### :soon: TODO
+### :soon: TODO next features
 * book page-search italian editions
    * default sort by year\publisher
    * possibility to change sorting algorithm
