@@ -12,7 +12,8 @@ javascript:(function(){var s=document.createElement('SCRIPT');s.type='text/javas
 ### :date: 2018.12.09
 * **Search for only Italian editions**
    * visible on BOOK page
-   * video showing "Search for only Italian editions" https://drive.google.com/open?id=1r7PcI4_UG82jNYpdQzLWs61_Y3gUx0Ag
+   * video showing [Search for only Italian editions](https://asamorini.github.io/goodreads.utility/docs/video/SearchItalianEditions.swf)
+
 
 
 ### :soon: TODO
