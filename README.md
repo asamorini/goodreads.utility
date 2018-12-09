@@ -33,6 +33,7 @@ javascript:(function(){var s=document.createElement('SCRIPT');s.type='text/javas
    * load images of functionality on docs/ (and add to *readme*)
    * load source code versions on *src/js*
 * code improvements, next steps
+   * check possibility to create a link that automatically add bookmark
    * remove *SAMO* reference
    * externalize citations in separate file
    * search for only Italian editions -> possibility to choose language (browser language as default?)
