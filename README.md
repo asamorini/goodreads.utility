@@ -10,9 +10,9 @@ javascript:(function(){var s=document.createElement('SCRIPT');s.type='text/javas
 
 # LIST OF UTILITIES
 ### :date: 2018.12.09
-* **Search for only Italian editions** :it:
-** visible on BOOK page
-** video showing "Search for only Italian editions" https://drive.google.com/open?id=1r7PcI4_UG82jNYpdQzLWs61_Y3gUx0Ag
+* **Search for only Italian editions**
+   * visible on BOOK page
+   * video showing "Search for only Italian editions" https://drive.google.com/open?id=1r7PcI4_UG82jNYpdQzLWs61_Y3gUx0Ag
 
 
 ### :soon: TODO
@@ -29,10 +29,10 @@ javascript:(function(){var s=document.createElement('SCRIPT');s.type='text/javas
 
 # :construction: DEVELOPERS TODO
 * GITHUB better organization
-** beautify *readme* https://help.github.com/articles/basic-writing-and-formatting-syntax/
-** load images of functionality on docs/ (and add to *readme*)
-** load source code versions on *src/js*
+   * beautify *readme* https://help.github.com/articles/basic-writing-and-formatting-syntax/
+   * load images of functionality on docs/ (and add to *readme*)
+   * load source code versions on *src/js*
 * code improvements, next steps
-** remove *SAMO* reference
-** externalize citations in separate file
-** search for only Italian editions -> possibility to choose language (browser language as default?)
+   * remove *SAMO* reference
+   * externalize citations in separate file
+   * search for only Italian editions -> possibility to choose language (browser language as default?)
