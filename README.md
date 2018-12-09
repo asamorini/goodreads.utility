@@ -2,7 +2,7 @@
 Add some utilities to Goodreads site https://www.goodreads.com/
 
 # INSTRUCTION
-1) Add a :bookmark: Bookmark "Goodreads Utility"
+1) Add a :bookmark: Bookmark "Goodreads Utility" to your browser
    - with this javascript code in the URL
 ```
 javascript:(function(){var s=document.createElement('SCRIPT');s.type='text/javascript';s.src='https://asamorini.github.io/goodreads.utility/dist/goodreads.utility.min.js';document.getElementsByTagName('head')[0].appendChild(s);})();
@@ -43,6 +43,7 @@ javascript:(function(){var s=document.createElement('SCRIPT');s.type='text/javas
    * beautify *readme* https://help.github.com/articles/basic-writing-and-formatting-syntax/
    * load source code versions on *src/js*
 * code improvements, next steps
+   * menu icon initialization: css transitions background-color
    * check possibility to create a link that automatically add bookmark
    * remove *SAMO* reference
    * externalize citations in separate file
