@@ -24,6 +24,9 @@ javascript:(function(){var s=document.createElement('SCRIPT');s.type='text/javas
 
 
 ### :soon: TODO
+* book page-search italian editions
+   * default sort by year\publisher
+   * possibility to change sorting algorithm
 * possibility to replace on those books lists, for every book, with the corresponding italian edition
    * Recommendations
    * Choice Awards
