@@ -31,7 +31,7 @@ javascript:(function(){var s=document.createElement('SCRIPT');s.type='text/javas
 * GITHUB better organization
 ** beautify *readme* https://help.github.com/articles/basic-writing-and-formatting-syntax/
 ** load images of functionality on docs/ (and add to *readme*)
-** load source code versions on src/js
+** load source code versions on *src/js*
 * code improvements, next steps
 ** remove *SAMO* reference
 ** externalize citations in separate file
