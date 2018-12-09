@@ -41,6 +41,7 @@ javascript:(function(){var s=document.createElement('SCRIPT');s.type='text/javas
 # :construction: DEVELOPERS TODO
 * GITHUB better organization
    * beautify *readme* https://help.github.com/articles/basic-writing-and-formatting-syntax/
+      * add also an initial summary so readme contents with link
    * load source code versions on *src/js*
 * code improvements, next steps
    * menu icon initialization: css transitions background-color
