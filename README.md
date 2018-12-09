@@ -45,6 +45,10 @@ javascript:(function(){var s=document.createElement('SCRIPT');s.type='text/javas
    * filter to show only italian ones
 
 
+# :bug: Known limitations and bugs
+* It works only on *desktop version* of the site
+* Layout is verified only for window larger than 600px
+
 # :construction: DEVELOPERS TODO
 * GITHUB better organization
    * beautify *readme* https://help.github.com/articles/basic-writing-and-formatting-syntax/
