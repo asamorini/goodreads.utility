@@ -24,6 +24,11 @@ javascript:(function(){var s=document.createElement('SCRIPT');s.type='text/javas
 
 
 ### :soon: TODO next features
+* language
+   * possibility to choose other language than italian
+      * default language=Italian
+      * possibility to define preferred language directly on bookmark
+      * *<select>* languages on menu
 * book page-search italian editions
    * sort
       * default by year\publisher
@@ -32,7 +37,6 @@ javascript:(function(){var s=document.createElement('SCRIPT');s.type='text/javas
       * by type (paperback\ebook\audiobook\...)
    * language
       * possibility to include editions without language defined (checkbox, default included, they must be evidenced in some way)
-      * possibility to choose other language than italian (browser language as default?)
 * book list: possibility to replace, for every book, with the corresponding italian edition
    * on those list
       * Recommendations
