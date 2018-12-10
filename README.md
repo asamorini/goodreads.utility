@@ -48,6 +48,8 @@ javascript:(function(){var s=document.createElement('SCRIPT');s.type='text/javas
       * other user bookshelves
 * reviews
    * filter to show only italian ones
+* bookshelves
+   * possibility to categorize
 
 
 # :bug: Known limitations and bugs
