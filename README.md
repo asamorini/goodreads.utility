@@ -28,7 +28,7 @@ javascript:(function(){var s=document.createElement('SCRIPT');s.type='text/javas
    * possibility to choose other language than italian
       * default language=Italian
       * possibility to define preferred language directly on bookmark
-      * <select> languages on menu
+      * select languages on menu
 * book page-search italian editions
    * sort
       * default by year\publisher
