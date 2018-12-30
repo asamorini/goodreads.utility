@@ -1,6 +1,16 @@
 # :books: Goodreads Utility
 Add some utilities to Goodreads site https://www.goodreads.com/
 
+## Table of contents
+1. [Instruction](#instruction)
+2. [List of utilities](#utilities)
+3. [Soon: next features](#utilitiesnext)
+4. [Versions history](#versions)
+5. [Known limitations and bugs](#bugs)
+6. [Developers: todo](#devtodo)
+
+
+<a name="instruction"/>
 # INSTRUCTION
 1) Add a :bookmark: Bookmark "Goodreads Utility" to your browser
    - with this javascript code in the URL
@@ -14,16 +24,16 @@ javascript:(function(){var s=document.createElement('SCRIPT');s.type='text/javas
       ![new menu opened](docs/images/menu.02.opened.png)
 
 
+<a name="utilities"/>
 # LIST OF UTILITIES
-### :date: 2018.12.09
 * **Search for only Italian editions**
    * visible on BOOK page
          ![Search for Italian editions](docs/images/menu.bookPage.01.searchItalianEditions.png)
    * video showing [Search for only Italian editions](https://asamorini.github.io/goodreads.utility/docs/video/SearchItalianEditions.swf)
 
 
-
-### :soon: TODO next features
+<a name="utilitiesnext"/>
+# :soon: next features
 * language
    * possibility to choose other language than italian
       * default language=Italian
@@ -52,10 +62,18 @@ javascript:(function(){var s=document.createElement('SCRIPT');s.type='text/javas
    * possibility to categorize
 
 
+<a name="versions"/>
+# :date: Versions history
+### :date: 2018.12.09
+* Search for only Italian editions
+
+
+<a name="bugs"/>
 # :bug: Known limitations and bugs
 * It works only on *desktop version* of the site
 * Layout is verified only for window larger than 600px
 
+<a name="devtodo"/>
 # :construction: DEVELOPERS TODO
 * GITHUB better organization
    * beautify *readme* https://help.github.com/articles/basic-writing-and-formatting-syntax/
