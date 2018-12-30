@@ -17,7 +17,8 @@ Add some utilities to Goodreads site https://www.goodreads.com/
       - by default this installation language is *Italian*
          > samoGoodreadsUtility={'lang':'ita'}
          
-         you can change by replacing the 'lang' value **ita** with one of this
+      - you can change language by replacing the 'lang' value **ita** with one of this [languages](https://asamorini.github.io/goodreads.utility/docs/languages.txt)
+      
       ```
       javascript:var samoGoodreadsUtility={'lang':'ita'};(function(){var s=document.createElement('SCRIPT');s.type='text/javascript';s.src='https://asamorini.github.io/goodreads.utility/dist/goodreads.utility.min.js';document.getElementsByTagName('head')[0].appendChild(s);})();
       ```
