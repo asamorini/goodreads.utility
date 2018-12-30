@@ -2,7 +2,7 @@
 Add some utilities to Goodreads site https://www.goodreads.com/
 
 ## Table of contents
-1. [Instruction](#instruction)
+1. [Installation](#installation)
 2. [Utilities list](#utilities)
 3. [Soon next features](#utilitiesnext)
 4. [Versions history](#versions)
@@ -11,7 +11,7 @@ Add some utilities to Goodreads site https://www.goodreads.com/
 
 
 
-# <a name="instruction">Instruction</a>
+# <a name="installation">Installation</a>
 1) Add a :bookmark: Bookmark "Goodreads Utility" to your browser
    - with this javascript code in the URL
       ```
@@ -25,10 +25,11 @@ Add some utilities to Goodreads site https://www.goodreads.com/
 
 
 # <a name="utilities">Utilities List</a>
-* **Search for only Italian editions**
-   * visible on BOOK page
+* **Book page: search for editions of specific language**
+   [video](https://asamorini.github.io/goodreads.utility/docs/video/SearchItalianEditions.swf)
+   * when you are on a BOOK page, you can find list of specific language editions
          ![Search for Italian editions](docs/images/menu.bookPage.01.searchItalianEditions.png)
-   * video showing [Search for only Italian editions](https://asamorini.github.io/goodreads.utility/docs/video/SearchItalianEditions.swf)
+   
 
 
 
