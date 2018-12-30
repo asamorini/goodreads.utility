@@ -65,9 +65,9 @@ Add some utilities to Goodreads site https://www.goodreads.com/
 
 # <a name="versions">:date: Versions history</a>
 
-| Date  | Improvement
-| :---: | :---
-| 2018.12.09  | Search for only Italian editions
+| Date | Version | Improvement
+| :---: | :---: | :---
+| 2018.12.09  | 1.0 | Search for only Italian editions
 
 
 # <a name="bugs">:bug: Known limitations and bugs</a>
@@ -78,7 +78,6 @@ Add some utilities to Goodreads site https://www.goodreads.com/
 # <a name="devtodo">:construction: Developers TODO</a>
 * GITHUB better organization
    * beautify *readme* https://help.github.com/articles/basic-writing-and-formatting-syntax/
-   * load source code versions on *src/js*
 * code improvements, next steps
    * menu icon initialization: css transitions background-color (and auto showing expanded menu)
    * bookmarklet creation: check possibility to automatically add bookmark with a link
