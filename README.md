@@ -63,9 +63,10 @@ javascript:(function(){var s=document.createElement('SCRIPT');s.type='text/javas
 
 
 # <a name="versions">:date: Versions history</a>
-### :date: 2018.12.09
-* Search for only Italian editions
 
+| Date  | Improvement
+| :---: | :---
+| 2018.12.09  | Search for only Italian editions
 
 
 # <a name="bugs">:bug: Known limitations and bugs</a>
