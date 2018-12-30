@@ -11,7 +11,7 @@ Add some utilities to Goodreads site https://www.goodreads.com/
 
 
 
-# INSTRUCTION
+# <a name="instruction">INSTRUCTION</a>
 1) Add a :bookmark: Bookmark "Goodreads Utility" to your browser
    - with this javascript code in the URL
 ```
