@@ -81,7 +81,6 @@ Add some utilities to Goodreads site https://www.goodreads.com/
 * GITHUB better organization
    * beautify *readme* https://help.github.com/articles/basic-writing-and-formatting-syntax/
 * code improvements, next steps
-   * menu icon initialization: css transitions background-color (and auto showing expanded menu)
    * bookmarklet creation: check possibility to automatically add bookmark with a link
    * externalize citations in separate file
    * intenazionalization messages and labels
