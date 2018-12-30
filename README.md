@@ -1,5 +1,6 @@
 # :books: Goodreads Utility
 Add some utilities to Goodreads site https://www.goodreads.com/
+Current version: 1.0
 
 ## Table of contents
 1. [Installation](#installation)
