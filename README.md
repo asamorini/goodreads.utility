@@ -16,6 +16,7 @@ Add some utilities to Goodreads site https://www.goodreads.com/
    - copy and paste this javascript code into the bookmark URL
       - by default this installation language is *Italian*
          > samoGoodreadsUtility={'lang':'ita'}
+         
          you can change by replacing the 'lang' value **ita** with one of this
       ```
       javascript:var samoGoodreadsUtility={'lang':'ita'};(function(){var s=document.createElement('SCRIPT');s.type='text/javascript';s.src='https://asamorini.github.io/goodreads.utility/dist/goodreads.utility.min.js';document.getElementsByTagName('head')[0].appendChild(s);})();
