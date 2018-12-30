@@ -10,7 +10,7 @@ Add some utilities to Goodreads site https://www.goodreads.com/
 6. [Developers: todo](#devtodo)
 
 
-<a name="instruction"/>
+
 # INSTRUCTION
 1) Add a :bookmark: Bookmark "Goodreads Utility" to your browser
    - with this javascript code in the URL
