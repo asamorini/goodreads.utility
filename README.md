@@ -3,15 +3,15 @@ Add some utilities to Goodreads site https://www.goodreads.com/
 
 ## Table of contents
 1. [Instruction](#instruction)
-2. [List of utilities](#utilities)
-3. [Soon: next features](#utilitiesnext)
+2. [Utilities list](#utilities)
+3. [Soon next features](#utilitiesnext)
 4. [Versions history](#versions)
 5. [Known limitations and bugs](#bugs)
 6. [Developers: todo](#devtodo)
 
 
 
-# <a name="instruction">INSTRUCTION</a>
+# <a name="instruction">Instruction</a>
 1) Add a :bookmark: Bookmark "Goodreads Utility" to your browser
    - with this javascript code in the URL
 ```
@@ -24,7 +24,7 @@ javascript:(function(){var s=document.createElement('SCRIPT');s.type='text/javas
       ![new menu opened](docs/images/menu.02.opened.png)
 
 
-# <a name="utilities">LIST OF UTILITIES</a>
+# <a name="utilities">Utilities List</a>
 * **Search for only Italian editions**
    * visible on BOOK page
          ![Search for Italian editions](docs/images/menu.bookPage.01.searchItalianEditions.png)
@@ -32,7 +32,7 @@ javascript:(function(){var s=document.createElement('SCRIPT');s.type='text/javas
 
 
 
-# <a name="utilitiesnext">:soon: next features</a>
+# <a name="utilitiesnext">:soon: Next features</a>
 * language
    * possibility to choose other language than italian
       * default language=Italian
@@ -74,7 +74,7 @@ javascript:(function(){var s=document.createElement('SCRIPT');s.type='text/javas
 * Layout is verified only for window larger than 600px
 
 
-# <a name="devtodo">:construction: DEVELOPERS TODO</a>
+# <a name="devtodo">:construction: Developers TODO</a>
 * GITHUB better organization
    * beautify *readme* https://help.github.com/articles/basic-writing-and-formatting-syntax/
       * add also an initial summary so readme contents with link
