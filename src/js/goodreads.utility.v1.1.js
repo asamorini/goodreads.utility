@@ -1,6 +1,8 @@
 //GOODREADS NEW FUNCTIONALITY
 /*
+
 VERSION: 1.1 (2018.12.30)
+
 Minify code:
 	https://closure-compiler.appspot.com/home
 		poi a mano aggiungere come prefisso
@@ -27,6 +29,9 @@ var samoGoodreadsUtility=samoGoodreadsUtility || {'lang':'ita'};
 		_PAGE_TYPE_GOODREADS_CHOICE_AWARDS_CATEGORY='GOODREADS CHOICE AWARDS CATEGORY',
 
 		//languages
+		_languageCod='',
+		_languageDesc='',
+		_languageButtonSpan='<span class="LANGUAGE_DESCRIPTION"></span>',
 		_languages=[
 			['eng','English'],
 			['spa','Spanish'],
@@ -1138,13 +1143,13 @@ evidenziare eventuale libro che è la pagina attualmente aperta
 						_headerButton_BookEditionsLang=results.empty().append(_imgLoading()).show('slow');
 						//search specific language editions
 						results.addClass('workEditions');
-						_bookEditionsLanguage(allEditions.attr('href'),$('#samoLang option:selected').text());
+						_bookEditionsLanguage(allEditions.attr('href'),_languageDesc);
 					})
 				);
 				right
 				.append(
 					$('<div/>',{'style':'font-weight:bold'})
-					.html('Find Italian Editions')
+					.html('Find '+_languageButtonSpan+' Editions (of current book)')
 				)
 				.append($('<small/>').html(_bookTitle.html()));
 				break;
@@ -1164,14 +1169,14 @@ evidenziare eventuale libro che è la pagina attualmente aperta
 verifica di richiamo una volta sola, a meno che non vada in errore (es: per connessione interrotta)
 */
 						_headerReplaceBook_Counters=results.empty().show('slow');
-						_booksListLanguage($('#samoLang option:selected').text());
+						_booksListLanguage(_languageDesc);
 					})
 				);
 
 				right
 				.append(
 					$('<div/>',{'style':'font-weight:bold'})
-					.html('Replace books with Italian edition')
+					.html('Replace books with '+_languageButtonSpan+' edition')
 				)
 				.append($('<small/>').html('(if it exists)'));
 				break;
@@ -1202,7 +1207,7 @@ verifica di richiamo una volta sola, a meno che non vada in errore (es: per conn
 			_bookTitle=$('#bookTitle');
 
 			//replace book
-//			options.append(_menuOptionsButton('booksListLanguage'));
+	//		options.append(_menuOptionsButton('booksListLanguage'));
 
 			//PAGE "BOOK"
 			if (_bookTitle.length){
@@ -1242,8 +1247,19 @@ HOMEPAGE
 			for (var i=0;i<_languages.length;i++){
 				language.append($('<option/>',{'value':_languages[i][0]}).html(_languages[i][1]));
 			}
-			language.val(samoGoodreadsUtility.lang);	//default language
-
+			language
+			.change(function(){
+				var el=$(this);
+				//set language variables
+				_languageCod=el.val();	//ex: "ita"
+				_languageDesc=el.find('option:selected').text();	//ex: "Italian"
+				console.log(_logPrefix+'Language '+_languageCod+'='+_languageDesc);
+				//change language description on menu options
+				$('#samoMenu').find('.samoOption .LANGUAGE_DESCRIPTION').each(function(){
+					$(this).html(_languageDesc);
+				});
+			});
+			
 			//MENU
 			menu=$('<div/>',{
 				'class':'dropdown__menu dropdown__menu--notifications gr-box gr-box--withShadowLarge'
@@ -1316,6 +1332,8 @@ HOMEPAGE
 					.append(menu)
 				)
 			);
+			language.val(samoGoodreadsUtility.lang).change();	//set default language
+			btn.click();	//automatically open menu
 		});
 	
 	//-----------------   public methods   -----------------
