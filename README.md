@@ -1,4 +1,4 @@
-# :books: Goodreads Utility (version 1.0)
+# :books: Goodreads Utility (version 1.1)
 Add some utilities to Goodreads site https://www.goodreads.com/
 
 ## Table of contents
@@ -14,6 +14,9 @@ Add some utilities to Goodreads site https://www.goodreads.com/
 # <a name="installation">Installation</a>
 1) Add a :bookmark: Bookmark "Goodreads Utility" to your browser
    - copy and paste this javascript code into the bookmark URL
+      - by default this installation language is *Italian*
+         > samoGoodreadsUtility={'lang':'ita'}
+         you can change by replacing the 'lang' value **ita** with one of this
       ```
       javascript:var samoGoodreadsUtility={'lang':'ita'};(function(){var s=document.createElement('SCRIPT');s.type='text/javascript';s.src='https://asamorini.github.io/goodreads.utility/dist/goodreads.utility.min.js';document.getElementsByTagName('head')[0].appendChild(s);})();
       ```
@@ -22,6 +25,7 @@ Add some utilities to Goodreads site https://www.goodreads.com/
       ![new menu](docs/images/menu.01.added.png)
    - click on it to see utilities
       ![new menu opened](docs/images/menu.02.opened.png)
+
 
 
 # <a name="utilities">Utilities List</a>
@@ -34,11 +38,6 @@ Add some utilities to Goodreads site https://www.goodreads.com/
 
 
 # <a name="utilitiesnext">:soon: Next features</a>
-* language
-   * possibility to choose other language than italian
-      * default language=Italian
-      * possibility to define preferred language directly on bookmark
-      * select languages on menu
 * book page-search italian editions
    * sort
       * default by year\publisher
@@ -67,7 +66,8 @@ Add some utilities to Goodreads site https://www.goodreads.com/
 
 | Date | Version | Improvement
 | :---: | :---: | :---
-| 2018.12.09  | 1.0 | Search for only Italian editions
+| 2018.12.09  | 1.0 | Search for book editions on specific language (Italian)
+| 2018.12.30  | 1.1 | Language selection
 
 
 # <a name="bugs">:bug: Known limitations and bugs</a>
