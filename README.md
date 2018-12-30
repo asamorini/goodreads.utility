@@ -13,9 +13,9 @@ Add some utilities to Goodreads site https://www.goodreads.com/
 
 # <a name="installation">Installation</a>
 1) Add a :bookmark: Bookmark "Goodreads Utility" to your browser
-   - with this javascript code in the URL
+   - copy and paste this javascript code into the bookmark URL
       ```
-      javascript:(function(){var s=document.createElement('SCRIPT');s.type='text/javascript';s.src='https://asamorini.github.io/goodreads.utility/dist/goodreads.utility.min.js';document.getElementsByTagName('head')[0].appendChild(s);})();
+      javascript:var samoGoodreadsUtility={'lang':'ita'};(function(){var s=document.createElement('SCRIPT');s.type='text/javascript';s.src='https://asamorini.github.io/goodreads.utility/dist/goodreads.utility.min.js';document.getElementsByTagName('head')[0].appendChild(s);})();
       ```
 2) and now, when you are visiting www.goodreads.com/ site
    - if you click the bookmark "Goodreads utility" a new menu will be shown
