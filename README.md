@@ -24,16 +24,15 @@ javascript:(function(){var s=document.createElement('SCRIPT');s.type='text/javas
       ![new menu opened](docs/images/menu.02.opened.png)
 
 
-<a name="utilities"/>
-# LIST OF UTILITIES
+# <a name="utilities">LIST OF UTILITIES</a>
 * **Search for only Italian editions**
    * visible on BOOK page
          ![Search for Italian editions](docs/images/menu.bookPage.01.searchItalianEditions.png)
    * video showing [Search for only Italian editions](https://asamorini.github.io/goodreads.utility/docs/video/SearchItalianEditions.swf)
 
 
-<a name="utilitiesnext"/>
-# :soon: next features
+
+# <a name="utilitiesnext">:soon: next features</a>
 * language
    * possibility to choose other language than italian
       * default language=Italian
@@ -62,19 +61,19 @@ javascript:(function(){var s=document.createElement('SCRIPT');s.type='text/javas
    * possibility to categorize
 
 
-<a name="versions"/>
-# :date: Versions history
+
+# <a name="versions">:date: Versions history</a>
 ### :date: 2018.12.09
 * Search for only Italian editions
 
 
-<a name="bugs"/>
-# :bug: Known limitations and bugs
+
+# <a name="bugs">:bug: Known limitations and bugs</a>
 * It works only on *desktop version* of the site
 * Layout is verified only for window larger than 600px
 
-<a name="devtodo"/>
-# :construction: DEVELOPERS TODO
+
+# <a name="devtodo">:construction: DEVELOPERS TODO</a>
 * GITHUB better organization
    * beautify *readme* https://help.github.com/articles/basic-writing-and-formatting-syntax/
       * add also an initial summary so readme contents with link
