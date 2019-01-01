@@ -35,8 +35,8 @@ Add some utilities to Goodreads site https://www.goodreads.com/
    * when you are on a BOOK page, you can find list of specific language editions
          ![Search for Italian editions](docs/images/menu.bookPage.01.searchItalianEditions.png)
 * **Books list: replace books to the corresponding edition of specific language**
-   * AUTHOR PAGE (books list)
-   * Books by AUTHOR
+   * Author page (books list)
+   * Books by author page
    * Choice Awards
    * Choice Awards Category
 
