@@ -32,11 +32,16 @@ Add some utilities to Goodreads site https://www.goodreads.com/
 # <a name="utilities">Utilities List</a>
 * **Books list: replace books to the corresponding edition of specific language**
    * Author page - [show demo video](https://drive.google.com/file/d/12YgEMhwExuduRZhCcqoEVqN8jyD9FBvx/view?usp=drivesdk)
+      * author's books list
    * Books by author page - [show demo video](https://drive.google.com/file/d/1WFOd9GlGz5jVLK05nOdmKtNLVnxoNpzj/view?usp=drivesdk)
+      * author's books list
    * Choice Awards - [show demo video](https://drive.google.com/file/d/1FdMLCz2oJ4K5uusp64T8FzkSJLXKMhxV/view?usp=drivesdk)
+      * "Nominees on your shelves" books list
    * Choice Awards Category - [show demo video](https://drive.google.com/file/d/1Z2bT0ZgcAugVooPMMlVIOF1ALtvH8n10/view?usp=drivesdk)
+      * "Winner" book
+      * "All nominees" books list
 * **Book page: search for editions of specific language**
-   [video](https://asamorini.github.io/goodreads.utility/docs/video/SearchItalianEditions.swf)
+   [show demo video](https://drive.google.com/file/d/1QXjWG69WGndvnPH4LqqMq3m2oMngdwtb/view?usp=drivesdk)
    * when you are on a BOOK page, you can find list of specific language editions
          ![Search for Italian editions](docs/images/menu.bookPage.01.searchItalianEditions.png)
 
