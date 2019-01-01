@@ -1,4 +1,4 @@
-# :books: Goodreads Utility (version 1.1)
+# :books: Goodreads Utility (version 1.2)
 Add some utilities to Goodreads site https://www.goodreads.com/
 
 ## Table of contents
@@ -29,14 +29,16 @@ Add some utilities to Goodreads site https://www.goodreads.com/
       ![new menu opened](docs/images/menu.02.opened.png)
 
 
-
 # <a name="utilities">Utilities List</a>
 * **Book page: search for editions of specific language**
    [video](https://asamorini.github.io/goodreads.utility/docs/video/SearchItalianEditions.swf)
    * when you are on a BOOK page, you can find list of specific language editions
          ![Search for Italian editions](docs/images/menu.bookPage.01.searchItalianEditions.png)
-   
-
+* **Books list: replace books to the corresponding edition of specific language**
+   * AUTHOR PAGE (books list)
+   * Books by AUTHOR
+   * Choice Awards
+   * Choice Awards Category
 
 
 # <a name="utilitiesnext">:soon: Next features</a>
@@ -48,10 +50,9 @@ Add some utilities to Goodreads site https://www.goodreads.com/
       * by type (paperback\ebook\audiobook\...)
    * language
       * possibility to include editions without language defined (checkbox, default included, they must be evidenced in some way)
-* book list: possibility to replace, for every book, with the corresponding italian edition
+* Books list: replace books to the corresponding edition of specific language
    * on those list
       * Recommendations
-      * Choice Awards
       * Giveaways
       * New Releases
       * Lists
@@ -70,6 +71,7 @@ Add some utilities to Goodreads site https://www.goodreads.com/
 | :---: | :---: | :---
 | 2018.12.09  | 1.0 | Search for book editions on specific language (Italian)
 | 2018.12.30  | 1.1 | Language selection
+| 2019.01.01  | 1.2 | Replace books on list to specific language (on page Authors,Authors book,Choice Awards,Choice Awards Category)
 
 
 # <a name="bugs">:bug: Known limitations and bugs</a>
