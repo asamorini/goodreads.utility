@@ -12,6 +12,7 @@ Add some utilities to Goodreads site https://www.goodreads.com/
 
 
 # <a name="installation">Installation</a>
+[sho installation demo video](https://asamorini.github.io/goodreads.utility/docs/video/AddBookmark.Chrome.swf)
 1) Add a :bookmark: Bookmark "Goodreads Utility" to your browser
    - copy and paste this javascript code into the bookmark URL
       - by default this installation language is *Italian*
@@ -61,7 +62,7 @@ Add some utilities to Goodreads site https://www.goodreads.com/
       * Recommendations
       * Giveaways
       * New Releases
-      * Lists
+      * Listopia pages
       * book page, *Books by AUTHOR*
       * other user bookshelves
 * reviews
