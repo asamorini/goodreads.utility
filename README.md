@@ -69,7 +69,7 @@ Add some utilities to Goodreads site https://www.goodreads.com/
 * reviews
    * filter to show only italian ones
 * bookshelves
-   * possibility to categorize
+   * possibility to aggregate
 * citations (inside "SAMO Goodreads utility" menù)
    * from public site's citations
       * in language (defined in "SAMO Goodreads utility" installation language)
