@@ -58,6 +58,7 @@ Add some utilities to Goodreads site https://www.goodreads.com/
    * language
       * possibility to include editions without language defined (checkbox, default included, they must be evidenced in some way)
 * Books list: replace books to the corresponding edition of specific language
+   * don't re-execute search for the same book\lang (save data-attr for completed replacement)
    * on those list
       * Recommendations
       * Giveaways
@@ -69,6 +70,11 @@ Add some utilities to Goodreads site https://www.goodreads.com/
    * filter to show only italian ones
 * bookshelves
    * possibility to categorize
+* citations (inside "SAMO Goodreads utility" menù)
+   * from public site's citations
+      * in language (defined in "SAMO Goodreads utility" installation language)
+   * button to refresh\load another one
+   
 
 
 
@@ -89,7 +95,7 @@ Add some utilities to Goodreads site https://www.goodreads.com/
 # <a name="devtodo">:construction: Developers TODO</a>
 * GITHUB better organization
    * beautify *readme* https://help.github.com/articles/basic-writing-and-formatting-syntax/
+   * demo video: reduce size and upload on github (max 25mb limit)
 * code improvements, next steps
-   * bookmarklet creation: check possibility to automatically add bookmark with a link
    * externalize citations in separate file
    * intenazionalization messages and labels
