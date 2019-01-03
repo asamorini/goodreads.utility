@@ -2,12 +2,12 @@
 Add some utilities to Goodreads site https://www.goodreads.com/
 
 ## Table of contents
-1. [:wrench: Installation](#installation)
-2. [:heavy_check_mark: Utilities list](#utilities)
-3. [:soon: Soon next features](#utilitiesnext)
-4. [:date: Versions history](#versions)
-5. [:hear_no_evil: Known limitations and bugs :bug:](#bugs)
-6. [:construction: Developers: todo](#devtodo)
+[:wrench: Installation](#installation)
+[:heavy_check_mark: Utilities list](#utilities)
+[:soon: Soon next features](#utilitiesnext)
+[:date: Versions history](#versions)
+[:hear_no_evil: Known limitations and bugs :bug:](#bugs)
+[:construction: Developers: todo](#devtodo)
 
 
 
@@ -95,6 +95,8 @@ Add some utilities to Goodreads site https://www.goodreads.com/
 # <a name="devtodo">:construction: Developers TODO</a>
 * GITHUB better organization
    * beautify *readme* https://help.github.com/articles/basic-writing-and-formatting-syntax/
+   * create a "how it works" documentation
+   * italian documentation version too
    * demo video: reduce size and upload on github (max 25mb limit)
 * code improvements, next steps
    * externalize citations in separate file
