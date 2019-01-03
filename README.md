@@ -2,16 +2,16 @@
 Add some utilities to Goodreads site https://www.goodreads.com/
 
 ## Table of contents
-1. [Installation](#installation)
-2. [Utilities list](#utilities)
-3. [Soon next features](#utilitiesnext)
-4. [Versions history](#versions)
-5. [Known limitations and bugs](#bugs)
-6. [Developers: todo](#devtodo)
+1. [:wrench: Installation](#installation)
+2. [:heavy_check_mark: Utilities list](#utilities)
+3. [:soon: Soon next features](#utilitiesnext)
+4. [:date: Versions history](#versions)
+5. [:bug: Known limitations and bugs](#bugs)
+6. [:construction: Developers: todo](#devtodo)
 
 
 
-# <a name="installation">Installation</a>
+# <a name="installation">:wrench: Installation</a>
 [show Installation video (on iPad)](https://drive.google.com/file/d/1gnZtnvcJKyLXSIRJGKNTpa0OE24PblL0/view?usp=drivesdk)
 1) Add a :bookmark: Bookmark "Goodreads Utility" to your browser
    - copy and paste this javascript code into the bookmark URL
@@ -30,7 +30,7 @@ Add some utilities to Goodreads site https://www.goodreads.com/
       ![new menu opened](docs/images/menu.02.opened.png)
 
 
-# <a name="utilities">Utilities List</a>
+# <a name="utilities">:heavy_check_mark: Utilities List</a>
 * **Books list: replace books to the corresponding edition of specific language**
    * Author page - [show demo video](https://drive.google.com/file/d/12YgEMhwExuduRZhCcqoEVqN8jyD9FBvx/view?usp=drivesdk)
       * author's books list
