@@ -6,7 +6,7 @@ Add some utilities to Goodreads site https://www.goodreads.com/
 2. [:heavy_check_mark: Utilities list](#utilities)
 3. [:soon: Soon next features](#utilitiesnext)
 4. [:date: Versions history](#versions)
-5. [:bug: Known limitations and bugs :hear_no_evil:](#bugs)
+5. [:hear_no_evil: Known limitations and bugs :bug:](#bugs)
 6. [:construction: Developers: todo](#devtodo)
 
 
@@ -87,7 +87,7 @@ Add some utilities to Goodreads site https://www.goodreads.com/
 | 2019.01.01  | 1.2 | Replace books on list to specific language (on page Authors,Authors book,Choice Awards,Choice Awards Category)
 
 
-# <a name="bugs">:bug: Known limitations and bugs :hear_no_evil:</a>
+# <a name="bugs">:hear_no_evil: Known limitations and bugs :bug:</a>
 * It works only on *desktop version* of the site
 * Layout is verified only for window larger than 600px
 
