@@ -2,12 +2,12 @@
 Add some utilities to Goodreads site https://www.goodreads.com/
 
 ## Table of contents
-- [:wrench: Installation](#installation)
-- [:heavy_check_mark: Utilities list](#utilities)
-- [:soon: Soon next features](#utilitiesnext)
-- [:date: Versions history](#versions)
-- [:hear_no_evil: Known limitations and bugs :bug:](#bugs)
-- [:construction: Developers: todo](#devtodo)
+- [Installation](#installation)
+- [Utilities list](#utilities)
+- [Soon next features](#utilitiesnext)
+- [Versions history](#versions)
+- [Known limitations and bugs](#bugs)
+- [Developers: todo](#devtodo)
 ***
 
 
