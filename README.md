@@ -43,7 +43,7 @@ Add some utilities to Goodreads site https://www.goodreads.com/
       * author's books list
    * Books by author page - [show demo video](https://drive.google.com/file/d/1WFOd9GlGz5jVLK05nOdmKtNLVnxoNpzj/view?usp=drivesdk)
       * author's books list
-   * Listopia pages (Listopia and Listopia voted by user...)
+   * Listopia pages (Listopia and Listopia voted by user...) - [show demo video](https://drive.google.com/file/d/1pMsskXttQ85H1bP53cpw5JHEfZ50ghrC/view?usp=drivesdk)
       * books of this list
    * Choice Awards - [show demo video](https://drive.google.com/file/d/1FdMLCz2oJ4K5uusp64T8FzkSJLXKMhxV/view?usp=drivesdk)
       * "Nominees on your shelves" books list
@@ -73,6 +73,7 @@ Add some utilities to Goodreads site https://www.goodreads.com/
       * New Releases
       * book page, *Books by AUTHOR*
       * other user bookshelves
+* help link on menu
 * reviews
    * filter to show only italian ones
 * bookshelves
