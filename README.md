@@ -1,4 +1,4 @@
-# :books: Goodreads Utility (version 1.2)
+# :books: Goodreads Utility (version 1.3)
 Add some utilities to Goodreads site https://www.goodreads.com/
 
 ## Table of contents
@@ -28,6 +28,11 @@ Add some utilities to Goodreads site https://www.goodreads.com/
       ![new menu](docs/images/menu.01.added.png)
    - click on it to see utilities
       ![new menu opened](docs/images/menu.02.opened.png)
+      
+> Notes:
+>   - after you have installed on your browser, you always use the last version
+>   - if you are synchronizing web browser bookmarks between your devices (example: pc and mobile phone and tablet), you need to install only on one browser
+
 ***
 
 
@@ -37,6 +42,8 @@ Add some utilities to Goodreads site https://www.goodreads.com/
       * author's books list
    * Books by author page - [show demo video](https://drive.google.com/file/d/1WFOd9GlGz5jVLK05nOdmKtNLVnxoNpzj/view?usp=drivesdk)
       * author's books list
+   * Listopia pages (Listopia and Listopia voted by user...)
+      * books of this list
    * Choice Awards - [show demo video](https://drive.google.com/file/d/1FdMLCz2oJ4K5uusp64T8FzkSJLXKMhxV/view?usp=drivesdk)
       * "Nominees on your shelves" books list
    * Choice Awards Category - [show demo video](https://drive.google.com/file/d/1Z2bT0ZgcAugVooPMMlVIOF1ALtvH8n10/view?usp=drivesdk)
@@ -59,12 +66,10 @@ Add some utilities to Goodreads site https://www.goodreads.com/
    * language
       * possibility to include editions without language defined (checkbox, default included, they must be evidenced in some way)
 * Books list: replace books to the corresponding edition of specific language
-   * don't re-execute search for the same book\lang (save data-attr for completed replacement)
    * on those list
       * Recommendations
       * Giveaways
       * New Releases
-      * Listopia pages
       * book page, *Books by AUTHOR*
       * other user bookshelves
 * reviews
@@ -86,6 +91,7 @@ Add some utilities to Goodreads site https://www.goodreads.com/
 | 2018.12.09  | 1.0 | Search for book editions on specific language (Italian)
 | 2018.12.30  | 1.1 | Language selection
 | 2019.01.01  | 1.2 | Replace books on list to specific language (on page Authors,Authors book,Choice Awards,Choice Awards Category)
+| 2019.01.04  | 1.2 | Replace books on list to specific language (on page Listopia,Listopia votes of ...)
 ***
 
 
