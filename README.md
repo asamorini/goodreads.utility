@@ -28,6 +28,7 @@ Add some utilities to Goodreads site https://www.goodreads.com/
       ![new menu](docs/images/menu.01.added.png)
    - click on it to see utilities
       ![new menu opened](docs/images/menu.02.opened.png)
+***
 
 
 # <a name="utilities">:heavy_check_mark: Utilities List</a>
@@ -45,7 +46,7 @@ Add some utilities to Goodreads site https://www.goodreads.com/
    [show demo video](https://drive.google.com/file/d/1QXjWG69WGndvnPH4LqqMq3m2oMngdwtb/view?usp=drivesdk)
    * when you are on a BOOK page, you can find list of specific language editions
          ![Search for Italian editions](docs/images/menu.bookPage.01.searchItalianEditions.png)
-
+***
 
 
 # <a name="utilitiesnext">:soon: Next features</a>
@@ -74,7 +75,7 @@ Add some utilities to Goodreads site https://www.goodreads.com/
    * from public site's citations
       * in language (defined in "SAMO Goodreads utility" installation language)
    * button to refresh\load another one
-   
+***
 
 
 
@@ -85,11 +86,13 @@ Add some utilities to Goodreads site https://www.goodreads.com/
 | 2018.12.09  | 1.0 | Search for book editions on specific language (Italian)
 | 2018.12.30  | 1.1 | Language selection
 | 2019.01.01  | 1.2 | Replace books on list to specific language (on page Authors,Authors book,Choice Awards,Choice Awards Category)
+***
 
 
 # <a name="bugs">:hear_no_evil: Known limitations and bugs :bug:</a>
 * It works only on *desktop version* of the site
 * Layout is verified only for window larger than 600px
+***
 
 
 # <a name="devtodo">:construction: Developers TODO</a>
