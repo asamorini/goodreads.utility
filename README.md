@@ -30,7 +30,7 @@ Add some utilities to Goodreads site https://www.goodreads.com/
       ![new menu opened](docs/images/menu.02.opened.png)
       
 > Notes:
->   - after you have installed on your browser, you always use the last version
+>   - after you have installed on your browser, you always use the last version, and receive automatically updates (so to become aware of new features, connected to this site)
 >   - if you are synchronizing web browser bookmarks between your devices (example: pc and mobile phone and tablet), you need to install only on one browser
 
 ***
