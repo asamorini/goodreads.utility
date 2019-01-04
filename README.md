@@ -93,7 +93,7 @@ Add some utilities to Goodreads site https://www.goodreads.com/
 | 2018.12.30  | 1.1 | Language selection
 | 2019.01.01  | 1.2 | Replace books on list to specific language (on page Authors,Authors book,Choice Awards,Choice Awards Category)
 | 2019.01.04  | 1.3 | Replace books on list to specific language (on page Listopia,Listopia votes of ...)
-Showed current version near the title
+| | | Showed current version near the title
 ***
 
 
