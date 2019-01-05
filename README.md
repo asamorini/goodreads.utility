@@ -30,9 +30,9 @@ Add some utilities to Goodreads site https://www.goodreads.com/
       ![new menu opened](docs/images/menu.02.opened.png)
       
 > Notes:
->   - if you are synchronizing web browser bookmarks between your devices (example: pc and mobile phone and tablet), you need to install only on one browser
->   - after you have installed on your browser, you always use the last version, and receive automatically updates (so to become aware of new features, connected to this site)
->   - from the new menù, near the title "GOODREADS UTILITY" the current version is showed, you can click it to open this documentation page
+>   - :bulb: if you are synchronizing web browser bookmarks between your devices (example: pc and mobile phone and tablet), you need to install only on one browser
+>   - :bulb: after you have installed on your browser, you always use the last version, and receive automatically updates (so to become aware of new features, connected to this site)
+>   - :bulb: how I can be updated of new features? From the new menù, near the title "GOODREADS UTILITY" the current version is showed, you can click it to open this documentation page, and check [Versions history](#versions)
 
 ***
 
