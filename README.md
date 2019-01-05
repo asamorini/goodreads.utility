@@ -122,3 +122,5 @@ Add some utilities to Goodreads site https://www.goodreads.com/
    * externalize citations in separate file
    * intenazionalization messages and labels
    * change "GOODREADS UTILITIES" to "SAMO Utilities"
+   * create a Chrome extension
+   * write ES6 code
