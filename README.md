@@ -45,7 +45,7 @@ Add some utilities to Goodreads site https://www.goodreads.com/
       * author's books list
    * Listopia pages (Listopia and Listopia voted by user...) - [show demo video](https://drive.google.com/file/d/1pMsskXttQ85H1bP53cpw5JHEfZ50ghrC/view?usp=drivesdk)
       * books of this list
-   * Recommendations pages (Recommendations,Recommendations based by shelf,Recommendations based by genre)
+   * Recommendations pages (Recommendations,Recommendations by shelf,Recommendations by genre) - [show demo video](https://drive.google.com/file/d/1o9SWyE2mf3qv2fSwmoRRJeLyFIVsOAHN/view?usp=drivesdk)
       * recommended books
    * Choice Awards - [show demo video](https://drive.google.com/file/d/1FdMLCz2oJ4K5uusp64T8FzkSJLXKMhxV/view?usp=drivesdk)
       * "Nominees on your shelves" books list
