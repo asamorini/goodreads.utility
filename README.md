@@ -76,6 +76,7 @@ Add some utilities to Goodreads site https://www.goodreads.com/
       * other user bookshelves
    * replacing info
       * book description not already replaced
+      * tooltip info replacement also in Choice awards
       * image has poor quality on "Choice awards" and "Recommendations" with View mode=covee
    * icon of replaced book should not be over tooltip book on Recommendations list
 * help link on menu
