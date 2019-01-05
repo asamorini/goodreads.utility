@@ -1,4 +1,4 @@
-# :books: Goodreads Utility (version 1.3)
+# :books: Goodreads Utility (version 1.4)
 Add some utilities to Goodreads site https://www.goodreads.com/
 
 ## Table of contents
@@ -45,6 +45,8 @@ Add some utilities to Goodreads site https://www.goodreads.com/
       * author's books list
    * Listopia pages (Listopia and Listopia voted by user...) - [show demo video](https://drive.google.com/file/d/1pMsskXttQ85H1bP53cpw5JHEfZ50ghrC/view?usp=drivesdk)
       * books of this list
+   * Recommendations pages (Recommendations,Recommendations based by shelf,Recommendations based by genre)
+      * recommended books
    * Choice Awards - [show demo video](https://drive.google.com/file/d/1FdMLCz2oJ4K5uusp64T8FzkSJLXKMhxV/view?usp=drivesdk)
       * "Nominees on your shelves" books list
    * Choice Awards Category - [show demo video](https://drive.google.com/file/d/1Z2bT0ZgcAugVooPMMlVIOF1ALtvH8n10/view?usp=drivesdk)
@@ -68,11 +70,13 @@ Add some utilities to Goodreads site https://www.goodreads.com/
       * possibility to include editions without language defined (checkbox, default included, they must be evidenced in some way)
 * Books list: replace books to the corresponding edition of specific language
    * on those list
-      * Recommendations
       * Giveaways
       * New Releases
       * book page, *Books by AUTHOR*
       * other user bookshelves
+   * replacing info
+      * book description not already replaced
+      * image has poor quality on "Choice awards" and "Recommendations" with View mode=covee
 * help link on menu
 * reviews
    * filter to show only italian ones
@@ -95,6 +99,8 @@ Add some utilities to Goodreads site https://www.goodreads.com/
 | 2019.01.01  | 1.2 | Replace books on list to specific language (on page Authors,Authors book,Choice Awards,Choice Awards Category)
 | 2019.01.04  | 1.3 | Replace books on list to specific language (on page Listopia,Listopia votes of ...)
 | | | Showed current version near the title
+| 2019.01.05  | 1.4 | Replace books on list to specific language (on page Recommendations,Recommendations based by shelf,Recommendations based by genre)
+| | | Replace books on list to specific language (added red icon over images of replaced books)
 ***
 
 
