@@ -121,3 +121,4 @@ Add some utilities to Goodreads site https://www.goodreads.com/
 * code improvements, next steps
    * externalize citations in separate file
    * intenazionalization messages and labels
+   * change "GOODREADS UTILITIES" to "SAMO Utilities"
