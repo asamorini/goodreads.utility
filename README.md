@@ -1,5 +1,5 @@
 # :books: Goodreads Utility (version 1.4)
-Add some utilities to Goodreads site https://www.goodreads.com/
+Bookmarklet that add some utilities to Goodreads site https://www.goodreads.com/
 
 ## Table of contents
 - [Installation](#installation)
