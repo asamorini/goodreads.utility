@@ -120,7 +120,7 @@ Bookmarklet that add some utilities to Goodreads site https://www.goodreads.com/
 ***
 
 
-# <a name="devtodo">:construction: Developers TODO</a>
+# <a name="devtodo">:construction: Developers area</a>
 * GITHUB better organization
    * beautify *readme* https://help.github.com/articles/basic-writing-and-formatting-syntax/
    * create a "how it works" documentation
