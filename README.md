@@ -84,6 +84,8 @@ Bookmarklet that add some utilities to Goodreads site https://www.goodreads.com/
       * tooltip info replacement also in Choice awards
       * image has poor quality on "Choice awards" and "Recommendations" with View mode=cover
    * near the start button, add checkbox "hide books without choosen language edition"
+   * counter
+      * format "n/tot list book type"
 * help link on menu
 * reviews
    * filter to show only italian ones
