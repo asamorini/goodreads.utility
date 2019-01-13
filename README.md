@@ -77,8 +77,9 @@ Bookmarklet that add some utilities to Goodreads site https://www.goodreads.com/
    * replacing info
       * book description not already replaced
       * tooltip info replacement also in Choice awards
-      * image has poor quality on "Choice awards" and "Recommendations" with View mode=covee
+      * image has poor quality on "Choice awards" and "Recommendations" with View mode=cover
    * icon of replaced book should not be over tooltip book on Recommendations list
+   * near the start button, add checkbox "hide books without choosen language edition"
 * help link on menu
 * reviews
    * filter to show only italian ones
