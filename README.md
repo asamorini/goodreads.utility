@@ -1,4 +1,4 @@
-# :books: Goodreads Utility (version 1.4)
+# :books: Goodreads Utility (version 1.5)
 Bookmarklet that add some utilities to Goodreads site https://www.goodreads.com/
 
 ## Table of contents
@@ -52,6 +52,9 @@ Bookmarklet that add some utilities to Goodreads site https://www.goodreads.com/
    * Choice Awards Category - [show demo video](https://drive.google.com/file/d/1Z2bT0ZgcAugVooPMMlVIOF1ALtvH8n10/view?usp=drivesdk)
       * "Winner" book
       * "All nominees" books list
+   * Book page - [show demo video](xxx)
+      * "Books by *author*" books list
+      * "Readers also enjoyed" books list
 * **Book page: search for editions of specific language**
    [show demo video](https://drive.google.com/file/d/1QXjWG69WGndvnPH4LqqMq3m2oMngdwtb/view?usp=drivesdk)
    * when you are on a BOOK page, you can find list of specific language editions
@@ -69,16 +72,17 @@ Bookmarklet that add some utilities to Goodreads site https://www.goodreads.com/
    * language
       * possibility to include editions without language defined (checkbox, default included, they must be evidenced in some way)
 * Books list: replace books to the corresponding edition of specific language
-   * on those list
+   * also on those list
       * Giveaways
       * New Releases
-      * book page, *Books by AUTHOR*
       * other user bookshelves
+      * Books similar to ... page (link "Readers also enjoyed" of book page)
+      * Favorite genres
+      * Favorite genres\Shelf; example: https://www.goodreads.com/shelf/show/art-books-monographs
    * replacing info
       * book description not already replaced
       * tooltip info replacement also in Choice awards
       * image has poor quality on "Choice awards" and "Recommendations" with View mode=cover
-   * icon of replaced book should not be over tooltip book on Recommendations list
    * near the start button, add checkbox "hide books without choosen language edition"
 * help link on menu
 * reviews
@@ -104,6 +108,7 @@ Bookmarklet that add some utilities to Goodreads site https://www.goodreads.com/
 | | | Showed current version near the title
 | 2019.01.05  | 1.4 | Replace books on list to specific language (on page Recommendations,Recommendations based by shelf,Recommendations based by genre)
 | | | Replace books on list to specific language (added red icon over images of replaced books)
+| 2019.01.13  | 1.5 | Replace books on list to specific language (on page Book)
 ***
 
 
