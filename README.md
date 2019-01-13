@@ -101,14 +101,14 @@ Bookmarklet that add some utilities to Goodreads site https://www.goodreads.com/
 
 | Date | Version | Improvement
 | :---: | :---: | :---
-| 2018.12.09  | 1.0 | Search for book editions on specific language (Italian)
+| 2018.12.09  | 1.0 | Search for book editions on specific language (*Italian*)
 | 2018.12.30  | 1.1 | Language selection
-| 2019.01.01  | 1.2 | Replace books on list to specific language (on page Authors,Authors book,Choice Awards,Choice Awards Category)
-| 2019.01.04  | 1.3 | Replace books on list to specific language (on page Listopia,Listopia votes of ...)
+| 2019.01.01  | 1.2 | Replace books on list to specific language (on page *Authors,Authors book,Choice Awards,Choice Awards Category*)
+| 2019.01.04  | 1.3 | Replace books on list to specific language (on page *Listopia,Listopia votes of ...*)
 | | | Showed current version near the title
-| 2019.01.05  | 1.4 | Replace books on list to specific language (on page Recommendations,Recommendations based by shelf,Recommendations based by genre)
+| 2019.01.05  | 1.4 | Replace books on list to specific language (on page *Recommendations,Recommendations based by shelf,Recommendations based by genre*)
 | | | Replace books on list to specific language (added red icon over images of replaced books)
-| 2019.01.13  | 1.5 | Replace books on list to specific language (on page Book)
+| 2019.01.13  | 1.5 | Replace books on list to specific language (on page *Book*)
 ***
 
 
