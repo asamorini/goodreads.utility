@@ -7,7 +7,7 @@ Bookmarklet that add some utilities to Goodreads site https://www.goodreads.com/
 - [Soon next features](#utilitiesnext)
 - [Versions history](#versions)
 - [Known limitations and bugs](#bugs)
-- [Developers: todo](#devtodo)
+- [Developers area](#devarea)
 ***
 
 
@@ -120,7 +120,7 @@ Bookmarklet that add some utilities to Goodreads site https://www.goodreads.com/
 ***
 
 
-# <a name="devtodo">:construction: Developers area</a>
+# <a name="devarea">:construction: Developers area</a>
 * GITHUB better organization
    * beautify *readme* https://help.github.com/articles/basic-writing-and-formatting-syntax/
    * create a "how it works" documentation
