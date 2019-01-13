@@ -1,4 +1,4 @@
-# :books: Goodreads Utility (version 1.5)
+# :books: "SAMO" Goodreads Utility (version 1.5)
 Bookmarklet that add some utilities to Goodreads site https://www.goodreads.com/
 
 ## Table of contents
