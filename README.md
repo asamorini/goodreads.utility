@@ -90,7 +90,19 @@ Bookmarklet that add some utilities to Goodreads site https://www.goodreads.com/
 * reviews
    * filter to show only italian ones
 * bookshelves
-   * possibility to aggregate
+   * filters that refresh counters
+      * date filter (year, year\month, from\to)
+      * based on read (default)\all
+   * possibility to aggregate cresting tree view, ex for my library
+      * g-Genre 999
+         * Art 150
+         * Assay 159
+         * Biography 263
+         * ...
+      * w-World 999
+         * Africa 67
+            * Algeria 23
+            * ...
 * citations (inside "SAMO Goodreads utility" menù)
    * from public site's citations
       * in language (defined in "SAMO Goodreads utility" installation language)
