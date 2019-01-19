@@ -1,4 +1,4 @@
-# :books: "SAMO" Goodreads Utility (version 1.5)
+# :books: "SAMO" Goodreads Utility (version 1.6)
 Bookmarklet that add some utilities to Goodreads site https://www.goodreads.com/
 
 ## Table of contents
@@ -83,9 +83,6 @@ Bookmarklet that add some utilities to Goodreads site https://www.goodreads.com/
       * book description not already replaced
       * tooltip info replacement also in Choice awards
       * image has poor quality on "Choice awards" and "Recommendations" with View mode=cover
-   * near the start button, add checkbox "hide books without choosen language edition"
-   * counter
-      * format "n/tot list book type"
 * help link on menu
 * reviews
    * filter to show only italian ones
@@ -129,6 +126,7 @@ Bookmarklet that add some utilities to Goodreads site https://www.goodreads.com/
 | 2019.01.05  | 1.4 | Replace books on list to specific language (on page *Recommendations,Recommendations based by shelf,Recommendations based by genre*)
 | | | Replace books on list to specific language (added red icon over images of replaced books)
 | 2019.01.13  | 1.5 | Replace books on list to specific language (on page *Book*)
+| 2019.01.20  | 1.6 | Replace books on list to specific language (added total searched info on counter; added checkbox "Hide books not found")
 ***
 
 
