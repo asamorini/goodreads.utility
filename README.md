@@ -93,7 +93,13 @@ Bookmarklet that add some utilities to Goodreads site https://www.goodreads.com/
    * filters that refresh counters
       * date filter (year, year\month, from\to)
       * based on read (default)\all
-   * possibility to aggregate cresting tree view, ex for my library
+   * results book list
+      * complete (all within filters and shelf checked)
+      * sequence number before any book
+   * shelf list
+      * remove links
+      * show as checkbox (background red if choosen)
+   * possibility to aggregate shelf tree view, ex for my library
       * g-Genre 999
          * Art 150
          * Assay 159
