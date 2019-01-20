@@ -1697,9 +1697,6 @@ bisogna aggiungere "if" che sia visibile in questo momento
 						_BSD.books.push(book);
 					});
 					//show results
-
-lastPage=true;
-
 					if (lastPage){
 						_bookshelvesViewer_layoutInit();
 					//load next book page list
