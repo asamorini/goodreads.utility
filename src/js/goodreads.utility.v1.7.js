@@ -1,20 +1,3 @@
-/*TODO in sviluppo dall'ultima versione
-
-
-
-
-Aggiornamento README
-
-
-*/
-
-
-
-
-
-
-
-
 //GOODREADS NEW FUNCTIONALITY
 /*
 Minify code:
@@ -1722,10 +1705,11 @@ bisogna aggiungere "if" che sia visibile in questo momento
 				style=[
 					'a.samoFilterYear{',
 						'background: #f4f1ea;',
-						'margin: 0 12px 0 0;',
+						'margin: 6px 12px 0 0;',
 						'padding: 2px 0px 1px 6px;',
 						'border-radius: 6px;',
 						'color: #da1515;',
+						'display: inline-block;',
 					'}',
 					'a.samoFilterYear.selected{',
 						'background: #00635d;',
@@ -1752,7 +1736,7 @@ bisogna aggiungere "if" che sia visibile in questo momento
 				controls=$('#controls'),
 				leftCol=$('#leftCol'),
 				rightCol=$('#rightCol'),
-				filterYear,
+				filterYear,yearsArray=[],year,
 				shelvesContainer=$('#shelvesSection'),
 				booksTable=$('#books');
 
@@ -1812,8 +1796,13 @@ bisogna aggiungere "if" che sia visibile in questo momento
 aggiungere tasto "reset filters (show all)"
 */
 			//replace pagination with year filter
-			filterYear=$('<span/>');
+			filterYear=$('<div/>');
 			for (var year in _BSD.years){
+				yearsArray.push(year);
+			}
+			yearsArray.sort(function(a, b){return b-a});	//descending
+			for (var i=0;i<yearsArray.length;i++){
+				year=yearsArray[i]
 				filterYear.append(
 					$('<a/>',{'class':'samoFilterYear','data-year':year})
 					.append(year)
