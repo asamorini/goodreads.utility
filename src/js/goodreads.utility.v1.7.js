@@ -1927,7 +1927,8 @@ aggiungere tooltip con tutti gli anni di questo shelf
 				}
 				//show\hide book
 				if (ok){
-					book.show('slow');
+//					book.show('slow');
+					book.show();
 					okNumber++;
 					//counters
 					counters['years'][year]=(counters['years'][year] || 0)+1;
@@ -1935,7 +1936,8 @@ aggiungere tooltip con tutti gli anni di questo shelf
 						counters['shelves'][shelves[k]]=(counters['shelves'][shelves[k]] || 0)+1;
 					}
 				}else{
-					book.hide('slow');
+//					book.hide('slow');
+					book.hide();
 				}
 			}
 			//display total number of books filtered
@@ -1951,9 +1953,11 @@ aggiungere tooltip con tutti gli anni di questo shelf
 				el.find('span').html(foundNumber);
 				//show\hide shelf
 				if (foundNumber || el.hasClass('selected')){
-					el.show('slow');
+//					el.show('slow');
+					el.show();
 				}else{
-					el.hide('slow');
+//					el.hide('slow');
+					el.hide();
 				}
 			}
 			for (var i=0;i<_BSD.yearA.length;i++){
