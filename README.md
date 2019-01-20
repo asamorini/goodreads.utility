@@ -59,6 +59,10 @@ Bookmarklet that add some utilities to Goodreads site https://www.goodreads.com/
    [show demo video](https://drive.google.com/file/d/1QXjWG69WGndvnPH4LqqMq3m2oMngdwtb/view?usp=drivesdk)
    * when you are on a BOOK page, you can find list of specific language editions
          ![Search for Italian editions](docs/images/menu.bookPage.01.searchItalianEditions.png)
+* **My Books page: bookshelves viewer**
+   [show demo video](xxx)
+   * when you are on MY BOOKS page, you can navigate and filter Read shelf by year and with multiple shelves selected
+      after first data calculation, all fillter you apply are on your browser (so it's fast)
 ***
 
 
@@ -86,26 +90,27 @@ Bookmarklet that add some utilities to Goodreads site https://www.goodreads.com/
 * help link on menu
 * reviews
    * filter to show only italian ones
-* bookshelves
-   * filters that refresh counters
-      * date filter (year, year\month, from\to)
-      * based on read (default)\all
-   * results book list
-      * complete (all within filters and shelf checked)
-      * sequence number before any book
-   * shelf list
-      * remove links
-      * show as checkbox (background red if choosen)
-   * possibility to aggregate shelf tree view, ex for my library
-      * g-Genre 999
-         * Art 150
-         * Assay 159
-         * Biography 263
-         * ...
-      * w-World 999
-         * Africa 67
-            * Algeria 23
+* bookshelves viewer
+   * filters
+      * add "search book" text field to filter on title\author
+      * add "reset filters (show all)" button
+   * books column
+      * click to sort
+   * bookshelves list
+      * add input configuration field in order to exclude from list bookshelves that starts\ends\contains some characters, ex for my library all shelves that starts with "p_" 
+      * tooltip on every shelf with the number books read on every year
+      * tree representation\aggregation, ex for my library
+         * g-Genre 999
+            * Art 150
+            * Assay 159
+            * Biography 263
             * ...
+         * w-World 999
+            * Africa 67
+               * Algeria 23
+               * ...
+   * books list
+      * add sequence number before any book
 * citations (inside "SAMO Goodreads utility" menù)
    * from public site's citations
       * in language (defined in "SAMO Goodreads utility" installation language)
@@ -127,6 +132,7 @@ Bookmarklet that add some utilities to Goodreads site https://www.goodreads.com/
 | | | Replace books on list to specific language (added red icon over images of replaced books)
 | 2019.01.13  | 1.5 | Replace books on list to specific language (on page *Book*)
 | 2019.01.20  | 1.6 | Replace books on list to specific language (added total searched info on counter; added checkbox "Hide books not found")
+| 2019.01.20  | 1.7 | Bookshelves viewer
 ***
 
 
