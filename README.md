@@ -92,9 +92,11 @@ Bookmarklet that add some utilities to Goodreads site https://www.goodreads.com/
 * reviews
    * filter to show only italian ones
 * bookshelves viewer
+   * load more ajax pages simultaneously
    * filters
       * add "search book" text field to filter on title\author
       * add "reset filters (show all)" button
+      * years filter: hide year when has 0 books
    * books column
       * click to sort
    * bookshelves list
