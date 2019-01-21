@@ -96,7 +96,7 @@ Bookmarklet that add some utilities to Goodreads site https://www.goodreads.com/
    * filters
       * add "search book" text field to filter on title\author
       * add "reset filters (show all)" button
-      * years filter: hide year when has 0 books
+      * years filter: opacity year if 0 books
    * books column
       * click to sort
    * bookshelves list
