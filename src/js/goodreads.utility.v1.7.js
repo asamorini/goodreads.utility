@@ -21,6 +21,9 @@ var samoGoodreadsUtility=samoGoodreadsUtility || {'lang':'ita'};
 	var _logPrefix='GOODREADS UTILITY ',
 		_VERSION='1.7',
 
+		_bDebug=false,
+		_bDebugConsole=null,
+
 		_pageType='unknown',
 		_PAGE_TYPE_BOOK='BOOK',
 		_PAGE_TYPE_GOODREADS_CHOICE_AWARDS='GOODREADS CHOICE AWARDS',
@@ -1642,17 +1645,26 @@ bisogna aggiungere "if" che sia visibile in questo momento
 								'shelves':[],
 								'dateRead':''
 							},
-							dateRead=el.find('td.date_read .date_read_value').html(),	//ex: "Sep 13, 2003"
+							dateRead=el.find('td.date_read .date_read_value').html(),	//ex: "Sep 13, 2018"
+							dateReadSplit,
 							year=0;
 
 						//counter
 						_BSD.searchingEl.html(++_BSD.searchingCounter+' calculated books');
 						//get date read
-						try {
-							book['dateRead']=new Date(Date.parse(dateRead));
-							year=book['dateRead'].getFullYear();
-						}catch(error){
-							console.error(error);
+						if (dateRead){
+							dateReadSplit=dateRead.split(' ');
+							if (dateReadSplit.length<3){
+								//fix for date "first of the month"; ex: "Sep 2018"
+								dateRead=dateReadSplit[0]+' 1, '+dateReadSplit[1];
+							}
+							try {
+								book['dateRead']=new Date(Date.parse(dateRead));
+								year=book['dateRead'].getFullYear();
+							}catch(error){
+								console.error(error,dateRead,book['dateRead']);
+								_debugLog('_bookshelvesViewer dateRead not found',dateRead,book['dateRead'],el,year);
+							}
 						}
 						_BSD.years[year]=(_BSD.years[year] || 0)+1;
 						//get shelves for this book
@@ -1992,6 +2004,31 @@ aggiungere tooltip con tutti gli anni di questo shelf
 
 
 		/**************************************************************************************************************
+		******   LOG   ************************************************************************************************
+		**************************************************************************************************************/
+		//OUTPUT TO DOM (of all input parameters)
+		_debugLog=function(){
+			/*Input parameters:
+				xxx	= any parameters would be putted on DOM new console (at the top)
+			*/
+			if (!_bDebug){return;}
+			var container=$('<div/>',{'style':'border-bottom:3px solid #fff;font-size:10px'});
+			//create console on DOM
+			if (_bDebugConsole===null){
+				_bDebugConsole=$('<div/>',{'style':'background:#a0e6a0;margin-top:100px'}).prependTo($('body')).append($('<div/>').html('CONSOLE LOG DEBUG'))
+			}
+			//output console
+			for (var i=0;i<arguments.length;i++){
+				container.append(
+					$('<div/>')
+					.append(arguments[i])
+				);
+			}
+			_bDebugConsole.append(container);
+		},
+
+
+		/**************************************************************************************************************
 		******   BUTTONS MENU   ***************************************************************************************
 		**************************************************************************************************************/
 		_menuOptionsButton=function(buttonType){
@@ -2128,6 +2165,9 @@ verifica di richiamo una volta sola, a meno che non vada in errore (es: per conn
 				version,
 				options=$('<div/>',{'class':'samoOptions gr-notifications gr-box gr-box gr-box--forceScrollBar'}).css('max-height','600px'),
 				body=$('body');
+
+			//check for debug on browser: add on url ?samodebug=true
+			if (window.location.search.indexOf('samodebug=true')>-1){_bDebug=true;}
 
 			$('#samoMenu').remove();	//remove previously menù added (facility when develops)
 			_headerButtons=$('ul.personalNav').eq(0);
