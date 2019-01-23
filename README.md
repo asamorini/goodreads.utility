@@ -1,4 +1,4 @@
-# :books: "SAMO" Goodreads Utility (version 1.7)
+# :books: "SAMO" Goodreads Utility (version 1.8)
 Bookmarklet that add some utilities to Goodreads site https://www.goodreads.com/
 
 ## Table of contents
@@ -92,16 +92,12 @@ Bookmarklet that add some utilities to Goodreads site https://www.goodreads.com/
 * reviews
    * filter to show only italian ones
 * bookshelves viewer
-   * load more ajax pages simultaneously
    * filters
       * add "search book" text field to filter on title\author
       * add "reset filters (show all)" button
-      * years filter: opacity year if 0 books
    * books column
       * click to sort
    * bookshelves list
-      * add input configuration field in order to exclude from list bookshelves that starts\ends\contains some characters, ex for my library all shelves that starts with "p_" 
-      * tooltip on every shelf with the number books read on every year
       * tree representation\aggregation, ex for my library
          * g-Genre 999
             * Art 150
@@ -112,8 +108,6 @@ Bookmarklet that add some utilities to Goodreads site https://www.goodreads.com/
             * Africa 67
                * Algeria 23
                * ...
-   * books list
-      * add sequence number before any book
 * citations (inside "SAMO Goodreads utility" menù)
    * from public site's citations
       * in language (defined in "SAMO Goodreads utility" installation language)
@@ -136,6 +130,7 @@ Bookmarklet that add some utilities to Goodreads site https://www.goodreads.com/
 | 2019.01.13  | 1.5 | Replace books on list to specific language (on page *Book*)
 | 2019.01.20  | 1.6 | Replace books on list to specific language (added total searched info on counter; added checkbox "Hide books not found")
 | 2019.01.20  | 1.7 | Bookshelves viewer
+| 2019.01.23  | 1.8 | Bookshelves viewer (increased speed, added sequence number on books list, added tooltip on mouseover of shelves that show number of read books per years, added possibility to exclude shelves)
 ***
 
 
