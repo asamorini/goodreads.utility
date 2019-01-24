@@ -43,7 +43,7 @@ Bookmarklet that add some utilities to Goodreads site https://www.goodreads.com/
       * author's books list
    * Books by author page - [show demo video](https://drive.google.com/file/d/1awKCIWlevGUQMN_Gvn-X5pJI_fwSYVCc/view?usp=drivesdk)
       * author's books list
-   * Listopia pages (Listopia and Listopia voted by user...) - [show demo video](https://drive.google.com/file/d/1pMsskXttQ85H1bP53cpw5JHEfZ50ghrC/view?usp=drivesdk)
+   * Listopia pages (Listopia and Listopia voted by user...) - [show demo video](https://drive.google.com/file/d/1VCfcHIvp7rC0j2gx5gE_QRhcOSFZaI1d/view?usp=drivesdk)
       * books of this list
    * Recommendations pages (Recommendations,Recommendations by shelf,Recommendations by genre) - [show demo video](https://drive.google.com/file/d/1o9SWyE2mf3qv2fSwmoRRJeLyFIVsOAHN/view?usp=drivesdk)
       * recommended books
