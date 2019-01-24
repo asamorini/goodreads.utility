@@ -60,7 +60,7 @@ Bookmarklet that add some utilities to Goodreads site https://www.goodreads.com/
    * when you are on a BOOK page, you can find list of specific language editions
          ![Search for Italian editions](docs/images/menu.bookPage.01.searchItalianEditions.png)
 * **My Books page: bookshelves viewer**
-   [show demo video](https://drive.google.com/file/d/1DjfQZEX0AVackLvIPkhvjotNfjjEHVue/view?usp=drivesdk)
+   [show demo video](https://drive.google.com/file/d/1dpTKW88mLjNwmctENchrNyX3WYVPgWa8/view?usp=drivesdk)
    * when you are on MY BOOKS page, you can navigate and filter Read shelf by year and with multiple shelves selected
       after first data calculation, all fillter you apply are on your browser
 ***
