@@ -93,8 +93,7 @@ Bookmarklet that add some utilities to Goodreads site https://www.goodreads.com/
    * filters
       * add "search book" text field to filter on title\author
       * add "reset filters (show all)" button
-   * books column
-      * click to sort
+      * add "AND/OR" switch (now currently search is by AND operator between shelves)
    * bookshelves list
       * tree representation\aggregation, ex for my library
          * g-Genre 999
@@ -107,6 +106,7 @@ Bookmarklet that add some utilities to Goodreads site https://www.goodreads.com/
                * Algeria 23
                * ...
    * books list
+      * books column: click to sort
       * add tooltipTrigger on hover book thumbnail like in original list
 * citations (inside "SAMO Goodreads utility" menù)
    * from public site's citations
