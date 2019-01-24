@@ -1,4 +1,4 @@
-# :books: "SAMO" Goodreads Utility (version 1.8)
+# :books: "SAMO" Goodreads Utility (version 1.9)
 Bookmarklet that add some utilities to Goodreads site https://www.goodreads.com/
 
 ## Table of contents
@@ -67,12 +67,10 @@ Bookmarklet that add some utilities to Goodreads site https://www.goodreads.com/
 
 
 # <a name="utilitiesnext">:soon: Next features</a>
-* book page-search italian editions
+* book page-search language editions
    * sort
       * default by year\publisher
       * possibility to change by year
-   * filter
-      * by type (paperback\ebook\audiobook\...)
    * language
       * possibility to include editions without language defined (checkbox, default included, they must be evidenced in some way)
 * Books list: replace books to the corresponding edition of specific language
@@ -133,6 +131,7 @@ Bookmarklet that add some utilities to Goodreads site https://www.goodreads.com/
 | 2019.01.20  | 1.6 | Replace books on list to specific language (added total searched info on counter; added checkbox "Hide books not found")
 | 2019.01.20  | 1.7 | Bookshelves viewer
 | 2019.01.23  | 1.8 | Bookshelves viewer (increased speed, added sequence number on books list, added tooltip on mouseover of shelves that show number of read books per years, added possibility to exclude shelves)
+| 2019.01.20  | 1.9 | Search for book editions on specific language (possibility to filter book format, ex: paperback\ebook\audiobook\...)
 ***
 
 
