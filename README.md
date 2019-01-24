@@ -108,6 +108,8 @@ Bookmarklet that add some utilities to Goodreads site https://www.goodreads.com/
             * Africa 67
                * Algeria 23
                * ...
+   * books list
+      * add tooltipTrigger on hover book thumbnail like in original list
 * citations (inside "SAMO Goodreads utility" menù)
    * from public site's citations
       * in language (defined in "SAMO Goodreads utility" installation language)
