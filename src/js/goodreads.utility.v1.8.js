@@ -1592,9 +1592,37 @@ evidenziare eventuale libro che è la pagina attualmente aperta
 			if (_BSD.searching){return;}
 			_BSD.searching=true;
 			_BSD.searchingCounter=0;
+			_BSD.pagesTot=0;
 			_BSD.readShelfUrl=$('div.siteHeader > div').data('reactProps').myBooksUrl;	//ex: "/review/list/35318441"
-			//start searching first 100 books
-			return _bookshelvesViewer_search(1);
+
+			//identify list of pages to get, and launch searches simultaneously
+			jQuery('#paginatedShelfList .userShelf > a:not(.multiLink)').each(function(index,el){
+				var shelf=jQuery(el).html(),	//ex: "Read  ‎(1003)"
+					shelfEl=shelf.split(' '),
+					booksNumber;
+				if (shelfEl[0].trim()==='Read'){
+					shelfEl=shelf.split('(')[1].replace(')','');	//ex: "1003"
+					booksNumber=+shelfEl;	//ex: 1003
+
+					_BSD.searchingEl=$('<div/>',{'style':'color:red'}).appendTo(_headerBookshelves_Counters);
+
+					//total number of pages
+					_BSD.pagesTot=Math.floor(booksNumber / 100) + (booksNumber % 100===0 ? 0 : 1);	//ex: 11
+					for (var i=1;i<=_BSD.pagesTot;i++){	//from page 1 to end
+						_BSD.searchesPageToLaunch.push(i);
+						_BSD.booksPerPage[i]=[];	//initialize books array for this page
+					}
+					//start searching next books pages
+					for (var i=0,uI=_BSD.searchesPageToLaunch.length;i<uI;i++){
+						_bookshelvesViewer_search(_BSD.searchesPageToLaunch.shift());
+						if (i===10){break;}	//maximum 10 pages simultaneously
+					}
+					return false;
+				}
+			});
+			if (!_BSD.pagesTot){
+				_headerBookshelves_Counters.append($('<div/>',{'style':'color:red'}).html('Unable to retrieve list o Read pages'));
+			}
 		},
 
 		//BOOKSHELVES VIEWER: search
@@ -1619,25 +1647,8 @@ evidenziare eventuale libro che è la pagina attualmente aperta
 						pagination=myBooksPage.find('#reviewPagination').last(),
 						lastPage;
 
-					if (page===1){
-						_BSD.searchingEl=$('<div/>',{'style':'color:red'}).appendTo(_headerBookshelves_Counters);
-
-						//IDENTIFY LIST OF PAGES TO GET, AND LAUNCH SEARCHES SIMULTANEOUSLY
-						lastPage=!pagination.find('a.next_page').length;
-						if (!lastPage){
-							_BSD.pagesTot=+pagination.find(' a:not(.next_page)').last().html();	//ex: "11"
-							for (var i=2;i<=_BSD.pagesTot;i++){	//from page 2 to end
-								_BSD.searchesPageToLaunch.push(i);
-								_BSD.booksPerPage[i]=[];	//initialize books array for this page
-							}
-							//start searching next books pages
-							for (var i=0;i<_BSD.searchesPageToLaunch.length;i++){
-								_bookshelvesViewer_search(_BSD.searchesPageToLaunch.shift());
-								if (i===10){break;}	//maximum 10 pages simultaneously
-							}
-						}
-
-						//GET COLUMN CONFIGURATIONS
+					//GET COLUMN CONFIGURATIONS
+					if (_BSD.columnsHeader===null){	//only first time
 						_BSD.columnsHeader=booksList.find('#booksHeader').clone();
 						_BSD.columnsHeader.find('th').each(function(){
 							var column=$(this),
@@ -1667,7 +1678,6 @@ bisogna aggiungere "if" che sia visibile in questo momento
 						});
 					}
 					//analize data
-					_BSD.booksPerPage[page]=[];
 					booksList.find('#booksBody tr').each(function(){
 						var el=$(this),
 							book={
@@ -1808,7 +1818,7 @@ bisogna aggiungere "if" che sia visibile in questo momento
 						'margin-left: 2px;',
 						'margin-right: 5px;',
 					'}',
-					'#booksBody > tr td.field actions .samoCounter{',
+					'#booksBody > tr td.field.actions .samoCounter{',
 						'position: absolute;',
 						'top: 50%;',
 						'right: -2px;',
