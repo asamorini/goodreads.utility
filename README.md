@@ -52,7 +52,7 @@ Bookmarklet that add some utilities to Goodreads site https://www.goodreads.com/
    * Choice Awards Category - [show demo video](https://drive.google.com/file/d/1Z2bT0ZgcAugVooPMMlVIOF1ALtvH8n10/view?usp=drivesdk)
       * "Winner" book
       * "All nominees" books list
-   * Book page - [show demo video](https://drive.google.com/file/d/10fjyjcrnqFyqlXGzRihcd1lrtWE1SfxG/view?usp=drivesdk)
+   * Book page - [show demo video](https://drive.google.com/file/d/195L3h-2IUKZvvmSYr9Rgv0NvJjuIEzmf/view?usp=drivesdk)
       * "Books by *author*" books list
       * "Readers also enjoyed" books list
 * **Book page: search for editions of specific language**
