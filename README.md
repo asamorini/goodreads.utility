@@ -56,7 +56,7 @@ Bookmarklet that add some utilities to Goodreads site https://www.goodreads.com/
       * "Books by *author*" books list
       * "Readers also enjoyed" books list
 * **Book page: search for editions of specific language**
-   [show demo video](https://drive.google.com/file/d/1QXjWG69WGndvnPH4LqqMq3m2oMngdwtb/view?usp=drivesdk)
+   [show demo video](https://drive.google.com/file/d/1eUy29y-AGs1crugvBVDqOJhs5oI4orGh/view?usp=drivesdk)
    * when you are on a BOOK page, you can find list of specific language editions
          ![Search for Italian editions](docs/images/menu.bookPage.01.searchItalianEditions.png)
 * **My Books page: bookshelves viewer**
