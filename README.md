@@ -49,7 +49,7 @@ Bookmarklet that add some utilities to Goodreads site https://www.goodreads.com/
       * recommended books
    * Choice Awards - [show demo video](https://drive.google.com/file/d/1FdMLCz2oJ4K5uusp64T8FzkSJLXKMhxV/view?usp=drivesdk)
       * "Nominees on your shelves" books list
-   * Choice Awards Category - [show demo video](https://drive.google.com/file/d/1Z2bT0ZgcAugVooPMMlVIOF1ALtvH8n10/view?usp=drivesdk)
+   * Choice Awards Category - [show demo video](https://drive.google.com/file/d/1T36XdVEy3KcAbVQ8HVTDD7_IORhzdqT-/view?usp=drivesdk)
       * "Winner" book
       * "All nominees" books list
    * Book page - [show demo video](https://drive.google.com/file/d/195L3h-2IUKZvvmSYr9Rgv0NvJjuIEzmf/view?usp=drivesdk)
