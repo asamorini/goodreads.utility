@@ -41,7 +41,7 @@ Bookmarklet that add some utilities to Goodreads site https://www.goodreads.com/
 * **Books list: replace books to the corresponding edition of specific language**
    * Author page - [show demo video](https://drive.google.com/file/d/12YgEMhwExuduRZhCcqoEVqN8jyD9FBvx/view?usp=drivesdk)
       * author's books list
-   * Books by author page - [show demo video](https://drive.google.com/file/d/1WFOd9GlGz5jVLK05nOdmKtNLVnxoNpzj/view?usp=drivesdk)
+   * Books by author page - [show demo video](https://drive.google.com/file/d/1awKCIWlevGUQMN_Gvn-X5pJI_fwSYVCc/view?usp=drivesdk)
       * author's books list
    * Listopia pages (Listopia and Listopia voted by user...) - [show demo video](https://drive.google.com/file/d/1pMsskXttQ85H1bP53cpw5JHEfZ50ghrC/view?usp=drivesdk)
       * books of this list
