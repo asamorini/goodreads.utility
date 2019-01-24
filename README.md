@@ -39,7 +39,7 @@ Bookmarklet that add some utilities to Goodreads site https://www.goodreads.com/
 
 # <a name="utilities">:heavy_check_mark: Utilities List</a>
 * **Books list: replace books to the corresponding edition of specific language**
-   * Author page - [show demo video](https://drive.google.com/file/d/12YgEMhwExuduRZhCcqoEVqN8jyD9FBvx/view?usp=drivesdk)
+   * Author page - [show demo video](https://drive.google.com/file/d/1OE1VPf0f9bv7j20IkdMKcF5ikPiqgA6_/view?usp=drivesdk)
       * author's books list
    * Books by author page - [show demo video](https://drive.google.com/file/d/1awKCIWlevGUQMN_Gvn-X5pJI_fwSYVCc/view?usp=drivesdk)
       * author's books list
