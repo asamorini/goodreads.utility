@@ -18,9 +18,16 @@ Save a Bookmarklet "Goodreads Samo Utility" with this javascript code
 var samoGoodreadsUtility=samoGoodreadsUtility || {'lang':'ita'};	/*possible values:
 																			'lang':			'ita',		-> language
 																			'excludeShelves':{			-> excludes shelves from "Shelves viewer"
-																				'starts':	'p_',	
-																				'contains':	'',	
-																				'ends':		''	
+																				'read':{						-> from "Read" shelf analyzed
+																					's':	'p_',						-> starts
+																					'c':	'',							-> contains
+																					'e':	''							-> ends
+																				},
+																				'to-read':{						-> from "Want to Read" shelf analyzed
+																					's':	'',							-> starts
+																					'c':	'',							-> contains
+																					'e':	''							-> ends
+																				}
 																			}
 																	*/
 (function($){
@@ -41,6 +48,8 @@ var samoGoodreadsUtility=samoGoodreadsUtility || {'lang':'ita'};	/*possible valu
 		_PAGE_TYPE_LIST_USERVOTES='LISTOPIA USER VOTES',
 		_PAGE_TYPE_RECOMMENDATIONS='RECOMMENDATIONS',
 		_PAGE_TYPE_MYBOOKS='MY BOOKS',
+		_PAGE_TYPE_FAVORITES_GENRES='FAVORITES GENRES',
+		_PAGE_TYPE_FAVORITES_GENRES_SPECIFIC='FAVORITES GENRE SPECIFIC',
 
 		_menuSamoButton,
 
@@ -1214,6 +1223,56 @@ non è possibile sostituire immagine del vincitore, in quanto non è presente il
 				});
 				break;
 
+			case _PAGE_TYPE_FAVORITES_GENRES:
+				//best books of the month, genre "History\Music\..."
+				bookList.push({
+					'books':'div.mainContent  div.leftContainer div.bigBoxContent > .art_book,div.mainContent  div.leftContainer div.bigBoxContent .bookBox',
+					'url':	'div.coverWrapper a',
+					'replace':{
+						'links':'div.coverWrapper a',
+						'title':'a.bookTitle',
+						'img':	'div.coverWrapper a img.bookImage'
+					},
+					'actions':{
+						//activate tooltip in order to access data to be replaced
+						'before':function(book,bookListData){
+							_tooltipBook_Activate(book.find('>div.coverWrapper').prop('id'));
+						},
+						//replace data also on tooltip
+						'replace':function(book,bookListData,bookLanguageData){
+							_tooltipBook_ReplaceData(book.find('>div.coverWrapper').prop('id'),bookLanguageData);
+						}
+					}
+				});
+				break;
+
+			case _PAGE_TYPE_FAVORITES_GENRES_SPECIFIC:
+				//new releases tagged "...", most read this week, popular "..." books, new releases by authors you've read
+				bookList.push({
+					'books':'div.mainContent  div.leftContainer div.coverBigBox div.bigBoxContent .bookBox',
+					'url':	'div.coverWrapper a',
+					'replace':{
+						'links':'div.coverWrapper a',
+						'title':'a.bookTitle',
+						'img':	'div.coverWrapper a img.bookImage'
+					},
+					'actions':{
+						//activate tooltip in order to access data to be replaced
+						'before':function(book,bookListData){
+							_tooltipBook_Activate(book.find('>div.coverWrapper').prop('id'));
+						},
+						//replace data also on tooltip
+						'replace':function(book,bookListData,bookLanguageData){
+							_tooltipBook_ReplaceData(book.find('>div.coverWrapper').prop('id'),bookLanguageData);
+						}
+					}
+				});
+				//lists
+/*TODO
+*/
+				break;
+
+
 /*TODO
 
 			case xxxxxxx:
@@ -1590,7 +1649,20 @@ debugger;
 		/**************************************************************************************************************
 		******   BOOKSHELVES VIEWER   *********************************************************************************
 		**************************************************************************************************************/
+		_BSD_shelfAnalyze=null,
 		_BSD={	//Book Shelves Data; ex: {"searching":true,"searchingCounter":100,"searchingEl":{"0":{},"length":1,"prevObject":{"0":{},"length":1}},"readShelfUrl":"","books":[{"el":{"0":{},"context":{},"length":1},"shelves":["read","f_audiobook","g_novel-fantasy","p_rai-radio-3_ad-alta-voce","w_europa_russia","y_1800-1900"],"dateRead":"2019-01-18T23:00:00.000Z"},{"el":{"0":{},"context":{},"length":1},"shelves":["read","g_assay","h_historic","h_true_story","my_favorites","o_biblioteca","p_e-o","w_europa_austria","w_europa_germania","w_europa_uk","y_1920-1939","y_1945-1970"],"dateRead":"2019-01-18T23:00:00.000Z"},{"el":{"0":{},"context":{},"length":1},"shelves":["read","g_biography","h_historic","h_true_story","h_world_war_ii","my_favorites","o_biblioteca","p_bollati_boringhieri","w_europa_austria","w_europa_belgio","w_europa_francia","w_europa_germania","w_europa_polonia","y_1920-1939","y_1939-1945","y_1945-1970"],"dateRead":"2019-01-18T23:00:00.000Z"},{"el":{"0":{},"context":{},"length":1},"shelves":["read","f_ebook","g_biography","h_historic","h_true_story","h_world_war_ii","my_favorites","o_biblioteca_mlol","p_mondadori","w_europa_germania","w_europa_ucraina","y_1900-1920","y_1920-1939","y_1939-1945","y_1945-1970","y_1970-2000"],"dateRead":"2019-01-15T23:00:00.000Z"},{"el":{"0":{},"context":{},"length":1},"shelves":["read","f_audiobook","g_novel-fantasy","p_rai-radio-3_ad-alta-voce","w_asia_sud_bangladesh","w_asia_sud_india","w_europa_uk","y_1939-1945","y_1945-1970","y_1970-2000"],"dateRead":"2019-01-15T23:00:00.000Z"},{"el":{"0":{},"context":{},"length":1},"shelves":["read","g_biography","h_true_story","o_biblioteca","p_ponte-alle-grazie","w_africa_algeria","w_africa_marocco","w_europa_francia","w_europa_svezia","y_1400-1500","y_1800-1900","y_1900-1920","y_1920-1939","y_1970-2000"],"dateRead":"2019-01-11T23:00:00.000Z"},{"el":{"0":{},"context":{},"length":1},"shelves":["read","g_comics","g_novel-fantasy","o_biblioteca","p_logos"],"dateRead":"2019-01-09T23:00:00.000Z"},{"el":{"0":{},"context":{},"length":1},"shelves":["read","g_novel-fantasy","my_favorites","o_biblioteca","p_einaudi","w_europa_francia","w_europa_spagna","y_1200-1300","y_1400-1500","y_1600-1700","y_1700-1800","y_1945-1970"],"dateRead":"2019-01-06T23:00:00.000Z"},{"el":{"0":{},"context":{},"length":1},"shelves":["read","g_assay","h_historic","h_true_story","o_biblioteca_mlol","p_marsilio","w_africa_egitto","w_america_nord_usa_virginia","w_america_sud_perù","w_asia_ovest_israele","w_asia_ovest_turchia","w_asia_sud-est_indonesia","w_europa_austria","w_europa_cecoslovacchia","w_europa_francia","w_europa_germania","w_europa_italia","w_europa_lussemburgo","w_europa_olanda","w_europa_polonia","w_europa_portogallo","w_europa_russia","w_europa_spagna","w_europa_svezia","w_europa_svizzera","w_europa_ucraina","w_europa_uk","w_europa_ungheria","y_1500-1600","y_1600-1700","y_1700-1800"],"dateRead":"2019-01-04T23:00:00.000Z"},{"el":{"0":{},"context":{},"length":1},"shelves":["read","f_audiobook","g_novel-fantasy","h_world_war_ii","my_favorites","p_rai-radio-3_ad-alta-voce","w_america_nord_usa_new_york","w_europa_polonia","y_1939-1945","y_1945-1970"],"dateRead":"2019-01-02T23:00:00.000Z"},{"el":{"0":{},"context":{},"length":1},"shelves":["read","g_biography","g_comics","h_historic","h_true_story","o_biblioteca","p_hop_edizioni","w_america_nord_usa_california","w_europa_francia","w_europa_germania","w_europa_italia","w_europa_spagna","w_europa_svizzera","w_europa_uk","y_1800-1900","y_1900-1920","y_1920-1939","y_1939-1945","y_1945-1970","y_1970-2000"],"dateRead":"2019-01-02T23:00:00.000Z"},{"el":{"0":{},"context":{},"length":1},"shelves":["read","g_assay","g_informatics","p_egea"],"dateRead":"2018-12-31T23:00:00.000Z"},{"el":{"0":{},"context":{},"length":1},"shelves":["read","g_biography","h_historic","h_true_story","o_biblioteca","p_mondadori","w_europa_austria","w_europa_belgio","w_europa_cecoslovacchia","w_europa_danimarca","w_europa_francia","w_europa_germania","w_europa_italia","w_europa_olanda","w_europa_polonia","w_europa_portogallo","w_europa_spagna","w_europa_svezia","y_1600-1700"],"dateRead":"2018-12-31T23:00:00.000Z"},{"el":{"0":{},"context":{},"length":1},"shelves":["read","g_comics","p_panini_comics","y_1970-2000"],"dateRead":"2018-12-29T23:00:00.000Z"},{"el":{"0":{},"context":{},"length":1},"shelves":["read","g_novel-fantasy","h_historic","o_biblioteca","p_iperborea","w_europa_francia","y_1800-1900","y_1900-1920","y_1920-1939"],"dateRead":"2018-12-21T23:00:00.000Z"},{"el":{"0":{},"context":{},"length":1},"shelves":["read","g_assay","h_historic","h_true_story","my_favorites","o_biblioteca","p_ponte-alle-grazie","w_america_nord_usa_alabama","w_america_nord_usa_arizona","w_america_nord_usa_california","w_america_nord_usa_carolina_del_nor","w_america_nord_usa_carolina_del_sud","w_america_nord_usa_colorado","w_america_nord_usa_georgia","w_america_nord_usa_louisiana","w_america_nord_usa_mississippi","w_america_nord_usa_ohio","w_america_nord_usa_pennsylvania","w_america_nord_usa_tennessee","w_asia_est_cina","w_asia_ovest_armenia","w_europa_francia","w_europa_germania","w_europa_irlanda","w_europa_russia","w_europa_uk","y_1400-1500","y_1700-1800","y_1800-1900","y_1900-1920","y_1920-1939"],"dateRead":"2018-12-12T23:00:00.000Z"},{"el":{"0":{},"context":{},"length":1},"shelves":["read","f_audiobook","g_novel-fantasy","p_collina-d-oro","w_europa_svezia","y_1800-1900"],"dateRead":"2018-12-10T23:00:00.000Z"},{"el":{"0":{},"context":{},"length":1},"shelves":["read","g_novel-fantasy","my_favorites","o_biblioteca","p_iperborea","w_europa_svezia","y_2020-2040"],"dateRead":"2018-12-03T23:00:00.000Z"},{"el":{"0":{},"context":{},"length":1},"shelves":["read","g_novel-fantasy","o_biblioteca","p_iperborea","w_europa_danimarca","w_europa_francia","w_europa_germania","w_europa_svezia","y_1800-1900","y_1920-1939","y_1939-1945","y_1945-1970"],"dateRead":"2018-12-01T23:00:00.000Z"},{"el":{"0":{},"context":{},"length":1},"shelves":["read","g_biography","h_true_story","o_biblioteca","p_iperborea","w_europa_svezia","y_1920-1939","y_1939-1945","y_1945-1970"],"dateRead":"2018-11-28T23:00:00.000Z"},{"el":{"0":{},"context":{},"length":1},"shelves":["read","f_audiobook","g_biography","g_novel-fantasy","h_true_story","h_world_war_ii","p_rai-radio-3_ad-alta-voce","w_europa_belgio","w_europa_francia","w_europa_italia","y_1920-1939","y_1939-1945","y_1945-1970"],"dateRead":"2018-11-26T23:00:00.000Z"},{"el":{"0":{},"context":{},"length":1},"shelves":["read","g_poetry","my_favorites","o_biblioteca","p_rizzoli","w_europa_svezia","y_1945-1970","y_1970-2000"],"dateRead":"2018-11-26T23:00:00.000Z"},{"el":{"0":{},"context":{},"length":1},"shelves":["read","f_ebook","g_art","g_biography","g_novel-fantasy","h_true_story","o_biblioteca_mlol","p_mondadori_electa","w_europa_belgio","w_europa_francia","y_1800-1900","y_2000-2020"],"dateRead":"2018-11-24T23:00:00.000Z"},{"el":{"0":{},"context":{},"length":1},"shelves":["read","g_assay","h_historic","p_quodlibet","w_america_nord_usa_massachussets","w_america_nord_usa_new_york","w_america_nord_usa_virginia","w_america_nord_usa_washington","w_europa_danimarca","w_europa_estonia","w_europa_francia","w_europa_germania","w_europa_italia","w_europa_polonia","w_europa_russia","w_europa_spagna","w_europa_uk","w_europa_ungheria","y_1700-1800","y_1800-1900","y_1900-1920","y_2000-2020"],"dateRead":"2018-11-24T23:00:00.000Z"},{"el":{"0":{},"context":{},"length":1},"shelves":["read","g_poetry","o_biblioteca","p_crocetti","w_europa_svezia","y_1945-1970","y_1970-2000"],"dateRead":"2018-11-23T23:00:00.000Z"},{"el":{"0":{},"context":{},"length":1},"shelves":["read","g_art","g_biography","g_comics","g_novel-fantasy","my_favorites","p_mondadori","w_africa_algeria","w_europa_francia","w_europa_uk","y_1800-1900","y_1900-1920"],"dateRead":"2018-11-23T23:00:00.000Z"},{"el":{"0":{},"context":{},"length":1},"shelves":["read","g_biography","g_comics","h_historic","h_true_story","o_biblioteca","p_rizzoli","w_asia_sud_iran","w_europa_francia","y_1970-2000"],"dateRead":"2018-11-22T23:00:00.000Z"},{"el":{"0":{},"context":{},"length":1},"shelves":["read","g_biography","g_comics","h_historic","h_true_story","o_biblioteca","p_rizzoli","w_europa_austria","y_1970-2000"],"dateRead":"2018-11-21T23:00:00.000Z"},{"el":{"0":{},"context":{},"length":1},"shelves":["read","g_biography","g_comics","h_historic","h_true_story","p_rizzoli","w_asia_sud_iran","y_1970-2000"],"dateRead":"2018-11-20T23:00:00.000Z"},{"el":{"0":{},"context":{},"length":1},"shelves":["read","g_biography","g_comics","h_historic","h_true_story","o_biblioteca","p_rizzoli","w_asia_ovest_turchia","w_asia_sud_iran","w_europa_italia","w_europa_spagna","y_1970-2000"],"dateRead":"2018-11-20T23:00:00.000Z"},{"el":{"0":{},"context":{},"length":1},"shelves":["read","g_assay","h_historic","o_biblioteca","p_laterza","w_america_nord_usa_new_york","w_europa_belgio","w_europa_francia","w_europa_italia","y_-3500-0bc","y_0100-0500","y_0500-1000","y_1000-1100","y_1100-1200","y_1200-1300","y_1300-1400","y_1400-1500","y_1500-1600","y_1600-1700","y_1700-1800","y_1800-1900","y_1900-1920","y_1920-1939","y_1945-1970","y_1970-2000","y_2000-2020"],"dateRead":"2018-11-17T23:00:00.000Z"},{"el":{"0":{},"context":{},"length":1},"shelves":["read","g_art","g_biography","h_true_story","my_favorites","p_skira","w_america_nord_usa_california","w_america_nord_usa_new_york","w_europa_francia","w_europa_germania","w_europa_polonia","w_europa_svizzera","y_1800-1900","y_1900-1920","y_1920-1939","y_1939-1945","y_1945-1970","y_1970-2000","y_2000-2020"],"dateRead":"2018-11-17T23:00:00.000Z"},{"el":{"0":{},"context":{},"length":1},"shelves":["read","f_audiobook","g_novel-fantasy","p_feltrinelli","w_america_centrale_messico","y_1920-1939"],"dateRead":"2018-11-16T23:00:00.000Z"},{"el":{"0":{},"context":{},"length":1},"shelves":["read","g_art","g_biography","h_true_story","o_biblioteca","p_astrolabio","w_europa_francia","y_1800-1900","y_1900-1920"],"dateRead":"2018-11-13T23:00:00.000Z"},{"el":{"0":{},"context":{},"length":1},"shelves":["read","f_audiobook","g_biography","g_novel-fantasy","p_bompiani","w_europa_italia","y_1945-1970"],"dateRead":"2018-11-02T23:00:00.000Z"},{"el":{"0":{},"context":{},"length":1},"shelves":["read","g_comics","my_favorites","p_panini_comics","y_1970-2000"],"dateRead":"2018-11-02T23:00:00.000Z"},{"el":{"0":{},"context":{},"length":1},"shelves":["read","g_assay","g_biography","h_historic","h_true_story","o_biblioteca","p_einaudi","w_europa_francia","w_europa_spagna","y_1500-1600"],"dateRead":"2018-11-01T23:00:00.000Z"},{"el":{"0":{},"context":{},"length":1},"shelves":["read","g_art","g_biography","g_photography","h_true_story","o_biblioteca","p_gruppo-editoriale-fabbri","y_1920-1939","y_1939-1945","y_1945-1970","y_1970-2000"],"dateRead":"2018-10-31T23:00:00.000Z"},{"el":{"0":{},"context":{},"length":1},"shelves":["read","g_novel-fantasy","o_biblioteca","p_newton_compton","w_europa_russia","y_1920-1939"],"dateRead":"2018-10-31T23:00:00.000Z"},{"el":{"0":{},"context":{},"length":1},"shelves":["read","f_ebook","g_biography","g_novel-fantasy","h_historic","h_true_story","o_biblioteca_mlol","p_adelphi","w_america_sud_brasile","w_asia_sud_india","w_europa_belgio","w_europa_finlandia","w_europa_francia","w_europa_germania","w_europa_norvegia","w_europa_polonia","w_europa_russia","w_europa_serbia","w_europa_slovacchia","w_europa_spagna","w_europa_svizzera","w_europa_ucraina","w_europa_uk","w_europa_ungheria","w_oceania_australia","y_1939-1945","y_1945-1970"],"dateRead":"2018-10-28T23:00:00.000Z"},{"el":{"0":{},"context":{},"length":1},"shelves":["read","g_art","g_biography","g_photography","h_true_story","h_world_war_ii","o_biblioteca","p_hachette","w_africa_costa-d-avorio","w_america_centrale_cuba","w_america_centrale_messico","w_america_nord_canada","w_america_nord_usa_louisiana","w_america_nord_usa_massachussets","w_america_nord_usa_new_jersey","w_america_nord_usa_new_york","w_asia_est_cina","w_asia_est_giappone","w_asia_sud-est_birmania","w_asia_sud-est_indonesia","w_asia_sud_india","w_europa_francia","w_europa_germania","w_europa_italia","w_europa_russia","w_europa_spagna","y_1900-1920","y_1920-1939","y_1939-1945","y_1945-1970","y_1970-2000","y_2000-2020"],"dateRead":"2018-10-28T23:00:00.000Z"},{"el":{"0":{},"context":{},"length":1},"shelves":["read","g_novel-fantasy","h_historic","h_world_war_ii","my_favorites","o_biblioteca","p_neri_pozza","w_america_nord_usa_florida","w_europa_russia","y_1939-1945","y_1970-2000"],"dateRead":"2018-10-27T22:00:00.000Z"},{"el":{"0":{},"context":{},"length":1},"shelves":["read","g_assay","h_historic","h_true_story","my_favorites","o_biblioteca","p_sellerio","w_africa_algeria","w_africa_egitto","w_africa_libia","w_asia_ovest_arabia_saudita","w_asia_ovest_armenia","w_asia_ovest_iraq","w_asia_ovest_israele","w_asia_ovest_libano","w_asia_ovest_palestina","w_asia_ovest_turchia","w_asia_sud_iran","w_europa_albania","w_europa_austria","w_europa_bosnia_ed_erzegovina","w_europa_bulgaria","w_europa_cipro","w_europa_croazia","w_europa_francia","w_europa_germania","w_europa_grecia","w_europa_italia","w_europa_malta","w_europa_portogallo","w_europa_romania","w_europa_russia","w_europa_serbia","w_europa_spagna","w_europa_uk","w_europa_ungheria","y_1000-1100","y_1100-1200","y_1200-1300","y_1300-1400","y_1400-1500","y_1500-1600","y_1600-1700","y_1700-1800","y_1800-1900","y_1900-1920","y_1920-1939"],"dateRead":"2018-10-26T22:00:00.000Z"},{"el":{"0":{},"context":{},"length":1},"shelves":["read","g_art","g_biography","o_biblioteca","p_mondadori_electa","w_europa_francia","y_1800-1900","y_1900-1920"],"dateRead":"2018-10-23T22:00:00.000Z"},{"el":{"0":{},"context":{},"length":1},"shelves":["read","g_humor","o_biblioteca","p_baldini_castoldi","w_america_nord_usa_california","w_america_nord_usa_ohio","y_1800-1900"],"dateRead":"2018-10-22T22:00:00.000Z"},{"el":{"0":{},"context":{},"length":1},"shelves":["read","f_ebook","g_biography","h_historic","h_true_story","my_favorites","o_biblioteca_mlol","p_mondadori","w_america_nord_usa_new_york","w_asia_ovest_iraq","w_asia_ovest_siria","w_europa_germania","w_europa_svizzera","y_1970-2000","y_2000-2020"],"dateRead":"2018-10-20T22:00:00.000Z"},{"el":{"0":{},"context":{},"length":1},"shelves":["read","f_audiobook","g_novel-fantasy","p_bompiani","w_europa_italia","y_1920-1939"],"dateRead":"2018-10-19T22:00:00.000Z"},{"el":{"0":{},"context":{},"length":1},"shelves":["read","g_biography","g_comics","g_novel-fantasy","h_faenza","h_true_story","o_biblioteca","p_coconino_press","w_africa_marocco","w_europa_italia","y_1970-2000","y_2000-2020"],"dateRead":"2018-10-19T22:00:00.000Z"},{"el":{"0":{},"context":{},"length":1},"shelves":["read","f_ebook","g_novel-fantasy","h_historic","h_true_story","o_biblioteca_mlol","p_mondadori","w_europa_russia","y_1970-2000","y_2000-2020"],"dateRead":"2018-10-18T22:00:00.000Z"},{"el":{"0":{},"context":{},"length":1},"shelves":["read","g_biography","g_comics","g_novel-fantasy","h_true_story","o_biblioteca","p_coconino_press","w_europa_italia","y_1939-1945","y_1970-2000","y_2000-2020"],"dateRead":"2018-10-15T22:00:00.000Z"},{"el":{"0":{},"context":{},"length":1},"shelves":["read","f_audiobook","g_novel-fantasy","g_thriller_mystery-novel","p_adelphi","w_europa_italia","y_1970-2000"],"dateRead":"2018-10-13T22:00:00.000Z"},{"el":{"0":{},"context":{},"length":1},"shelves":["read","g_assay","o_biblioteca","p_giunti"],"dateRead":"2018-10-13T22:00:00.000Z"},{"el":{"0":{},"context":{},"length":1},"shelves":["read","g_comics","g_novel-fantasy","o_biblioteca","p_mondadori","w_europa_italia","y_1945-1970"],"dateRead":"2018-10-12T22:00:00.000Z"},{"el":{"0":{},"context":{},"length":1},"shelves":["read","g_art","g_assay","h_historic","h_true_story","o_biblioteca","p_ponte-alle-grazie","w_africa_egitto","w_america_centrale_messico","w_america_centrale_rep-dominicana","w_america_nord_usa_california","w_asia_est_cina","w_asia_sud_afghanistan","w_asia_sud_india","w_asia_sud_iran","w_europa_francia","w_europa_germania","w_europa_grecia","w_europa_italia","w_europa_olanda","w_europa_polonia","w_europa_spagna","w_europa_svezia","w_europa_svizzera","w_europa_uk","y_-3500-0bc","y_0000-0100","y_0100-0500","y_0500-1000","y_1000-1100","y_1100-1200","y_1200-1300","y_1300-1400","y_1400-1500","y_1500-1600","y_1600-1700","y_1700-1800","y_1800-1900","y_1900-1920","y_1920-1939","y_1945-1970","y_1970-2000"],"dateRead":"2018-10-12T22:00:00.000Z"},{"el":{"0":{},"context":{},"length":1},"shelves":["read","f_audiobook","g_novel-fantasy","p_mondadori","w_europa_germania","y_1939-1945","y_1945-1970"],"dateRead":"2018-10-10T22:00:00.000Z"},{"el":{"0":{},"context":{},"length":1},"shelves":["read","g_biography","g_comics","g_photography","h_true_story","o_biblioteca","p_coconino_press","w_asia_sud_afghanistan","w_asia_sud_pakistan","w_europa_francia","y_1970-2000"],"dateRead":"2018-10-09T22:00:00.000Z"},{"el":{"0":{},"context":{},"length":1},"shelves":["read","g_novel-fantasy","h_historic","h_world_war_ii","o_biblioteca","p_l-espresso","w_europa_francia","y_1939-1945"],"dateRead":"2018-10-07T22:00:00.000Z"},{"el":{"0":{},"context":{},"length":1},"shelves":["read","g_art","g_biography","g_novel-fantasy","h_historic","o_biblioteca","p_neri_pozza","w_europa_italia","w_europa_uk","y_1600-1700"],"dateRead":"2018-10-06T22:00:00.000Z"},{"el":{"0":{},"context":{},"length":1},"shelves":["read","f_audiobook","g_novel-fantasy","o_biblioteca_mlol","p_emons","w_europa_italia","y_1945-1970"],"dateRead":"2018-10-06T22:00:00.000Z"},{"el":{"0":{},"context":{},"length":1},"shelves":["read","f_audiobook","g_novel-fantasy","g_thriller_mystery-novel","o_biblioteca_mlol","p_goodmood","w_europa_francia","w_europa_uk","y_1920-1939"],"dateRead":"2018-10-05T22:00:00.000Z"},{"el":{"0":{},"context":{},"length":1},"shelves":["read","g_novel-fantasy","h_historic","h_world_war_ii","o_biblioteca","p_garzanti","w_america_nord_usa_new_york","w_europa_germania","w_europa_polonia","y_1939-1945","y_1945-1970","y_1970-2000"],"dateRead":"2018-10-05T22:00:00.000Z"},{"el":{"0":{},"context":{},"length":1},"shelves":["read","f_audiobook","g_novel-fantasy","p_einaudi","w_america_nord_usa_new_york","y_1945-1970"],"dateRead":"2018-10-04T22:00:00.000Z"},{"el":{"0":{},"context":{},"length":1},"shelves":["read","g_novel-fantasy","h_historic","my_favorites","o_biblioteca","p_big_sur","w_africa_benin","w_america_nord_usa_carolina_del_nor","w_america_nord_usa_carolina_del_sud","w_america_nord_usa_georgia","w_america_nord_usa_indiana","w_america_nord_usa_massachussets","w_america_nord_usa_new_york","w_america_nord_usa_tennessee","w_america_nord_usa_virginia","w_america_nord_usa_washington","y_1700-1800","y_1800-1900"],"dateRead":"2018-10-03T22:00:00.000Z"},{"el":{"0":{},"context":{},"length":1},"shelves":["read","g_assay","o_biblioteca","p_adelphi","w_europa_germania","y_1800-1900"],"dateRead":"2018-09-21T22:00:00.000Z"},{"el":{"0":{},"context":{},"length":1},"shelves":["read","g_art","g_biography","g_novel-fantasy","h_historic","o_biblioteca","p_mondadori","w_europa_italia","w_europa_malta","y_1500-1600","y_1600-1700","y_2000-2020"],"dateRead":"2018-09-17T22:00:00.000Z"},{"el":{"0":{},"context":{},"length":1},"shelves":["read","g_novel-fantasy","h_historic","h_true_story","h_world_war_ii","my_favorites","o_biblioteca_mlol","p_sellerio","w_europa_germania","y_1939-1945","y_1945-1970"],"dateRead":"2018-09-15T22:00:00.000Z"},{"el":{"0":{},"context":{},"length":1},"shelves":["read","f_audiobook","g_novel-fantasy","g_thriller_mystery-novel","o_biblioteca_mlol","p_goodmood","w_europa_uk","y_1945-1970"],"dateRead":"2018-09-08T22:00:00.000Z"},{"el":{"0":{},"context":{},"length":1},"shelves":["read","g_biography","h_historic","h_true_story","h_world_war_ii","my_favorites","p_museo_statale_auschwitz_birkenau","w_europa_polonia","w_europa_slovacchia","y_1939-1945"],"dateRead":"2018-09-08T22:00:00.000Z"},{"el":{"0":{},"context":{},"length":1},"shelves":["read","g_biography","h_historic","h_true_story","o_biblioteca","p_einaudi","w_africa_capo-verde","w_africa_mauritius","w_america_sud_argentina","w_america_sud_brasile","w_america_sud_cile","w_america_sud_ecuador","w_america_sud_isole-falkland","w_america_sud_paraguay","w_america_sud_perù","w_america_sud_uruguay","w_oceania_australia","w_oceania_nuova_zelanda","w_oceania_polinesia","y_1800-1900"],"dateRead":"2018-09-07T22:00:00.000Z"},{"el":{"0":{},"context":{},"length":1},"shelves":["read","f_audiobook","g_novel-fantasy","g_thriller_mystery-novel","o_biblioteca_mlol","p_goodmood","w_europa_svizzera","w_europa_uk","y_1900-1920"],"dateRead":"2018-09-05T22:00:00.000Z"},{"el":{"0":{},"context":{},"length":1},"shelves":["read","o_biblioteca","p_bao_publishing","w_europa_italia","y_2000-2020"],"dateRead":"2018-09-03T22:00:00.000Z"},{"el":{"0":{},"context":{},"length":1},"shelves":["read","f_audiobook","g_novel-fantasy","g_thriller_mystery-novel","o_biblioteca_mlol","p_goodmood","w_europa_uk","y_1900-1920"],"dateRead":"2018-09-03T22:00:00.000Z"},{"el":{"0":{},"context":{},"length":1},"shelves":["read","g_biography","g_comics","h_true_story","o_biblioteca","p_bao_publishing","w_europa_italia","y_2000-2020"],"dateRead":"2018-09-01T22:00:00.000Z"},{"el":{"0":{},"context":{},"length":1},"shelves":["read","g_assay","h_historic","o_biblioteca","p_fazi","w_africa_egitto","w_africa_mauritania","w_africa_ruanda","w_asia_est_giappone","w_asia_ovest_arabia_saudita","w_asia_ovest_palestina","w_asia_ovest_siria","w_asia_ovest_turchia","w_asia_sud_iran","w_europa_francia","w_europa_germania","w_europa_grecia","w_europa_italia","w_europa_olanda","y_-3500-0bc","y_0000-0100","y_0100-0500","y_0500-1000","y_1300-1400","y_1600-1700","y_1700-1800","y_1800-1900","y_1920-1939","y_1939-1945","y_1970-2000","y_2000-2020"],"dateRead":"2018-09-01T22:00:00.000Z"},{"el":{"0":{},"context":{},"length":1},"shelves":["read","f_audiobook","g_novel-fantasy","o_biblioteca_mlol","p_full-color-sound","w_america_nord_usa_new_york","y_1800-1900"],"dateRead":"2018-09-01T22:00:00.000Z"},{"el":{"0":{},"context":{},"length":1},"shelves":["read","g_biography","g_comics","h_true_story","o_biblioteca","p_bao_publishing","w_europa_italia","y_1970-2000","y_2000-2020"],"dateRead":"2018-08-31T22:00:00.000Z"},{"el":{"0":{},"context":{},"length":1},"shelves":["read","g_biography","g_comics","h_true_story","my_favorites","o_biblioteca","p_bao_publishing","w_europa_italia","y_1970-2000","y_2000-2020"],"dateRead":"2018-08-28T22:00:00.000Z"},{"el":{"0":{},"context":{},"length":1},"shelves":["read","g_biography","g_comics","h_true_story","o_biblioteca","p_bao_publishing","w_europa_italia","y_1970-2000","y_2000-2020"],"dateRead":"2018-08-27T22:00:00.000Z"},{"el":{"0":{},"context":{},"length":1},"shelves":["read","f_ebook","g_art","g_biography","h_true_story","my_favorites","o_biblioteca_mlol","p_edizioni_di_pagina","w_europa_francia","y_1800-1900","y_1900-1920"],"dateRead":"2018-08-27T22:00:00.000Z"},{"el":{"0":{},"context":{},"length":1},"shelves":["read","f_audiobook","g_novel-fantasy","o_biblioteca_mlol","p_goodmood","w_europa_uk","y_1920-1939"],"dateRead":"2018-08-26T22:00:00.000Z"},{"el":{"0":{},"context":{},"length":1},"shelves":["read","f_audiobook","g_novel-fantasy","o_biblioteca_mlol","p_goodmood","w_europa_uk","y_1920-1939"],"dateRead":"2018-08-24T22:00:00.000Z"},{"el":{"0":{},"context":{},"length":1},"shelves":["read","g_novel-fantasy","o_biblioteca","p_casagrande","w_europa_ungheria","y_1939-1945","y_1945-1970"],"dateRead":"2018-08-22T22:00:00.000Z"},{"el":{"0":{},"context":{},"length":1},"shelves":["read","g_biography","h_true_story","o_biblioteca","p_casagrande","w_europa_austria","w_europa_germania","w_europa_svizzera","w_europa_ungheria","y_1939-1945","y_1945-1970","y_1970-2000"],"dateRead":"2018-08-22T22:00:00.000Z"},{"el":{"0":{},"context":{},"length":1},"shelves":["read","g_novel-fantasy","o_biblioteca","p_einaudi","y_1970-2000"],"dateRead":"2018-08-21T22:00:00.000Z"},{"el":{"0":{},"context":{},"length":1},"shelves":["read","f_audiobook","g_novel-fantasy","p_bompiani","w_europa_russia","y_1900-1920","y_1920-1939"],"dateRead":"2018-08-21T22:00:00.000Z"},{"el":{"0":{},"context":{},"length":1},"shelves":["read","g_novel-fantasy","o_biblioteca","p_einaudi","w_europa_svizzera","w_europa_ungheria","y_1939-1945","y_1945-1970"],"dateRead":"2018-08-21T22:00:00.000Z"},{"el":{"0":{},"context":{},"length":1},"shelves":["read","f_audiobook","g_novel-fantasy","p_feltrinelli","w_europa_uk","y_1800-1900"],"dateRead":"2018-08-20T22:00:00.000Z"},{"el":{"0":{},"context":{},"length":1},"shelves":["read","f_audiobook","g_novel-fantasy","p_adelphi","w_europa_italia","w_europa_portogallo","w_europa_spagna","y_1945-1970"],"dateRead":"2018-08-18T22:00:00.000Z"},{"el":{"0":{},"context":{},"length":1},"shelves":["read","g_novel-fantasy","h_world_war_ii","my_favorites","o_biblioteca","p_einaudi","w_europa_ungheria","y_1939-1945","y_1945-1970","y_1970-2000"],"dateRead":"2018-08-17T22:00:00.000Z"},{"el":{"0":{},"context":{},"length":1},"shelves":["read","g_assay","h_historic","h_true_story","h_world_war_i","h_world_war_ii","my_favorites","o_biblioteca","p_il_mulino","w_africa_algeria","w_africa_egitto","w_africa_etiopia","w_africa_libia","w_africa_marocco","w_africa_nigeria","w_africa_sudan","w_africa_sudan-del-sud","w_africa_tunisia","w_america_nord_usa_new_york","w_america_nord_usa_washington","w_asia_ovest_arabia_saudita","w_asia_ovest_armenia","w_asia_ovest_azerbaigian","w_asia_ovest_emirati-arabi-uniti","w_asia_ovest_giordania","w_asia_ovest_iraq","w_asia_ovest_israele","w_asia_ovest_kuwait","w_asia_ovest_libano","w_asia_ovest_palestina","w_asia_ovest_siria","w_asia_ovest_turchia","w_asia_ovest_yemen","w_asia_sud_afghanistan","w_asia_sud_india","w_asia_sud_iran","w_europa_albania","w_europa_austria","w_europa_bosnia_ed_erzegovina","w_europa_bulgaria","w_europa_francia","w_europa_grecia","w_europa_italia","w_europa_montenegro","w_europa_olanda","w_europa_russia","w_europa_serbia","w_europa_spagna","w_europa_svizzera","w_europa_uk","w_europa_ungheria","y_1700-1800","y_1800-1900","y_1900-1920","y_1920-1939","y_1939-1945","y_1945-1970","y_1970-2000","y_2000-2020"],"dateRead":"2018-08-14T22:00:00.000Z"},{"el":{"0":{},"context":{},"length":1},"shelves":["read","g_art","g_biography","g_novel-fantasy","h_historic","h_true_story","my_favorites","o_biblioteca","p_einaudi","w_africa_capo-verde","w_america_centrale_panama","w_america_sud_perù","w_europa_danimarca","w_europa_francia","w_europa_uk","w_oceania_polinesia","y_1800-1900","y_1900-1920"],"dateRead":"2018-08-11T22:00:00.000Z"},{"el":{"0":{},"context":{},"length":1},"shelves":["read","f_audiobook","g_novel-fantasy","p_einaudi","w_europa_italia","y_1920-1939"],"dateRead":"2018-08-04T22:00:00.000Z"},{"el":{"0":{},"context":{},"length":1},"shelves":["read","g_assay","h_historic","o_biblioteca","p_il_mulino","w_africa_benin","w_africa_camerun","w_africa_ciad","w_africa_egitto","w_africa_etiopia","w_africa_guinea","w_africa_kenya","w_africa_madagascar","w_africa_nigeria","w_africa_sudafrica","w_africa_tanzania","w_africa_togo","w_america_centrale_guatemala","w_america_centrale_messico","w_america_nord_canada","w_america_nord_groenlandia","w_america_nord_usa_alaska","w_america_nord_usa_montana","w_america_sud_argentina","w_america_sud_brasile","w_america_sud_cile","w_america_sud_perù","w_asia_centrale_uzbekistan","w_asia_est_cina","w_asia_ovest_georgia","w_asia_ovest_israele","w_asia_ovest_siria","w_asia_ovest_turchia","w_asia_sud-est_indonesia","w_asia_sud-est_laos","w_asia_sud-est_malesia","w_asia_sud_india","w_asia_sud_iran","w_europa_germania","w_europa_grecia","w_europa_italia","w_europa_romania","w_europa_russia","w_europa_spagna","w_europa_uk","w_europa_ungheria","w_oceania_australia","w_oceania_melanesia","w_oceania_polinesia","y_-0x0-3500bc","y_-3500-0bc","y_0500-1000","y_1500-1600","y_1600-1700","y_1700-1800","y_1800-1900","y_1920-1939","y_1945-1970","y_1970-2000","y_2000-2020"],"dateRead":"2018-08-04T22:00:00.000Z"},{"el":{"0":{},"context":{},"length":1},"shelves":["read","f_audiobook","g_biography","g_novel-fantasy","p_adelphi","w_europa_francia","w_europa_germania","w_europa_grecia","w_europa_italia","w_europa_olanda","y_1900-1920"],"dateRead":"2018-07-30T22:00:00.000Z"},{"el":{"0":{},"context":{},"length":1},"shelves":["read","g_novel-fantasy","h_historic","p_einaudi","w_asia_ovest_turchia","w_europa_francia","w_europa_germania","w_europa_italia","w_europa_olanda","w_europa_svizzera","w_europa_uk","y_1500-1600"],"dateRead":"2018-07-28T22:00:00.000Z"},{"el":{"0":{},"context":{},"length":1},"shelves":["read","f_ebook","g_novel-fantasy","o_biblioteca_mlol","p_adelphi","w_europa_austria","y_1900-1920"],"dateRead":"2018-07-28T22:00:00.000Z"},{"el":{"0":{},"context":{},"length":1},"shelves":["read","g_assay","h_historic","h_true_story","my_favorites","o_biblioteca","p_mondadori","w_africa_algeria","w_africa_angola","w_africa_capo-verde","w_africa_congo","w_africa_gambia","w_africa_ghana","w_africa_guinea","w_africa_marocco","w_africa_senegal","w_america_centrale_barbados","w_america_centrale_belize","w_america_centrale_cuba","w_america_centrale_giamaica","w_america_centrale_guatemala","w_america_centrale_messico","w_america_centrale_nicaragua","w_america_centrale_panama","w_america_centrale_rep-dominicana","w_america_nord_canada","w_america_nord_usa_carolina_del_nor","w_america_nord_usa_carolina_del_sud","w_america_nord_usa_connecticut","w_america_nord_usa_florida","w_america_nord_usa_georgia","w_america_nord_usa_illinois","w_america_nord_usa_iowa","w_america_nord_usa_louisiana","w_america_nord_usa_maine","w_america_nord_usa_maryland","w_america_nord_usa_massachussets","w_america_nord_usa_new_york","w_america_nord_usa_pennsylvania","w_america_nord_usa_texas","w_america_nord_usa_virginia","w_america_nord_usa_washington","w_america_nord_usa_wisconsin","w_america_sud_argentina","w_america_sud_bolivia","w_america_sud_brasile","w_america_sud_cile","w_america_sud_colombia","w_america_sud_ecuador","w_america_sud_guyana_francese","w_america_sud_guyana_inglese","w_america_sud_perù","w_america_sud_suriname","w_america_sud_venezuela","w_asia_est_cina","w_asia_est_corea_del_nord","w_asia_est_corea_del_sud","w_asia_est_giappone","w_asia_est_macao","w_asia_ovest_israele","w_asia_ovest_libano","w_asia_sud-est_filippine","w_asia_sud-est_laos","w_asia_sud-est_malesia","w_asia_sud-est_thailandia","w_asia_sud-est_vietnam","w_asia_sud_india","w_asia_sud_sri-lanka","w_europa_belgio","w_europa_danimarca","w_europa_francia","w_europa_irlanda","w_europa_italia","w_europa_olanda","w_europa_portogallo","w_europa_spagna","w_europa_svezia","w_europa_svizzera","w_europa_uk","y_1300-1400","y_1400-1500","y_1500-1600","y_1600-1700","y_1700-1800","y_1800-1900","y_1900-1920","y_1920-1939","y_1945-1970","y_1970-2000","y_2000-2020"],"dateRead":"2018-07-27T22:00:00.000Z"},{"el":{"0":{},"context":{},"length":1},"shelves":["read","g_comics","h_historic","o_biblioteca","p_carocci","w_europa_cecoslovacchia","w_europa_francia","w_europa_germania","w_europa_italia","w_europa_olanda","w_europa_svizzera","w_europa_uk","y_1600-1700","y_1700-1800"],"dateRead":"2018-07-24T22:00:00.000Z"},{"el":{"0":{},"context":{},"length":1},"shelves":["read","g_biography","g_comics","h_historic","my_favorites","o_biblioteca","p_rizzoli","w_asia_ovest_israele","w_asia_ovest_libano","w_europa_olanda","y_1970-2000","y_2000-2020"],"dateRead":"2018-07-23T22:00:00.000Z"},{"el":{"0":{},"context":{},"length":1},"shelves":["read","g_assay","h_historic","h_true_story","o_biblioteca","p_feltrinelli","w_america_sud_argentina","y_1970-2000"],"dateRead":"2018-07-21T22:00:00.000Z"}],"visibleColumns":["checkbox","position","cover","title","author","isbn","isbn13","asin","num_pages","avg_rating","num_ratings","date_pub","date_pub_edition","rating","shelves","review","notes","recommender","comments","votes","read_count","date_started","date_read","date_added","date_purchased","owned","purchase_location","condition","format","actions"],"columnsHeader":{"0":{},"length":1,"prevObject":{"0":{},"length":1,"prevObject":{"0":{},"length":1,"prevObject":{"0":{},"1":{},"2":{},"3":{},"4":{},"5":{},"6":{},"7":{},"8":{},"9":{},"10":{},"11":{},"12":{},"13":{},"14":{},"15":{},"16":{},"17":{},"18":{},"19":{},"20":{},"21":{},"22":{},"23":{},"24":{},"25":{},"26":{},"27":{},"28":{},"29":{},"30":{},"31":{},"32":{},"33":{},"34":{},"35":{},"36":{},"37":{},"38":{},"39":{},"40":{},"41":{},"42":{},"43":{},"44":{},"45":{},"46":{},"47":{},"48":{},"49":{},"50":{},"51":{},"52":{},"53":{},"54":{},"55":{},"56":{},"57":{},"58":{},"59":{},"60":{},"61":{},"62":{},"63":{},"64":{},"65":{},"66":{},"67":{},"68":{},"69":{},"70":{},"71":{},"72":{},"73":{},"74":{},"75":{},"76":{},"77":{},"78":{},"79":{},"80":{},"81":{},"82":{},"83":{},"84":{},"85":{},"86":{},"87":{},"88":{},"89":{},"90":{},"91":{},"92":{},"93":{},"94":{},"95":{},"96":{},"97":{},"98":{},"99":{},"100":{},"101":{},"102":{},"103":{},"104":{},"105":{},"106":{},"107":{},"108":{},"109":{},"110":{},"111":{},"112":{},"113":{},"114":{},"115":{},"116":{},"117":{},"118":{},"119":{},"120":{},"121":{},"122":{},"123":{},"124":{},"125":{},"length":126},"selector":"#books"},"selector":"#books #booksHeader"}},"shelves":{"read":{"2018":87,"2019":13,"tot":100},"f_audiobook":{"2018":21,"2019":3,"tot":24},"g_novel-fantasy":{"2018":46,"2019":5,"tot":51},"p_rai-radio-3_ad-alta-voce":{"2018":1,"2019":3,"tot":4},"w_europa_russia":{"2018":11,"2019":2,"tot":13},"y_1800-1900":{"2018":25,"2019":3,"tot":28},"g_assay":{"2018":13,"2019":3,"tot":16},"h_historic":{"2018":32,"2019":6,"tot":38},"h_true_story":{"2018":34,"2019":7,"tot":41},"my_favorites":{"2018":19,"2019":5,"tot":24},"o_biblioteca":{"2018":51,"2019":7,"tot":58},"p_e-o":{"2019":1,"tot":1},"w_europa_austria":{"2018":5,"2019":4,"tot":9},"w_europa_germania":{"2018":19,"2019":6,"tot":25},"w_europa_uk":{"2018":20,"2019":4,"tot":24},"y_1920-1939":{"2018":23,"2019":5,"tot":28},"y_1945-1970":{"2018":27,"2019":7,"tot":34},"g_biography":{"2018":33,"2019":5,"tot":38},"h_world_war_ii":{"2018":9,"2019":3,"tot":12},"p_bollati_boringhieri":{"2019":1,"tot":1},"w_europa_belgio":{"2018":5,"2019":2,"tot":7},"w_europa_francia":{"2018":28,"2019":6,"tot":34},"w_europa_polonia":{"2018":6,"2019":4,"tot":10},"y_1939-1945":{"2018":20,"2019":5,"tot":25},"f_ebook":{"2018":6,"2019":1,"tot":7},"o_biblioteca_mlol":{"2018":15,"2019":2,"tot":17},"p_mondadori":{"2018":7,"2019":2,"tot":9},"w_europa_ucraina":{"2018":1,"2019":2,"tot":3},"y_1900-1920":{"2018":20,"2019":3,"tot":23},"y_1970-2000":{"2018":33,"2019":4,"tot":37},"w_asia_sud_bangladesh":{"2019":1,"tot":1},"w_asia_sud_india":{"2018":6,"2019":1,"tot":7},"p_ponte-alle-grazie":{"2018":2,"2019":1,"tot":3},"w_africa_algeria":{"2018":4,"2019":1,"tot":5},"w_africa_marocco":{"2018":3,"2019":1,"tot":4},"w_europa_svezia":{"2018":8,"2019":3,"tot":11},"y_1400-1500":{"2018":5,"2019":2,"tot":7},"g_comics":{"2018":17,"2019":2,"tot":19},"p_logos":{"2019":1,"tot":1},"p_einaudi":{"2018":9,"2019":1,"tot":10},"w_europa_spagna":{"2018":11,"2019":4,"tot":15},"y_1200-1300":{"2018":3,"2019":1,"tot":4},"y_1600-1700":{"2018":9,"2019":3,"tot":12},"y_1700-1800":{"2018":11,"2019":2,"tot":13},"p_marsilio":{"2019":1,"tot":1},"w_africa_egitto":{"2018":5,"2019":1,"tot":6},"w_america_nord_usa_virginia":{"2018":3,"2019":1,"tot":4},"w_america_sud_perù":{"2018":4,"2019":1,"tot":5},"w_asia_ovest_israele":{"2018":5,"2019":1,"tot":6},"w_asia_ovest_turchia":{"2018":6,"2019":1,"tot":7},"w_asia_sud-est_indonesia":{"2018":2,"2019":1,"tot":3},"w_europa_cecoslovacchia":{"2018":1,"2019":2,"tot":3},"w_europa_italia":{"2018":30,"2019":3,"tot":33},"w_europa_lussemburgo":{"2019":1,"tot":1},"w_europa_olanda":{"2018":8,"2019":2,"tot":10},"w_europa_portogallo":{"2018":3,"2019":2,"tot":5},"w_europa_svizzera":{"2018":11,"2019":2,"tot":13},"w_europa_ungheria":{"2018":9,"2019":1,"tot":10},"y_1500-1600":{"2018":8,"2019":1,"tot":9},"w_america_nord_usa_new_york":{"2018":11,"2019":1,"tot":12},"p_hop_edizioni":{"2019":1,"tot":1},"w_america_nord_usa_california":{"2018":4,"2019":1,"tot":5},"g_informatics":{"2019":1,"tot":1},"p_egea":{"2019":1,"tot":1},"w_europa_danimarca":{"2018":4,"2019":1,"tot":5},"p_panini_comics":{"2018":2,"tot":2},"p_iperborea":{"2018":4,"tot":4},"w_america_nord_usa_alabama":{"2018":1,"tot":1},"w_america_nord_usa_arizona":{"2018":1,"tot":1},"w_america_nord_usa_carolina_del_nor":{"2018":3,"tot":3},"w_america_nord_usa_carolina_del_sud":{"2018":3,"tot":3},"w_america_nord_usa_colorado":{"2018":1,"tot":1},"w_america_nord_usa_georgia":{"2018":3,"tot":3},"w_america_nord_usa_louisiana":{"2018":3,"tot":3},"w_america_nord_usa_mississippi":{"2018":1,"tot":1},"w_america_nord_usa_ohio":{"2018":2,"tot":2},"w_america_nord_usa_pennsylvania":{"2018":2,"tot":2},"w_america_nord_usa_tennessee":{"2018":2,"tot":2},"w_asia_est_cina":{"2018":5,"tot":5},"w_asia_ovest_armenia":{"2018":3,"tot":3},"w_europa_irlanda":{"2018":2,"tot":2},"p_collina-d-oro":{"2018":1,"tot":1},"y_2020-2040":{"2018":1,"tot":1},"g_poetry":{"2018":2,"tot":2},"p_rizzoli":{"2018":6,"tot":6},"g_art":{"2018":12,"tot":12},"p_mondadori_electa":{"2018":2,"tot":2},"y_2000-2020":{"2018":20,"tot":20},"p_quodlibet":{"2018":1,"tot":1},"w_america_nord_usa_massachussets":{"2018":4,"tot":4},"w_america_nord_usa_washington":{"2018":4,"tot":4},"w_europa_estonia":{"2018":1,"tot":1},"p_crocetti":{"2018":1,"tot":1},"w_asia_sud_iran":{"2018":8,"tot":8},"p_laterza":{"2018":1,"tot":1},"y_-3500-0bc":{"2018":4,"tot":4},"y_0100-0500":{"2018":3,"tot":3},"y_0500-1000":{"2018":4,"tot":4},"y_1000-1100":{"2018":3,"tot":3},"y_1100-1200":{"2018":3,"tot":3},"y_1300-1400":{"2018":5,"tot":5},"p_skira":{"2018":1,"tot":1},"p_feltrinelli":{"2018":3,"tot":3},"w_america_centrale_messico":{"2018":5,"tot":5},"p_astrolabio":{"2018":1,"tot":1},"p_bompiani":{"2018":3,"tot":3},"g_photography":{"2018":3,"tot":3},"p_gruppo-editoriale-fabbri":{"2018":1,"tot":1},"p_newton_compton":{"2018":1,"tot":1},"p_adelphi":{"2018":6,"tot":6},"w_america_sud_brasile":{"2018":4,"tot":4},"w_europa_finlandia":{"2018":1,"tot":1},"w_europa_norvegia":{"2018":1,"tot":1},"w_europa_serbia":{"2018":3,"tot":3},"w_europa_slovacchia":{"2018":2,"tot":2},"w_oceania_australia":{"2018":3,"tot":3},"p_hachette":{"2018":1,"tot":1},"w_africa_costa-d-avorio":{"2018":1,"tot":1},"w_america_centrale_cuba":{"2018":2,"tot":2},"w_america_nord_canada":{"2018":3,"tot":3},"w_america_nord_usa_new_jersey":{"2018":1,"tot":1},"w_asia_est_giappone":{"2018":3,"tot":3},"w_asia_sud-est_birmania":{"2018":1,"tot":1},"p_neri_pozza":{"2018":2,"tot":2},"w_america_nord_usa_florida":{"2018":2,"tot":2},"p_sellerio":{"2018":2,"tot":2},"w_africa_libia":{"2018":2,"tot":2},"w_asia_ovest_arabia_saudita":{"2018":3,"tot":3},"w_asia_ovest_iraq":{"2018":3,"tot":3},"w_asia_ovest_libano":{"2018":4,"tot":4},"w_asia_ovest_palestina":{"2018":3,"tot":3},"w_europa_albania":{"2018":2,"tot":2},"w_europa_bosnia_ed_erzegovina":{"2018":2,"tot":2},"w_europa_bulgaria":{"2018":2,"tot":2},"w_europa_cipro":{"2018":1,"tot":1},"w_europa_croazia":{"2018":1,"tot":1},"w_europa_grecia":{"2018":6,"tot":6},"w_europa_malta":{"2018":2,"tot":2},"w_europa_romania":{"2018":2,"tot":2},"g_humor":{"2018":1,"tot":1},"p_baldini_castoldi":{"2018":1,"tot":1},"w_asia_ovest_siria":{"2018":4,"tot":4},"h_faenza":{"2018":1,"tot":1},"p_coconino_press":{"2018":3,"tot":3},"g_thriller_mystery-novel":{"2018":5,"tot":5},"p_giunti":{"2018":1,"tot":1},"w_america_centrale_rep-dominicana":{"2018":2,"tot":2},"w_asia_sud_afghanistan":{"2018":3,"tot":3},"y_0000-0100":{"2018":2,"tot":2},"w_asia_sud_pakistan":{"2018":1,"tot":1},"p_l-espresso":{"2018":1,"tot":1},"p_emons":{"2018":1,"tot":1},"p_goodmood":{"2018":6,"tot":6},"p_garzanti":{"2018":1,"tot":1},"p_big_sur":{"2018":1,"tot":1},"w_africa_benin":{"2018":2,"tot":2},"w_america_nord_usa_indiana":{"2018":1,"tot":1},"p_museo_statale_auschwitz_birkenau":{"2018":1,"tot":1},"w_africa_capo-verde":{"2018":3,"tot":3},"w_africa_mauritius":{"2018":1,"tot":1},"w_america_sud_argentina":{"2018":4,"tot":4},"w_america_sud_cile":{"2018":3,"tot":3},"w_america_sud_ecuador":{"2018":2,"tot":2},"w_america_sud_isole-falkland":{"2018":1,"tot":1},"w_america_sud_paraguay":{"2018":1,"tot":1},"w_america_sud_uruguay":{"2018":1,"tot":1},"w_oceania_nuova_zelanda":{"2018":1,"tot":1},"w_oceania_polinesia":{"2018":3,"tot":3},"p_bao_publishing":{"2018":5,"tot":5},"p_fazi":{"2018":1,"tot":1},"w_africa_mauritania":{"2018":1,"tot":1},"w_africa_ruanda":{"2018":1,"tot":1},"p_full-color-sound":{"2018":1,"tot":1},"p_edizioni_di_pagina":{"2018":1,"tot":1},"p_casagrande":{"2018":2,"tot":2},"h_world_war_i":{"2018":1,"tot":1},"p_il_mulino":{"2018":2,"tot":2},"w_africa_etiopia":{"2018":2,"tot":2},"w_africa_nigeria":{"2018":2,"tot":2},"w_africa_sudan":{"2018":1,"tot":1},"w_africa_sudan-del-sud":{"2018":1,"tot":1},"w_africa_tunisia":{"2018":1,"tot":1},"w_asia_ovest_azerbaigian":{"2018":1,"tot":1},"w_asia_ovest_emirati-arabi-uniti":{"2018":1,"tot":1},"w_asia_ovest_giordania":{"2018":1,"tot":1},"w_asia_ovest_kuwait":{"2018":1,"tot":1},"w_asia_ovest_yemen":{"2018":1,"tot":1},"w_europa_montenegro":{"2018":1,"tot":1},"w_america_centrale_panama":{"2018":2,"tot":2},"w_africa_camerun":{"2018":1,"tot":1},"w_africa_ciad":{"2018":1,"tot":1},"w_africa_guinea":{"2018":2,"tot":2},"w_africa_kenya":{"2018":1,"tot":1},"w_africa_madagascar":{"2018":1,"tot":1},"w_africa_sudafrica":{"2018":1,"tot":1},"w_africa_tanzania":{"2018":1,"tot":1},"w_africa_togo":{"2018":1,"tot":1},"w_america_centrale_guatemala":{"2018":2,"tot":2},"w_america_nord_groenlandia":{"2018":1,"tot":1},"w_america_nord_usa_alaska":{"2018":1,"tot":1},"w_america_nord_usa_montana":{"2018":1,"tot":1},"w_asia_centrale_uzbekistan":{"2018":1,"tot":1},"w_asia_ovest_georgia":{"2018":1,"tot":1},"w_asia_sud-est_laos":{"2018":2,"tot":2},"w_asia_sud-est_malesia":{"2018":2,"tot":2},"w_oceania_melanesia":{"2018":1,"tot":1},"y_-0x0-3500bc":{"2018":1,"tot":1},"w_africa_angola":{"2018":1,"tot":1},"w_africa_congo":{"2018":1,"tot":1},"w_africa_gambia":{"2018":1,"tot":1},"w_africa_ghana":{"2018":1,"tot":1},"w_africa_senegal":{"2018":1,"tot":1},"w_america_centrale_barbados":{"2018":1,"tot":1},"w_america_centrale_belize":{"2018":1,"tot":1},"w_america_centrale_giamaica":{"2018":1,"tot":1},"w_america_centrale_nicaragua":{"2018":1,"tot":1},"w_america_nord_usa_connecticut":{"2018":1,"tot":1},"w_america_nord_usa_illinois":{"2018":1,"tot":1},"w_america_nord_usa_iowa":{"2018":1,"tot":1},"w_america_nord_usa_maine":{"2018":1,"tot":1},"w_america_nord_usa_maryland":{"2018":1,"tot":1},"w_america_nord_usa_texas":{"2018":1,"tot":1},"w_america_nord_usa_wisconsin":{"2018":1,"tot":1},"w_america_sud_bolivia":{"2018":1,"tot":1},"w_america_sud_colombia":{"2018":1,"tot":1},"w_america_sud_guyana_francese":{"2018":1,"tot":1},"w_america_sud_guyana_inglese":{"2018":1,"tot":1},"w_america_sud_suriname":{"2018":1,"tot":1},"w_america_sud_venezuela":{"2018":1,"tot":1},"w_asia_est_corea_del_nord":{"2018":1,"tot":1},"w_asia_est_corea_del_sud":{"2018":1,"tot":1},"w_asia_est_macao":{"2018":1,"tot":1},"w_asia_sud-est_filippine":{"2018":1,"tot":1},"w_asia_sud-est_thailandia":{"2018":1,"tot":1},"w_asia_sud-est_vietnam":{"2018":1,"tot":1},"w_asia_sud_sri-lanka":{"2018":1,"tot":1},"p_carocci":{"2018":1,"tot":1}},"shelvesNames":["f_audiobook","f_ebook","g_art","g_assay","g_biography","g_comics","g_humor","g_informatics","g_novel-fantasy","g_photography","g_poetry","g_thriller_mystery-novel","h_faenza","h_historic","h_true_story","h_world_war_i","h_world_war_ii","my_favorites","o_biblioteca","o_biblioteca_mlol","p_adelphi","p_astrolabio","p_baldini_castoldi","p_bao_publishing","p_big_sur","p_bollati_boringhieri","p_bompiani","p_carocci","p_casagrande","p_coconino_press","p_collina-d-oro","p_crocetti","p_e-o","p_edizioni_di_pagina","p_egea","p_einaudi","p_emons","p_fazi","p_feltrinelli","p_full-color-sound","p_garzanti","p_giunti","p_goodmood","p_gruppo-editoriale-fabbri","p_hachette","p_hop_edizioni","p_il_mulino","p_iperborea","p_l-espresso","p_laterza","p_logos","p_marsilio","p_mondadori","p_mondadori_electa","p_museo_statale_auschwitz_birkenau","p_neri_pozza","p_newton_compton","p_panini_comics","p_ponte-alle-grazie","p_quodlibet","p_rai-radio-3_ad-alta-voce","p_rizzoli","p_sellerio","p_skira","read","w_africa_algeria","w_africa_angola","w_africa_benin","w_africa_camerun","w_africa_capo-verde","w_africa_ciad","w_africa_congo","w_africa_costa-d-avorio","w_africa_egitto","w_africa_etiopia","w_africa_gambia","w_africa_ghana","w_africa_guinea","w_africa_kenya","w_africa_libia","w_africa_madagascar","w_africa_marocco","w_africa_mauritania","w_africa_mauritius","w_africa_nigeria","w_africa_ruanda","w_africa_senegal","w_africa_sudafrica","w_africa_sudan","w_africa_sudan-del-sud","w_africa_tanzania","w_africa_togo","w_africa_tunisia","w_america_centrale_barbados","w_america_centrale_belize","w_america_centrale_cuba","w_america_centrale_giamaica","w_america_centrale_guatemala","w_america_centrale_messico","w_america_centrale_nicaragua","w_america_centrale_panama","w_america_centrale_rep-dominicana","w_america_nord_canada","w_america_nord_groenlandia","w_america_nord_usa_alabama","w_america_nord_usa_alaska","w_america_nord_usa_arizona","w_america_nord_usa_california","w_america_nord_usa_carolina_del_nor","w_america_nord_usa_carolina_del_sud","w_america_nord_usa_colorado","w_america_nord_usa_connecticut","w_america_nord_usa_florida","w_america_nord_usa_georgia","w_america_nord_usa_illinois","w_america_nord_usa_indiana","w_america_nord_usa_iowa","w_america_nord_usa_louisiana","w_america_nord_usa_maine","w_america_nord_usa_maryland","w_america_nord_usa_massachussets","w_america_nord_usa_mississippi","w_america_nord_usa_montana","w_america_nord_usa_new_jersey","w_america_nord_usa_new_york","w_america_nord_usa_ohio","w_america_nord_usa_pennsylvania","w_america_nord_usa_tennessee","w_america_nord_usa_texas","w_america_nord_usa_virginia","w_america_nord_usa_washington","w_america_nord_usa_wisconsin","w_america_sud_argentina","w_america_sud_bolivia","w_america_sud_brasile","w_america_sud_cile","w_america_sud_colombia","w_america_sud_ecuador","w_america_sud_guyana_francese","w_america_sud_guyana_inglese","w_america_sud_isole-falkland","w_america_sud_paraguay","w_america_sud_perù","w_america_sud_suriname","w_america_sud_uruguay","w_america_sud_venezuela","w_asia_centrale_uzbekistan","w_asia_est_cina","w_asia_est_corea_del_nord","w_asia_est_corea_del_sud","w_asia_est_giappone","w_asia_est_macao","w_asia_ovest_arabia_saudita","w_asia_ovest_armenia","w_asia_ovest_azerbaigian","w_asia_ovest_emirati-arabi-uniti","w_asia_ovest_georgia","w_asia_ovest_giordania","w_asia_ovest_iraq","w_asia_ovest_israele","w_asia_ovest_kuwait","w_asia_ovest_libano","w_asia_ovest_palestina","w_asia_ovest_siria","w_asia_ovest_turchia","w_asia_ovest_yemen","w_asia_sud-est_birmania","w_asia_sud-est_filippine","w_asia_sud-est_indonesia","w_asia_sud-est_laos","w_asia_sud-est_malesia","w_asia_sud-est_thailandia","w_asia_sud-est_vietnam","w_asia_sud_afghanistan","w_asia_sud_bangladesh","w_asia_sud_india","w_asia_sud_iran","w_asia_sud_pakistan","w_asia_sud_sri-lanka","w_europa_albania","w_europa_austria","w_europa_belgio","w_europa_bosnia_ed_erzegovina","w_europa_bulgaria","w_europa_cecoslovacchia","w_europa_cipro","w_europa_croazia","w_europa_danimarca","w_europa_estonia","w_europa_finlandia","w_europa_francia","w_europa_germania","w_europa_grecia","w_europa_irlanda","w_europa_italia","w_europa_lussemburgo","w_europa_malta","w_europa_montenegro","w_europa_norvegia","w_europa_olanda","w_europa_polonia","w_europa_portogallo","w_europa_romania","w_europa_russia","w_europa_serbia","w_europa_slovacchia","w_europa_spagna","w_europa_svezia","w_europa_svizzera","w_europa_ucraina","w_europa_uk","w_europa_ungheria","w_oceania_australia","w_oceania_melanesia","w_oceania_nuova_zelanda","w_oceania_polinesia","y_-0x0-3500bc","y_-3500-0bc","y_0000-0100","y_0100-0500","y_0500-1000","y_1000-1100","y_1100-1200","y_1200-1300","y_1300-1400","y_1400-1500","y_1500-1600","y_1600-1700","y_1700-1800","y_1800-1900","y_1900-1920","y_1920-1939","y_1939-1945","y_1945-1970","y_1970-2000","y_2000-2020","y_2020-2040"],"years":{"2018":87,"2019":13}}
+			shelvesAnalyze:[	//array of shelves that can be viewed
+				{
+					name:'Read',	//name as showed in "Shelf list" (left section of My Books page)
+					shelf:'read',
+					sort:'date_read'
+				},{
+					name:'Want to Read',	//name as showed in "Shelf list" (left section of My Books page)
+					shelf:'to-read',
+					sort:'date_added'
+				}
+			],
+			shelfAnalyzeCurrent:{},	//pointer to "shelvesAnalyze" array of the shelf currently analyzed
 			searching:	false,
 			searchingCounter:0,
 			searchingEl:null,
@@ -1616,22 +1688,27 @@ debugger;
 		},
 
 		//BOOKSHELVES VIEWER: execute
-		_bookshelvesViewer=function(){
+		_bookshelvesViewer=function(shelfAnalyzeIndex){
+			/*Input parameters:
+				shelfAnalyzeIndex	= index for "shelvesAnalyze" array of the shelf we want to analyze
+			*/
 			//initial search
 			if (_BSD.searching){return;}
+			_BSD.shelfAnalyzeCurrent=_BSD.shelvesAnalyze[shelfAnalyzeIndex];
 			_BSD.searching=true;
 			_BSD.searchingCounter=0;
 			_BSD.pagesTot=0;
 			_BSD.readShelfUrl=$('div.siteHeader > div').data('reactProps').myBooksUrl;	//ex: "/review/list/35318441"
 
 			//identify list of pages to get, and launch searches simultaneously
-			jQuery('#paginatedShelfList .userShelf > a:not(.multiLink)').each(function(index,el){
-				var shelf=jQuery(el).html(),	//ex: "Read  ‎(1003)"
-					shelfEl=shelf.split(' '),
+			$('#paginatedShelfList .userShelf > a:not(.multiLink)').each(function(index,el){
+				var shelf=jQuery(el).html(),	//ex: "Read  ‎(1003)"	ATTENTION, there is a "&lrm;" after the name
+					shelfEl=shelf.split('('),	//['Want to Read ','519)']
 					booksNumber;
-				if (shelfEl[0].trim()==='Read'){
-					shelfEl=shelf.split('(')[1].replace(')','');	//ex: "1003"
-					booksNumber=+shelfEl;	//ex: 1003
+				//remove character "&lrm;" after shelf name (the split function has replaced "&lrm;" with "")
+				shelfEl[0]=shelfEl[0].slice(0,shelfEl[0].length-1);
+				if (shelfEl[0].trim()===_BSD.shelfAnalyzeCurrent.name){	//ex: "Read"
+					booksNumber=+shelfEl[1].replace(')','');	//ex: 1003
 
 					_BSD.searchingEl=$('<div/>',{'style':'color:red'}).appendTo(_headerBookshelves_Counters);
 
@@ -1650,7 +1727,9 @@ debugger;
 				}
 			});
 			if (!_BSD.pagesTot){
-				_headerBookshelves_Counters.append($('<div/>',{'style':'color:red'}).html('Unable to retrieve list o Read pages'));
+				_headerBookshelves_Counters.find('.samoLoading').remove();
+				_headerBookshelves_Counters.append($('<div/>',{'style':'color:red'}).html('Unable to retrieve list of '+_BSD.shelfAnalyzeCurrent.name+' pages'));
+				_BSD.searching=false;
 			}
 		},
 
@@ -1663,9 +1742,9 @@ debugger;
 				type:	'GET',
 				url:	_BSD.readShelfUrl,
 				data:{
-					shelf:		'read',
+					shelf:		_BSD.shelfAnalyzeCurrent.shelf,	//ex: "read"
 					view:		'table',
-					sort:		'date_read',
+					sort:		_BSD.shelfAnalyzeCurrent.sort,	//ex: "date_read"
 //					order:		'a',	//ascending
 					per_page:	100,
 					page:		page
@@ -1712,30 +1791,39 @@ bisogna aggiungere "if" che sia visibile in questo momento
 							book={
 								'el':el,
 								'shelves':[],
-								'dateRead':''
+								'dateRead':'',
+								'dateAdded':''
 							},
 							dateRead=el.find('td.date_read .date_read_value').html(),	//ex: "Sep 13, 2018"
-							dateReadSplit,
-							year=0;
+							dateAdded=el.find('td.date_added div.value span').html(),	//ex: "Sep 13, 2018"
+							year=0,
+							extractDate=function(key,dateValue){
+								var dateSplit=dateValue.split(' ');
+								if (dateSplit.length<3){
+									//fix for date "first of the month"; ex: "Sep 2018"
+									dateValue=dateSplit[0]+' 1, '+dateSplit[1];
+								}
+								try {
+									book[key]=new Date(Date.parse(dateValue));
+								}catch(error){
+									console.error(error,dateValue,book[key]);
+									_debugLog('_bookshelvesViewer '+key+' not found',dateValue,book[key],el,year);
+								}
+							};
 
 						//counter
 						_BSD.searchingEl.html(++_BSD.searchingCounter+' calculated books');
-						//get date read
-						if (dateRead){
-							dateReadSplit=dateRead.split(' ');
-							if (dateReadSplit.length<3){
-								//fix for date "first of the month"; ex: "Sep 2018"
-								dateRead=dateReadSplit[0]+' 1, '+dateReadSplit[1];
-							}
-							try {
-								book['dateRead']=new Date(Date.parse(dateRead));
-								year=book['dateRead'].getFullYear();
-							}catch(error){
-								console.error(error,dateRead,book['dateRead']);
-								_debugLog('_bookshelvesViewer dateRead not found',dateRead,book['dateRead'],el,year);
-							}
+						//get date read, date added
+						if (dateRead){dateRead=extractDate('dateRead',dateRead);}
+						if (dateAdded){dateAdded=extractDate('dateAdded',dateAdded);}
+						//identify the year for this book
+						if (_BSD.shelfAnalyzeCurrent.shelf==='read'){
+							if (book['dateRead']){year=book['dateRead'].getFullYear();}
+						}else{
+							if (book['dateAdded']){year=book['dateAdded'].getFullYear();}
 						}
 						_BSD.years[year]=(_BSD.years[year] || 0)+1;
+
 						//get shelves for this book
 						el.find('td.shelves').find('a.shelfLink').each(function(){
 							var shelf=$(this).text();
@@ -1754,6 +1842,7 @@ bisogna aggiungere "if" che sia visibile in questo momento
 						//add data-attribute to element
 						el.data({
 							'date-read':	book['dateRead'],
+							'date-added':	book['dateAdded'],
 							'year':			year,
 							'shelves':		book.shelves
 						})
@@ -1865,7 +1954,8 @@ bisogna aggiungere "if" che sia visibile in questo momento
 				rightCol=$('#rightCol'),
 				filterYear,yearsArray=[],year,
 				shelvesContainer=$('#shelvesSection'),
-				booksTable=$('#books');
+				booksTable=$('#books'),
+				shelfExclude,shelfExcludeField;
 
 			//STYLE
 			if (!head.find('style[data-samo]').length){
@@ -1950,7 +2040,8 @@ bisogna aggiungere "if" che sia visibile in questo momento
 				//shelf with priority
 				var priority={
 						'read':			1,
-						'my_favorites':	2
+						'to-read':		2,
+						'my_favorites':	3
 					};
 				if (a in priority){
 					if (b in priority){
@@ -1968,9 +2059,17 @@ bisogna aggiungere "if" che sia visibile in questo momento
 			_bookshelvesViewer_displayShelves();
 			//exclude shelves
 			if (samoGoodreadsUtility['excludeShelves']){
-				for (var who in samoGoodreadsUtility['excludeShelves']){
-					if (samoGoodreadsUtility['excludeShelves'][who]){
-						controlsExcludeInputs.filter('.'+who).val(samoGoodreadsUtility['excludeShelves'][who]);
+				for (var shelf in samoGoodreadsUtility['excludeShelves']){
+					if (shelf===_BSD.shelfAnalyzeCurrent.shelf){	//ex: "to-read"
+						shelfExclude=samoGoodreadsUtility['excludeShelves'][shelf];
+						for (var who in shelfExclude){
+							if (shelfExclude[who]){
+								shelfExcludeField=who==='s' ? 'starts'
+												: who==='c' ? 'contains'
+												: who==='e' ? 'ends' : '';
+								controlsExcludeInputs.filter('.'+shelfExcludeField).val(shelfExclude[who]);
+							}
+						}
 					}
 				}
 				controlsExcludeInputs.eq(0).change();
@@ -2095,7 +2194,7 @@ la libreria "read" si potrebbe spostare sopra a filtri years
 				?	= 
 			*/
 			var book,
-				shelves,dateRead,year,
+				shelves,dateRead,dateAdded,year,
 				filters={	//filters applied
 					years:	_BSD.yearA.filter('.selected'),
 					shelves:_BSD.shelvesA.filter('.selected')
@@ -2110,6 +2209,7 @@ la libreria "read" si potrebbe spostare sopra a filtri years
 				shelves=book.data('shelves');
 				year=book.data('year');
 //				dateRead=book.data('dateRead');
+//				dateAdded=book.data('dateAdded');
 
 				//APPLY FILTERS
 				ok=!filters.years.length;
@@ -2349,6 +2449,17 @@ verifica di richiamo una volta sola, a meno che non vada in errore (es: per conn
 
 			/*****   BOOKSHELVES VIEWER   ************************************************************/
 			case 'bookshelvesViewer':
+				_BSD_shelfAnalyze=$('<select/>',{'style':'background: #ececb6;float:right;'});
+				for (var i=0;i<_BSD.shelvesAnalyze.length;i++){
+					_BSD_shelfAnalyze.append(
+/*TODO
+valore di default 
+	da samoGoodreadsUtility
+*/
+						$('<option/>',{'value':_BSD.shelvesAnalyze[i].name,'data-index':i})
+						.html(_BSD.shelvesAnalyze[i].name)
+					);
+				}
 				left
 				.append(
 					btn.css({
@@ -2361,7 +2472,7 @@ verifica di richiamo una volta sola, a meno che non vada in errore (es: per conn
 						//search bookshelves data
 						results.addClass('bookshelvesViewer');
 						_headerBookshelves_Counters=results.empty().append(_imgLoading()).show('slow');
-						return _bookshelvesViewer();
+						return _bookshelvesViewer(_BSD_shelfAnalyze.find('option:selected').data('index'));
 					})
 				);
 				right
@@ -2369,7 +2480,8 @@ verifica di richiamo una volta sola, a meno che non vada in errore (es: per conn
 					$('<div/>',{'style':'font-weight:bold'})
 					.html('Bookshelves viewer')
 				)
-				.append($('<small/>').html('&nbsp;'));
+				.append($('<small/>').html('&nbsp;'))
+				.append(_BSD_shelfAnalyze);
 				break;
 			}
 			return $('<div/>',{
@@ -2472,6 +2584,21 @@ verifica di richiamo una volta sola, a meno che non vada in errore (es: per conn
 
 				//bookshelves viewer
 				options.append(_menuOptionsButton('bookshelvesViewer'));
+
+			//PAGE "Favorites Genres"; ex: https://www.goodreads.com/genres
+			}else if ($('.mainContent h1').html()==='Genres'){
+				_pageType=_PAGE_TYPE_FAVORITES_GENRES;
+
+				//replace book
+				options.append(_menuOptionsButton('booksListLanguage'));
+
+			//PAGE "Favorites Genres\specific genre"; ex: https://www.goodreads.com/genres/art
+			}else if ($('.mainContent .leftContainer .breadcrumbs a').eq(0).html()==='Genres'
+ 					&& $('.mainContent .leftContainer .genreHeader').length){
+				_pageType=_PAGE_TYPE_FAVORITES_GENRES_SPECIFIC;
+
+				//replace book
+				options.append(_menuOptionsButton('booksListLanguage'));
 
 			//OTHER PAGES
 			}else{
