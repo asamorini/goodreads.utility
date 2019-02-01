@@ -21,7 +21,7 @@ Bookmarklet that add some utilities to Goodreads site https://www.goodreads.com/
       - you can change language by replacing the 'lang' value **ita** with one of this [languages](https://asamorini.github.io/goodreads.utility/docs/languages.txt)
       
       ```
-      javascript:var samoGoodreadsUtility={'lang':'ita','excludeShelves':{'read':{'s':'','c':'','e':''},'to-read':{'s':'','c':'','e':''}}};(function(){var s=document.createElement('SCRIPT');s.type='text/javascript';s.src='https://asamorini.github.io/goodreads.utility/dist/goodreads.utility.min.js';document.getElementsByTagName('head')[0].appendChild(s);})();
+      javascript:var samoGoodreadsUtility={'lang':'ita','shelvesNames':'','excludeShelves':{'read':{'s':'','c':'','e':''},'to-read':{'s':'','c':'','e':''}}};(function(){var s=document.createElement('SCRIPT');s.type='text/javascript';s.src='https://asamorini.github.io/goodreads.utility/dist/goodreads.utility.min.js';document.getElementsByTagName('head')[0].appendChild(s);})();
       ```
 2) and now, when you are visiting www.goodreads.com/ site
    - if you click the bookmark "Goodreads utility" a new menu will be shown
