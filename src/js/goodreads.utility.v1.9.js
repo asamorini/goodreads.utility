@@ -28,7 +28,14 @@ var samoGoodreadsUtility=samoGoodreadsUtility || {'lang':'ita'};	/*possible valu
 																					'c':	'',							-> contains
 																					'e':	''							-> ends
 																				}
-																			}
+																			},
+																			'shelvesNames':''			-> replace shelves names from "Shelves viewer"
+																												ex: "toread-|,toread_|,_|,-|"
+																													every replacing rules
+																														separated by ","
+																														composed by 2 parts, separated by "|":
+																															1) searching text
+																															2) [optional] replacing text
 																	*/
 (function($){
 	//-----------------   private methods   -----------------
@@ -1655,36 +1662,18 @@ debugger;
 				{
 					name:'Read',	//name as showed in "Shelf list" (left section of My Books page)
 					shelf:'read',
-					sort:'date_read'
+					sort:'date_read',
+					yearLabel:'date read',
+					booksNumber:0
 				},{
 					name:'Want to Read',	//name as showed in "Shelf list" (left section of My Books page)
 					shelf:'to-read',
-					sort:'date_added'
+					sort:'date_added',
+					yearLabel:'date added',
+					booksNumber:0
 				}
 			],
 			shelfAnalyzeCurrent:{},	//pointer to "shelvesAnalyze" array of the shelf currently analyzed
-			searching:	false,
-			searchingCounter:0,
-			searchingEl:null,
-			readShelfUrl:'',
-			pagesTot:1,
-			pagesCompleted:0,
-			searchesPageToLaunch:[],//array of "page" to launch to get ALL read books (page "1" stand for book 1-100, page "2" stand for book 101-200)
-			booksPerPage:{},	//temporary JSON of book element and shelves (after retrieving all pages, they are moved to "books" variable)
-			books:[],			//array of book element and shelves
-			visibleColumns:[],	//column names visible
-			columnsHeader:null,
-			shelves:{},			//all shelves data
-			shelvesNames:[],	//all shelves names (for sorting purpose)
-			years:{},			//years in book
-			//DOM cache
-			bookShowed:null,
-			shelvesList:null,
-			shelvesA:null,
-			yearContainer:null,
-			yearA:null,
-			booksContainer:null,
-			booksRows:null
 		},
 
 		//BOOKSHELVES VIEWER: execute
@@ -1692,45 +1681,86 @@ debugger;
 			/*Input parameters:
 				shelfAnalyzeIndex	= index for "shelvesAnalyze" array of the shelf we want to analyze
 			*/
-			//initial search
 			if (_BSD.searching){return;}
+			//INITIALIZE SEARCH
 			_BSD.shelfAnalyzeCurrent=_BSD.shelvesAnalyze[shelfAnalyzeIndex];
 			_BSD.searching=true;
 			_BSD.searchingCounter=0;
 			_BSD.pagesTot=0;
+			_BSD.pagesCompleted=0;
+			_BSD.searchesPageToLaunch=[];//array of "page" to launch to get ALL read books (page "1" stand for book 1-100, page "2" stand for book 101-200)
+			_BSD.booksPerPage={};	//temporary JSON of book element and shelves (after retrieving all pages, they are moved to "books" variable)
+			_BSD.books=[];			//array of book element and shelves
+			_BSD.visibleColumns=[];	//column names visible
+			_BSD.columnsHeader=null;
+			_BSD.shelves={};			//all shelves data
+			_BSD.shelvesNames=[];	//all shelves names (for sorting purpose)
+			_BSD.years={};			//years in book
+			//DOM cache
+			_BSD.bookShowed=null;
+			_BSD.shelvesList=null;
+			_BSD.shelvesA=null;
+			_BSD.yearContainer=null;
+			_BSD.yearA=null;
+			_BSD.booksContainer=null;
+			_BSD.booksRows=null;
 			_BSD.readShelfUrl=$('div.siteHeader > div').data('reactProps').myBooksUrl;	//ex: "/review/list/35318441"
+			_BSD.searchingEl=null;
 
 			//identify list of pages to get, and launch searches simultaneously
-			$('#paginatedShelfList .userShelf > a:not(.multiLink)').each(function(index,el){
-				var shelf=jQuery(el).html(),	//ex: "Read  ‎(1003)"	ATTENTION, there is a "&lrm;" after the name
-					shelfEl=shelf.split('('),	//['Want to Read ','519)']
-					booksNumber;
-				//remove character "&lrm;" after shelf name (the split function has replaced "&lrm;" with "")
-				shelfEl[0]=shelfEl[0].slice(0,shelfEl[0].length-1);
-				if (shelfEl[0].trim()===_BSD.shelfAnalyzeCurrent.name){	//ex: "Read"
-					booksNumber=+shelfEl[1].replace(')','');	//ex: 1003
+			_bookshelvesViewer_getBooksNumber();
+			if (_BSD.shelfAnalyzeCurrent.booksNumber){
 
-					_BSD.searchingEl=$('<div/>',{'style':'color:red'}).appendTo(_headerBookshelves_Counters);
+				_BSD.searchingEl=$('<div/>',{'style':'color:red'}).appendTo(_headerBookshelves_Counters);
 
-					//total number of pages
-					_BSD.pagesTot=Math.floor(booksNumber / 100) + (booksNumber % 100===0 ? 0 : 1);	//ex: 11
-					for (var i=1;i<=_BSD.pagesTot;i++){	//from page 1 to end
-						_BSD.searchesPageToLaunch.push(i);
-						_BSD.booksPerPage[i]=[];	//initialize books array for this page
-					}
-					//start searching next books pages
-					for (var i=0,uI=_BSD.searchesPageToLaunch.length;i<uI;i++){
-						_bookshelvesViewer_search(_BSD.searchesPageToLaunch.shift());
-						if (i===10){break;}	//maximum 10 pages simultaneously
-					}
-					return false;
+				//total number of pages
+				_BSD.pagesTot=Math.floor(_BSD.shelfAnalyzeCurrent.booksNumber / 100) + (_BSD.shelfAnalyzeCurrent.booksNumber % 100===0 ? 0 : 1);	//ex: 11
+				for (var i=1;i<=_BSD.pagesTot;i++){	//from page 1 to end
+					_BSD.searchesPageToLaunch.push(i);
+					_BSD.booksPerPage[i]=[];	//initialize books array for this page
 				}
-			});
+				//start searching next books pages
+				for (var i=0,uI=_BSD.searchesPageToLaunch.length;i<uI;i++){
+					_bookshelvesViewer_search(_BSD.searchesPageToLaunch.shift());
+					if (i===10){break;}	//maximum 10 pages simultaneously
+				}
+			}
 			if (!_BSD.pagesTot){
 				_headerBookshelves_Counters.find('.samoLoading').remove();
 				_headerBookshelves_Counters.append($('<div/>',{'style':'color:red'}).html('Unable to retrieve list of '+_BSD.shelfAnalyzeCurrent.name+' pages'));
 				_BSD.searching=false;
 			}
+		},
+
+
+		//BOOKSHELVES VIEWER: get books number for shelves to analyze
+		_bookshelvesViewer_getBooksNumber=function(){
+			/*Input parameters:
+				?	= 
+			*/
+			var allShelvesBooksCounted=true;
+			//check if we have already get books number for all shelves to analyze
+			for (var i=0;i<_BSD.shelvesAnalyze.length;i++){	//check if we already had retrieved books number
+				if (!_BSD.shelvesAnalyze[i].booksNumber){
+					allShelvesBooksCounted=false;
+					break;
+				}
+			}
+			if (allShelvesBooksCounted){return true;}
+
+			//SEARCH BOOKS NUMBER
+			$('#paginatedShelfList .userShelf > a:not(.multiLink)').each(function(index,el){
+				var shelf=jQuery(el).html(),	//ex: "Read  ‎(1003)"	ATTENTION, there is a "&lrm;" after the name
+					shelfEl=shelf.split('(');	//['Want to Read ','519)']
+				//remove character "&lrm;" after shelf name (the split function has replaced "&lrm;" with "")
+				shelfEl[0]=shelfEl[0].slice(0,shelfEl[0].length-1).trim();
+				//book numbers for shelves to analyzed
+				for (var i=0;i<_BSD.shelvesAnalyze.length;i++){
+					if (shelfEl[0]===_BSD.shelvesAnalyze[i].name){	//ex: "Read"
+						_BSD.shelvesAnalyze[i].booksNumber=+shelfEl[1].replace(')','');	//ex: 1003
+					}
+				}
+			});
 		},
 
 		//BOOKSHELVES VIEWER: search
@@ -1746,6 +1776,7 @@ debugger;
 					view:		'table',
 					sort:		_BSD.shelfAnalyzeCurrent.sort,	//ex: "date_read"
 //					order:		'a',	//ascending
+					order:		'd',	//descending
 					per_page:	100,
 					page:		page
 				},
@@ -1954,6 +1985,7 @@ bisogna aggiungere "if" che sia visibile in questo momento
 				rightCol=$('#rightCol'),
 				filterYear,yearsArray=[],year,
 				shelvesContainer=$('#shelvesSection'),
+				shelvesHeader=shelvesContainer.find('.sectionHeader'),
 				booksTable=$('#books'),
 				shelfExclude,shelfExcludeField;
 
@@ -1968,7 +2000,7 @@ bisogna aggiungere "if" che sia visibile in questo momento
 			if (!_BSD.bookShowed.length){
 				_BSD.bookShowed=$('<span/>',{'class':'h1Shelf'}).appendTo(header.find('h1'));
 			}
-			_BSD.bookShowed.html(_BSD.books.length).css('padding-right','5px');
+			_BSD.bookShowed.html(_BSD.books.length+' '+_BSD.shelfAnalyzeCurrent.name).css('padding-right','5px');
 			//search book: remove original version and add new one
 			controls.find('.myBooksSearch').empty();
 /*TODO
@@ -2007,7 +2039,7 @@ bisogna aggiungere "if" che sia visibile in questo momento
 						controlsExcludeInputs.each(function(index,input){
 							var who=input.className,
 								input=$(input),
-								value=input.val().trim();
+								value=input.val().trim().toLowerCase();
 							if (value!==''){
 								if (who==='starts'){
 									if (shelf.startsWith(value)){exclude=true;return false;}
@@ -2031,10 +2063,51 @@ bisogna aggiungere "if" che sia visibile in questo momento
 
 			//LEFT PART: BOOKSHELVES
 			//remove original leftpart
-			shelvesContainer.find('.sectionHeader a').remove();	//"Edit bookshelves" link
+			shelvesHeader.find('a').remove();	//"Edit bookshelves" link
 			shelvesContainer.find('a').remove();	//"All" shelf link
 			_BSD.shelvesList=shelvesContainer.find('#paginatedShelfList').removeClass('stacked').empty();	//remove original bookshelves
 			leftCol.find('.stacked').remove();	//remove stacked shelves ("Add shelf")
+			//shelf names replace
+			if (!shelvesHeader.find('input').length){
+				shelvesHeader
+				.prepend(
+					$('<div/>',{'style':'display: table;'})
+					.append($('<span/>',{'style':'float: right;font-weight: normal;'}).html('Display shelf name'))
+					.append($('<span/>',{'style':'float: right;font-weight: normal;font-size:10px;'}).html('(pattern: "search|replace,...")'))
+					.append(
+
+						//REPLACE SHELVES NAME
+						$('<input/>',{'type':'text','style':'float: right;width: 120px;'})
+						.val(samoGoodreadsUtility['shelvesNames'] || '')
+						.change(function(){
+							//iudentify rules
+							var namesRules=$(this).val().split(',')	//ex: ["toread-|","toread_|"]
+											.map(function(namesRule){
+												if (namesRule===''){return {}};
+												namesRule=namesRule.split('|');	//ex: ["toread-","|"]
+												return {
+													'search':	new RegExp(namesRule[0],'g'),
+													'replace':	namesRule[1] || ''
+												};
+											}),
+								el,
+								shelf;
+							for (var i=0;i<_BSD.shelvesA.length;i++){
+								//calculate new name
+								el=$(_BSD.shelvesA[i]);
+								shelf=el.data('name');
+								for (var k=0;k<namesRules.length;k++){
+									if ('search' in namesRules[k]){
+										shelf=shelf.replace(namesRules[k]['search'],namesRules[k]['replace']);
+									}
+								}
+								//replace new name
+								el.find('span').eq(0).html(shelf);
+							}
+						})
+					)
+				)
+			}
 			//compose bookshelves list
 			_BSD.shelvesNames.sort(function(a,b){
 				//shelf with priority
@@ -2098,7 +2171,7 @@ aggiungere tasto "reset filters (show all)"
 			}
 			_BSD.yearA=filterYear.find('a');
 			_BSD.yearContainer=rightCol.find('#reviewPagination');
-			_BSD.yearContainer.empty().append(' ').append('Years: ').append(filterYear);
+			_BSD.yearContainer.empty().append(' ').append('Years ('+_BSD.shelfAnalyzeCurrent.yearLabel+'):').append(filterYear);
 			_BSD.yearContainer.parent().removeClass('right');
 			
 			//set header book list
@@ -2142,7 +2215,7 @@ la libreria "read" si potrebbe spostare sopra a filtri years
 							'class':	shelf.length>21 ? 'longShelf' : '',
 							'data-name':shelf
 						})
-						.append(shelf)
+						.append($('<span/>').html(shelf))
 						.append(_bookshelvesViewer_layoutAddCounter(_BSD.shelves[shelf]['tot']))
 						.click(function(){
 							_bookshelvesViewer_clickFilter($(this));
