@@ -2067,6 +2067,28 @@ bisogna aggiungere "if" che sia visibile in questo momento
 			shelvesContainer.find('a').remove();	//"All" shelf link
 			_BSD.shelvesList=shelvesContainer.find('#paginatedShelfList').removeClass('stacked').empty();	//remove original bookshelves
 			leftCol.find('.stacked').remove();	//remove stacked shelves ("Add shelf")
+			//compose bookshelves list
+			_BSD.shelvesNames.sort(function(a,b){
+				//shelf with priority
+				var priority={
+						'read':			1,
+						'to-read':		2,
+						'my_favorites':	3
+					};
+				if (a in priority){
+					if (b in priority){
+						return priority[a]-priority[b];
+					}
+					return -1;
+				}else if (b in priority){
+					return 1;
+				}
+				//ascending alphabetically
+				if (a < b) {return -1;}
+				if (a > b) {return 1;}
+				return 0;
+			});
+			_bookshelvesViewer_displayShelves();
 			//shelf names replace
 			if (!shelvesHeader.find('input').length){
 				shelvesHeader
@@ -2108,28 +2130,7 @@ bisogna aggiungere "if" che sia visibile in questo momento
 					)
 				)
 			}
-			//compose bookshelves list
-			_BSD.shelvesNames.sort(function(a,b){
-				//shelf with priority
-				var priority={
-						'read':			1,
-						'to-read':		2,
-						'my_favorites':	3
-					};
-				if (a in priority){
-					if (b in priority){
-						return priority[a]-priority[b];
-					}
-					return -1;
-				}else if (b in priority){
-					return 1;
-				}
-				//ascending alphabetically
-				if (a < b) {return -1;}
-				if (a > b) {return 1;}
-				return 0;
-			});
-			_bookshelvesViewer_displayShelves();
+			shelvesHeader.find('input').change();
 			//exclude shelves
 			if (samoGoodreadsUtility['excludeShelves']){
 				for (var shelf in samoGoodreadsUtility['excludeShelves']){
