@@ -2330,7 +2330,7 @@ la libreria "read" si potrebbe spostare sopra a filtri years
 
 				//update shelf counter
 				foundNumber=counters['shelves'][shelf] || 0;
-				el.find('span').html(foundNumber);
+				el.find('span.samoShelfCounter').html(foundNumber);
 				//show\hide shelf
 				if (foundNumber || el.hasClass('selected')){
 					el.show();
