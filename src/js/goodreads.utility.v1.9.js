@@ -2125,6 +2125,11 @@ bisogna aggiungere "if" che sia visibile in questo momento
 								}
 								//replace new name
 								el.find('span').eq(0).html(shelf);
+								if (shelf.length>21){
+									el.addClass('longShelf');
+								}else{
+									el.removeClass('longShelf');
+								}
 							}
 						})
 					)
