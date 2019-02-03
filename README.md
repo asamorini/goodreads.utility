@@ -1,4 +1,4 @@
-# :books: "SAMO" Goodreads Utility (version 1.9)
+# :books: "SAMO" Goodreads Utility (version 2.0)
 Bookmarklet that add some utilities to Goodreads site https://www.goodreads.com/
 
 ## Table of contents
@@ -93,7 +93,6 @@ Bookmarklet that add some utilities to Goodreads site https://www.goodreads.com/
    * filters
       * add "search book" text field to filter on title\author
       * add "reset filters (show all)" button
-      * add "AND/OR" switch (now currently search is by AND operator between shelves)
    * bookshelves list
       * tree representation\aggregation, ex for my library
          * g-Genre 999
@@ -132,6 +131,7 @@ Bookmarklet that add some utilities to Goodreads site https://www.goodreads.com/
 | 2019.01.20  | 1.7 | Bookshelves viewer
 | 2019.01.23  | 1.8 | Bookshelves viewer (increased speed, added sequence number on books list, added tooltip on mouseover of shelves that show number of read books per years, added possibility to exclude shelves)
 | 2019.01.24  | 1.9 | Search for book editions on specific language (possibility to filter book format, ex: paperback\ebook\audiobook\...)
+| 2019.02.03  | 2.0 | Bookshelves viewer (added conditions between shelves buttons "AND\OR", and possibility to and customizazion of shelves names display)
 ***
 
 
