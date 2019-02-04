@@ -131,7 +131,7 @@ Bookmarklet that add some utilities to Goodreads site https://www.goodreads.com/
 | 2019.01.20  | 1.7 | Bookshelves viewer
 | 2019.01.23  | 1.8 | Bookshelves viewer (increased speed, added sequence number on books list, added tooltip on mouseover of shelves that show number of read books per years, added possibility to exclude shelves)
 | 2019.01.24  | 1.9 | Search for book editions on specific language (possibility to filter book format, ex: paperback\ebook\audiobook\...)
-| 2019.02.03  | 2.0 | Bookshelves viewer (added conditions between shelves buttons "AND\OR", and possibility to and customizazion of shelves names display)
+| 2019.02.03  | 2.0 | Bookshelves viewer (added conditions between shelves buttons "AND\OR", and possibility to and customizazion of shelves names display, added rating and authors filters)
 ***
 
 
