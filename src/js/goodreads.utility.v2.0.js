@@ -1590,7 +1590,6 @@ evidenziare eventuale libro che è la pagina attualmente aperta
 											}
 											book.data('format',bookFormat);	//add this info for filter purpose
 											//check if user has already selected a filter format
-debugger;
 											if (_bookEditionsLanguage_FormatFilter && _bookEditionsLanguage_FormatFilter!==bookFormat){
 												book.hide();
 											}
@@ -1693,16 +1692,16 @@ debugger;
 			_BSD.books=[];			//array of book element and shelves
 			_BSD.visibleColumns=[];	//column names visible
 			_BSD.columnsHeader=null;
-			_BSD.shelves={};			//all shelves data
-			_BSD.shelvesNames=[];	//all shelves names (for sorting purpose)
-			_BSD.years={};			//years in book
+			//filters
+			_BSD.f={			//filters
+				SHELVES:	_bookshelvesViewer_filterInitialize(),
+				YEARS:		_bookshelvesViewer_filterInitialize(),
+				RATING:		_bookshelvesViewer_filterInitialize(),
+				AUTHORS:	_bookshelvesViewer_filterInitialize()
+			};
 			//DOM cache
 			_BSD.bookShowed=null;
-			_BSD.shelvesList=null;
-			_BSD.shelvesA=null;
 			_BSD.shelvesCondition='AND';
-			_BSD.yearContainer=null;
-			_BSD.yearA=null;
 			_BSD.booksContainer=null;
 			_BSD.booksRows=null;
 			_BSD.readShelfUrl=$('div.siteHeader > div').data('reactProps').myBooksUrl;	//ex: "/review/list/35318441"
@@ -1733,6 +1732,19 @@ debugger;
 			}
 		},
 
+		//INITIALIZE FILTER OBJECT PROPERTIES
+		_bookshelvesViewer_filterInitialize=function(){
+			/*Input parameters:
+				?	= ?
+			Return value:	JSON object with properties for filter
+			*/
+			return {
+				DOMcontainer:null,	//jQuery container
+				DOManchors:null,	//jQuery array elements <a>
+				names:[],			//array of filter values name (for sorting purpose); ex: for shelves "g_biography"
+				counters:{}			//json with book counter for every filter {"filter value":number of books}
+			};
+		},
 
 		//BOOKSHELVES VIEWER: get books number for shelves to analyze
 		_bookshelvesViewer_getBooksNumber=function(){
@@ -1829,6 +1841,8 @@ bisogna aggiungere "if" che sia visibile in questo momento
 							dateRead=el.find('td.date_read .date_read_value').html(),	//ex: "Sep 13, 2018"
 							dateAdded=el.find('td.date_added div.value span').html(),	//ex: "Sep 13, 2018"
 							year=0,
+							rating=el.find('td.rating div.stars').data('rating'),
+							author=el.find('td.author a').text()
 							extractDate=function(key,dateValue){
 								var dateSplit=dateValue.split(' ');
 								if (dateSplit.length<3){
@@ -1854,7 +1868,7 @@ bisogna aggiungere "if" che sia visibile in questo momento
 						}else{
 							if (book['dateAdded']){year=book['dateAdded'].getFullYear();}
 						}
-						_BSD.years[year]=(_BSD.years[year] || 0)+1;
+						_BSD.f.YEARS.counters[year]=(_BSD.f.YEARS.counters[year] || 0)+1;
 
 						//get shelves for this book
 						el.find('td.shelves').find('a.shelfLink').each(function(){
@@ -1863,20 +1877,26 @@ bisogna aggiungere "if" che sia visibile in questo momento
 
 							//CALCULATE SHELVES COUNTER
 							//total
-							if (!(shelf in _BSD.shelves)){
-								_BSD.shelves[shelf]={'tot':0};
-								_BSD.shelvesNames.push(shelf);
+							if (!(shelf in _BSD.f.SHELVES.counters)){
+								_BSD.f.SHELVES.counters[shelf]={'tot':0};
+								_BSD.f.SHELVES.names.push(shelf);
 							}
-							_BSD.shelves[shelf]['tot']=_BSD.shelves[shelf]['tot']+1;
+							_BSD.f.SHELVES.counters[shelf]['tot']=_BSD.f.SHELVES.counters[shelf]['tot']+1;
 							//total by year
-							_BSD.shelves[shelf][year]=(_BSD.shelves[shelf][year] || 0)+1;
+							_BSD.f.SHELVES.counters[shelf][year]=(_BSD.f.SHELVES.counters[shelf][year] || 0)+1;
 						});
+						//rating
+						_BSD.f.RATING.counters[rating]=(_BSD.f.RATING.counters[rating] || 0)+1;
+						//author
+						_BSD.f.AUTHORS.counters[author]=(_BSD.f.AUTHORS.counters[author] || 0)+1;
 						//add data-attribute to element
 						el.data({
 							'date-read':	book['dateRead'],
 							'date-added':	book['dateAdded'],
 							'year':			year,
-							'shelves':		book.shelves
+							'shelves':		book.shelves,
+							'rating':		rating,	//ex: "4"
+							'author':		author	//ex: "Tolstoy, Lev"
 						})
 						//cache book data
 						_BSD.booksPerPage[page].push(book);
@@ -1918,7 +1938,35 @@ bisogna aggiungere "if" che sia visibile in questo momento
 					'.samoHidden{',
 						'display: none !important;',
 					'}',
-					'a.samoFilterYear{',
+					'div.samoFilterAuthorsContainer{',
+						'position: absolute;',
+						'top: 0;',
+						'right: -13px;',
+						'z-index: 1;',
+						'border-top-left-radius: 8px;',
+						'border-bottom-left-radius: 8px;',
+						'border: 2px solid #bdbd8e;',
+						'background: #fff;',
+						'width: 200px;',
+						'padding: 10px;',
+						'display: none;',
+					'}',
+					'a#samoAuthorsButton{',
+						'border-radius: 5px;',
+						'padding: 5px;',
+						'display: inline-block;',
+						'-moz-transition: all 1s ease-in;',
+						'-webkit-transition: all 1s ease-in;',
+						'-o-transition: all 1s ease-in;',
+						'transition: all 1s ease-in;',
+					'}',
+					'a#samoAuthorsButton.selected{',
+						'background: #00635d;',
+						'color: #fff;',
+					'}',
+					'a.samoFilterYear,',
+					'a.samoFilterRating,',
+					'a.samoFilterAuthor{',
 						'background: #f4f1ea;',
 						'margin: 6px 12px 0 0;',
 						'padding: 2px 0px 1px 6px;',
@@ -1931,10 +1979,19 @@ bisogna aggiungere "if" che sia visibile in questo momento
 						'-o-transition: all 1s ease-in;',
 						'transition: all 1s ease-in;',
 					'}',
-					'a.samoFilterYear.selected{',
+					'a.samoFilterAuthor{',
+						'background: #fff;',
+						'display: block;',
+					'}',
+					'a.samoFilterYear.selected,',
+					'a.samoFilterRating.selected,',
+					'a.samoFilterAuthor.selected{',
 						'background: #00635d;',
 						'color: #fff;',
 						'font-weight: normal !important;',
+					'}',
+					'a.samoFilterRating{',
+						'color: #00635d;',
 					'}',
 					'span.samoShelfCounter{',
 						'background: #e0e0c5;',
@@ -1995,7 +2052,8 @@ bisogna aggiungere "if" che sia visibile in questo momento
 				controlsExcludeInputs,
 				leftCol=$('#leftCol'),
 				rightCol=$('#rightCol'),
-				filterYear,yearsArray=[],year,
+				filtersContainer,
+				filterDOM,filterValues=[],filterValue,
 				shelvesContainer=$('#shelvesSection'),
 				shelvesHeader=shelvesContainer.find('.sectionHeader'),
 				booksTable=$('#books'),
@@ -2049,9 +2107,9 @@ bisogna aggiungere "if" che sia visibile in questo momento
 				controlsExcludeInputs.change(function(){
 					var exclude,el,shelf;
 					//exclude\hide shelves
-					for (var i=0;i<_BSD.shelvesA.length;i++){
+					for (var i=0;i<_BSD.f.SHELVES.DOManchors.length;i++){
 						exclude=false;
-						el=$(_BSD.shelvesA[i]);
+						el=$(_BSD.f.SHELVES.DOManchors[i]);
 						shelf=el.data('name');
 						controlsExcludeInputs.each(function(index,input){
 							var who=input.className,
@@ -2100,9 +2158,9 @@ bisogna aggiungere "if" che sia visibile in questo momento
 											}),
 								el,
 								shelf;
-							for (var i=0;i<_BSD.shelvesA.length;i++){
+							for (var i=0;i<_BSD.f.SHELVES.DOManchors.length;i++){
 								//calculate new name
-								el=$(_BSD.shelvesA[i]);
+								el=$(_BSD.f.SHELVES.DOManchors[i]);
 								shelf=el.data('name');
 								for (var k=0;k<namesRules.length;k++){
 									if ('search' in namesRules[k]){
@@ -2128,7 +2186,7 @@ bisogna aggiungere "if" che sia visibile in questo momento
 			//remove original leftpart
 			shelvesHeader.find('a').remove();	//"Edit bookshelves" link
 			shelvesContainer.find('a').remove();	//"All" shelf link
-			_BSD.shelvesList=shelvesContainer.find('#paginatedShelfList').removeClass('stacked').empty();	//remove original bookshelves
+			_BSD.f.SHELVES.DOMcontainer=shelvesContainer.find('#paginatedShelfList').removeClass('stacked').empty();	//remove original bookshelves
 			leftCol.find('.stacked').remove();	//remove stacked shelves ("Add shelf")
 			//"AND\OR" conndition between shelves
 			if (!shelvesHeader.find('div.samoConditionShelves').length){
@@ -2155,7 +2213,7 @@ bisogna aggiungere "if" che sia visibile in questo momento
 				);
 			}
 			//compose bookshelves list
-			_BSD.shelvesNames.sort(function(a,b){
+			_BSD.f.SHELVES.names.sort(function(a,b){
 				//shelf with priority
 				var priority={
 						'read':			1,
@@ -2196,32 +2254,110 @@ bisogna aggiungere "if" che sia visibile in questo momento
 				controlsExcludeInputs.eq(0).change();
 			}
 
-			//RIGHT PART: BOOKS AND YEARS FILTERS
+			//RIGHT PART: BOOKS AND OTH£R  FILTERS (years, rating, authors)
+			//filter: remove original "pagination" in order to use for filters field
+			filtersContainer=rightCol.find('#reviewPagination').empty().css('display','table');
+			filtersContainer.parent().removeClass('right');
+			//"reset" filters
 /*TODO
 aggiungere tasto "reset filters (show all)"
 */
-			//replace pagination with year filter
-			filterYear=$('<div/>');
-			for (var year in _BSD.years){
-				yearsArray.push(year);
+			//filter: years
+			filterDOM=$('<div/>',{'style':'display:table-cell;'});
+			for (var filterValue in _BSD.f.YEARS.counters){
+				filterValues.push(filterValue);
 			}
-			yearsArray.sort(function(a, b){return b-a});	//descending
-			for (var i=0;i<yearsArray.length;i++){
-				year=yearsArray[i]
-				filterYear.append(
-					$('<a/>',{'class':'samoFilterYear','data-year':year})
-					.append(year)
-					.append(_bookshelvesViewer_layoutAddCounter(_BSD.years[year]))
+			filterValues.sort(function(a, b){return b-a});	//descending
+			for (var i=0;i<filterValues.length;i++){
+				filterValue=filterValues[i]
+				filterDOM.append(
+					$('<a/>',{'class':'samoFilterYear','data-year':filterValue})
+					.append(filterValue)
+					.append(_bookshelvesViewer_layoutAddCounter(_BSD.f.YEARS.counters[filterValue]))
 					.click(function(){
 						_bookshelvesViewer_clickFilter($(this));
 					})
 				);
 			}
-			_BSD.yearA=filterYear.find('a');
-			_BSD.yearContainer=rightCol.find('#reviewPagination');
-			_BSD.yearContainer.empty().append(' ').append('Years ('+_BSD.shelfAnalyzeCurrent.yearLabel+'):').append(filterYear);
-			_BSD.yearContainer.parent().removeClass('right');
-			
+			_BSD.f.YEARS.DOManchors=filterDOM.find('a');
+			_BSD.f.YEARS.DOMcontainer=$('<div/>',{'style':'display:table-row'})
+			.append(
+				$('<div/>',{'style':'display:table-cell;min-width: 70px;'}).html('Years')
+				.append($('<div/>',{'style':'font-size: 12px;'}).html('('+_BSD.shelfAnalyzeCurrent.yearLabel+')'))
+			)
+			.append(filterDOM);
+			filtersContainer.append(_BSD.f.YEARS.DOMcontainer);
+			//filter: rating
+			_BSD.f.RATING.DOManchors=$();	//empty jQuery element
+			if (_BSD.shelfAnalyzeCurrent.shelf==='read'){
+				filterDOM=$('<div/>',{'style':'display:table-cell;'});
+				for (var filterValue=0;filterValue<6;filterValue++){
+					if (filterValue===0 && !_BSD.f.RATING.counters[filterValue]){continue;}	//"not rated" value  display only if there are "not rated" books
+					filterDOM.append(
+						$('<a/>',{'class':'samoFilterRating'+(filterValue in _BSD.f.RATING.counters ? '' : ' disabled'),'data-rating':filterValue})
+						.append(filterValue ? (filterValue+' stars') : 'not rated')
+						.append(_bookshelvesViewer_layoutAddCounter(_BSD.f.RATING.counters[filterValue] || 0))
+						.click(function(){
+							_bookshelvesViewer_clickFilter($(this));
+						})
+					);
+				}
+				_BSD.f.RATING.DOManchors=filterDOM.find('a:not(.disabled)');
+				_BSD.f.RATING.DOMcontainer=$('<div/>',{'style':'display:table-row'})
+				.append($('<div/>',{'style':'display:table-cell;min-width: 70px;'}).html('Rating'))
+				.append(filterDOM);
+				filtersContainer.append(_BSD.f.RATING.DOMcontainer);
+			}
+			//filter: authors
+			filterValues=[];
+			filterDOM=$('<div/>',{'class':'samoFilterAuthorsContainer'});
+			for (var filterValue in _BSD.f.AUTHORS.counters){
+				filterValues.push(filterValue);
+			}
+			filterValues.sort();	//ascending
+			for (var i=0;i<filterValues.length;i++){
+				filterValue=filterValues[i]
+				filterDOM.append(
+					$('<a/>',{'class':'samoFilterAuthor','data-author':filterValue})
+					.append(filterValue)
+					.append(_bookshelvesViewer_layoutAddCounter(_BSD.f.AUTHORS.counters[filterValue]))
+					.click(function(){
+						_bookshelvesViewer_clickFilter($(this));
+					})
+				);
+			}
+			_BSD.f.AUTHORS.DOManchors=filterDOM.find('a');
+			_BSD.f.AUTHORS.DOMcontainer=$('<div/>',{'style':'display:table-row'})
+			.append(
+				$('<div/>',{'style':'display:table-cell;min-width: 70px;'})
+				.append(
+					$('<a/>',{'id':'samoAuthorsButton'}).html('Authors')
+					.click(function(){
+						var button=$(this);
+						if (button.hasClass('selected')){
+							button.removeClass('selected');
+						}else{
+							button.addClass('selected');
+						}
+						filterDOM.animate({width: 'toggle'});
+					})
+				)
+			)
+			.append(
+				$('<div/>',{'style':'display:table-cell;position: relative;width:100%;'})
+/*todo
+aggiungere
+		input ricerca autore
+				.append(
+				)
+*/
+				.append(filterDOM)
+			);
+			filtersContainer.append(_BSD.f.AUTHORS.DOMcontainer);
+			setTimeout(function(){
+				//automatically open author
+				_BSD.f.AUTHORS.DOMcontainer.find('#samoAuthorsButton').click();
+			},1000);
 			//set header book list
 			booksTable.find('#booksHeader').empty().append(_BSD.columnsHeader.html());
 			//remove original book
@@ -2247,16 +2383,16 @@ aggiungere tasto "reset filters (show all)"
 				?	= 
 			*/
 			var shelf;
-			for (var i=0;i<_BSD.shelvesNames.length;i++){
-				shelf=_BSD.shelvesNames[i];
+			for (var i=0;i<_BSD.f.SHELVES.names.length;i++){
+				shelf=_BSD.f.SHELVES.names[i];
 /*TODO
 visualizzazione a tree?
 la libreria "read" si potrebbe spostare sopra a filtri years
 */
-				_BSD.shelvesList.append(
+				_BSD.f.SHELVES.DOMcontainer.append(
 					$('<div/>',{
 						'class':'userShelf',
-						'title':_bookshelvesViewer_tooltipShelvesYearText(_BSD.shelves[shelf])
+						'title':_bookshelvesViewer_tooltipShelvesYearText(_BSD.f.SHELVES.counters[shelf])
 					})
 					.append(
 						$('<a/>',{
@@ -2264,14 +2400,14 @@ la libreria "read" si potrebbe spostare sopra a filtri years
 							'data-name':shelf
 						})
 						.append($('<span/>').html(shelf))
-						.append(_bookshelvesViewer_layoutAddCounter(_BSD.shelves[shelf]['tot']))
+						.append(_bookshelvesViewer_layoutAddCounter(_BSD.f.SHELVES.counters[shelf]['tot']))
 						.click(function(){
 							_bookshelvesViewer_clickFilter($(this));
 						})
 					)
 				);
 			}
-			_BSD.shelvesA=_BSD.shelvesList.find('a');
+			_BSD.f.SHELVES.DOManchors=_BSD.f.SHELVES.DOMcontainer.find('a');
 		},
 		
 		//BOOKSHELVES VIEWER: construct text to be used on tooltip over shelves
@@ -2315,26 +2451,31 @@ la libreria "read" si potrebbe spostare sopra a filtri years
 				?	= 
 			*/
 			var book,
-				shelves,dateRead,dateAdded,year,
+				shelves,dateRead,dateAdded,year,rating,author,
 				filters={	//filters applied
-					years:	_BSD.yearA.filter('.selected'),
-					shelves:_BSD.shelvesA.filter('.selected')
+					years:	_BSD.f.YEARS.DOManchors.filter('.selected'),
+					shelves:_BSD.f.SHELVES.DOManchors.filter('.selected'),
+					rating:	_BSD.f.RATING.DOManchors.filter('.selected'),
+					authors:_BSD.f.AUTHORS.DOManchors.filter('.selected')
 				},
 				ok,okNumber=0,atLeastOneFound,
-				filterYear,filterShelves,
+				filterYear,filterShelves,filterRating,filterAuthor,
 				el,
 				shelf,foundNumber,
-				counters={'years':{},'shelves':{}};	//shelves counters for this filters
+				counters={'years':{},'shelves':{},'rating':{},'authors':{}};	//shelves counters for this filters
+			
+			/**********   APPLY FILTERS **********************************************/
 			for (var i=0;i<_BSD.booksRows.length;i++){
 				book=$(_BSD.booksRows[i]);
 				shelves=book.data('shelves');
 				year=book.data('year');
 //				dateRead=book.data('dateRead');
 //				dateAdded=book.data('dateAdded');
+				rating=book.data('rating');
+				author=book.data('author');
 
-				//APPLY FILTERS
+				//YEARS filter
 				ok=!filters.years.length;
-				//years filter
 				for (var k=0;k<filters.years.length;k++){
 					filterYear=$(filters.years[k]).data('year');	//ex: "2018"
 					if (filterYear==year){
@@ -2342,7 +2483,7 @@ la libreria "read" si potrebbe spostare sopra a filtri years
 						break;
 					}
 				}
-				//shelves filter
+				//SHELVES filter
 				if (ok && filters.shelves.length){
 					if (_BSD.shelvesCondition==='OR'){atLeastOneFound=false;}
 					for (var k=0;k<filters.shelves.length;k++){
@@ -2360,27 +2501,53 @@ la libreria "read" si potrebbe spostare sopra a filtri years
 						if (!atLeastOneFound){ok=false;}
 					}
 				}
-				//show\hide book
+				//RATING filter
+				if (ok && filters.rating.length){
+					atLeastOneFound=false;
+					for (var k=0;k<filters.rating.length;k++){
+						filterRating=$(filters.rating[k]).data('rating');	//ex: "4"
+						if (filterRating==rating){
+							atLeastOneFound=true;
+							break;
+						}
+					}
+					if (!atLeastOneFound){ok=false;}
+				}
+				//AUTHORS filter
+				if (ok && filters.authors.length){
+					atLeastOneFound=false;
+					for (var k=0;k<filters.authors.length;k++){
+						filterAuthor=$(filters.authors[k]).data('author');	//ex: "Tolstoy, Lev"
+						if (filterAuthor==author){
+							atLeastOneFound=true;
+							break;
+						}
+					}
+					if (!atLeastOneFound){ok=false;}
+				}
+
+				//SHOW\HIDE BOOK
 				if (ok){
-//					book.show('slow');
 					book.show();
 					okNumber++;
 					//counters
-					counters['years'][year]=(counters['years'][year] || 0)+1;
 					for (var k=0;k<shelves.length;k++){
 						counters['shelves'][shelves[k]]=(counters['shelves'][shelves[k]] || 0)+1;
 					}
+					counters['years'][year]=(counters['years'][year] || 0)+1;
+					counters['rating'][rating]=(counters['rating'][rating] || 0)+1;
+					counters['authors'][author]=(counters['authors'][author] || 0)+1;
 				}else{
-//					book.hide('slow');
 					book.hide();
 				}
 			}
 			//display total number of books filtered
 			_BSD.bookShowed.html(okNumber);
 
-			//SHOW\HIDE SHELVES AND UPDATE COUNTERS
-			for (var i=0;i<_BSD.shelvesA.length;i++){
-				el=$(_BSD.shelvesA[i]);
+			/**********   SHOW\HIDE FILTER ELEMENTS AND UPDATE COUNTERS **********************************************/
+			//SHELVES
+			for (var i=0;i<_BSD.f.SHELVES.DOManchors.length;i++){
+				el=$(_BSD.f.SHELVES.DOManchors[i]);
 				shelf=el.data('name');
 
 				//update shelf counter
@@ -2399,8 +2566,9 @@ la libreria "read" si potrebbe spostare sopra a filtri years
 					el.css('opacity',foundNumber ? 1 : 0.5);
 				}
 			}
-			for (var i=0;i<_BSD.yearA.length;i++){
-				el=$(_BSD.yearA[i]);
+			//YEARS
+			for (var i=0;i<_BSD.f.YEARS.DOManchors.length;i++){
+				el=$(_BSD.f.YEARS.DOManchors[i]);
 				year=el.data('year');
 				okNumber=counters['years'][year] || 0;
 				//update year counter
@@ -2409,6 +2577,32 @@ la libreria "read" si potrebbe spostare sopra a filtri years
 					el.css({'opacity':'1','font-weight':'bold'});
 				}else{
 					el.css({'opacity':'0.4','font-weight':'normal'});
+				}
+			}
+			//RATING
+			for (var i=0;i<_BSD.f.RATING.DOManchors.length;i++){
+				el=$(_BSD.f.RATING.DOManchors[i]);
+				rating=el.data('rating');
+				okNumber=counters['rating'][rating] || 0;
+				//update rating counter
+				el.find('span').html(okNumber);
+				if (okNumber){
+					el.css({'opacity':'1','font-weight':'bold'});
+				}else{
+					el.css({'opacity':'0.4','font-weight':'normal'});
+				}
+			}
+			//AUTHORS
+			for (var i=0;i<_BSD.f.AUTHORS.DOManchors.length;i++){
+				el=$(_BSD.f.AUTHORS.DOManchors[i]);
+				author=el.data('author');
+				okNumber=counters['authors'][author] || 0;
+				//update author counter
+				el.find('span').html(okNumber);
+				if (okNumber){
+					el.show();
+				}else{
+					el.hide();
 				}
 			}
 		},
