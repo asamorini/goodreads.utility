@@ -19,7 +19,7 @@ https://www.w3schools.com/charsets/ref_utf_symbols.asp
 &#Wopf;	W				w_
 &#9864;	cerchio nero buco bianco		genre
 &#9830;	seme carte quadri			genre
-&#9829;	cuore			readNext
+&#9829;	cuore			my_favorites
 &#9856;	quadrarto con punto centrale		tema
 &#9839;	diesis		tema
 */
@@ -27,7 +27,15 @@ var samoGoodreadsUtility={
   lang:'ita',
   shelvesViewer:{
     analyzeShelfDefault:'to-read',
-    shelvesNames:['toread-',
+    shelvesNames:[
+                  'my_favorites|&#9829;'
+                  'f_audiobook|audiobook;'
+                  'f_ebook|ebook;'
+                  'o_biblioteca_mlol|MLOL;'
+                  'o_biblioteca_|BIBLIOTECA ;'
+                  'h_|STORICO ',
+                  'y_|'
+                  'toread-',
                   '1-read-next|&#10004;Read next',
                   '2-|&#10103; ',
                   '3-|&#10104; ',
