@@ -1,0 +1,1 @@
+javascript:jQuery.ajaxSetup({cache:true});jQuery.getScript('https://asamorini.github.io/goodreads.utility/src/js/config.samo.js',function(){jQuery.getScript('https://asamorini.github.io/goodreads.utility/dist/goodreads.utility.min.js');});
