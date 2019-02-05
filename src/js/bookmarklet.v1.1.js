@@ -1,1 +1,0 @@
-javascript:var samoGoodreadsUtility={lang:'ita',shelvesNames:'',excludeShelves:{read:{s:'',c:'',e:''},'to-read':{s:'',c:'',e:''}}};jQuery.getScript('https://asamorini.github.io/goodreads.utility/dist/goodreads.utility.min.js');
