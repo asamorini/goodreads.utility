@@ -28,13 +28,13 @@ var samoGoodreadsUtility={
   shelvesViewer:{
     analyzeShelfDefault:'to-read',
     shelvesNames:[
-                  'my_favorites|&#9829;'
-                  'f_audiobook|audiobook;'
-                  'f_ebook|ebook;'
-                  'o_biblioteca_mlol|MLOL;'
-                  'o_biblioteca_|BIBLIOTECA ;'
+                  'my_favorites|&#9829;',
+                  'f_audiobook|audiobook;',
+                  'f_ebook|ebook;',
+                  'o_biblioteca_mlol|MLOL;',
+                  'o_biblioteca_|BIBLIOTECA ;',
                   'h_|STORICO ',
-                  'y_|'
+                  'y_|',
                   'toread-',
                   '1-read-next|&#10004;Read next',
                   '2-|&#10103; ',
