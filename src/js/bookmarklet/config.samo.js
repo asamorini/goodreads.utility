@@ -50,6 +50,6 @@ var samoGoodreadsUtility={
       read:{s:'p_',c:'',e:''},
       'to-read':{s:'',c:'',e:''}
     },
-    filterNumPages:[0,100,200,400,1000]
+    filterNumPages:[100,200,400,1000]
   }
 };
