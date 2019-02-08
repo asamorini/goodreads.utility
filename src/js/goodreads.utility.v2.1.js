@@ -37,7 +37,42 @@ var samoGoodreadsUtility=samoGoodreadsUtility || {'lang':'ita'};	/*possible valu
 																														composed by 2 parts, separated by "|":
 																															1) searching text
 																															2) [optional] replacing text
-																				filterNumPages:[100,200,400,1000]		-> replace shelves names
+																				filterNumPages:[100,200,400,1000],		-> replace shelves names
+																				columns:{				-> customized visible columns (if not specified, it will be used the user current settings)
+																					read:[						-> for "Read" shelf analyzed
+																						'asin',
+																						'author',
+																						'avg_rating',
+																						'comments',
+																						'condition',
+																						'cover',
+																						'date_added',
+																						'date_pub',
+																						'date_pub_edition',
+																						'date_purchased',
+																						'date_read',
+																						'date_started',
+																						'format',
+																						'isbn',
+																						'isbn13',
+																						'notes',
+																						'num_pages',
+																						'num_ratings',
+																						'owned',
+																						'position',
+																						'purchase_location',
+																						'rating',
+																						'read_count',
+																						'recommender',
+																						'review',
+																						'shelves',
+																						'title',
+																						'votes'
+																					],
+																					to-read:[					-> for "Want to Read" shelf analyzed
+																						...
+																					]
+																				}
 																			}
 
 																	*/
@@ -571,6 +606,7 @@ var samoGoodreadsUtility=samoGoodreadsUtility || {'lang':'ita'};	/*possible valu
 
 
 		//cache DOM
+		_body,
 		_headerButtons,
 		_headerButton_BookEditionsLang,
 		_headerReplaceBook_Counters,
@@ -1720,7 +1756,6 @@ evidenziare eventuale libro che è la pagina attualmente aperta
 			_BSD.searchesPageToLaunch=[];//array of "page" to launch to get ALL read books (page "1" stand for book 1-100, page "2" stand for book 101-200)
 			_BSD.booksPerPage={};	//temporary JSON of book element and shelves (after retrieving all pages, they are moved to "books" variable)
 			_BSD.books=[];			//array of book element and shelves
-			_BSD.visibleColumns=[];	//column names visible
 			_BSD.columnsHeader=null;
 			//DOM cache
 			_BSD.bookShowed=null;
@@ -1742,9 +1777,9 @@ evidenziare eventuale libro che è la pagina attualmente aperta
 								 : [100,200,400,1000];
 			if (_BSD.f.NUMPAG.ranges.indexOf(0)===-1){_BSD.f.NUMPAG.ranges.unshift(0);}	//add first element (for undefined num pages)
 			_BSD.f.NUMPAG.ranges.push(Number.MAX_VALUE);						//add last element (for numpages over max range)
-			_BSD.fSearch={			//filter search input
+			_BSD.fSearch=_BSD.fSearch || {			//filter search input
 				input:null,
-				insideAppliedFilters:null
+				insideAppliedFilters:null,
 			};
 			//identify list of pages to get, and launch searches simultaneously
 			_bookshelvesViewer_getBooksNumber();
@@ -1768,6 +1803,23 @@ evidenziare eventuale libro che è la pagina attualmente aperta
 				_headerBookshelves_Counters.find('.samoLoading').remove();
 				_headerBookshelves_Counters.append($('<div/>',{'style':'color:red'}).html('Unable to retrieve list of '+_BSD.shelfAnalyzeCurrent.name+' pages'));
 				_BSD.searching=false;
+			}
+			//"Settings" set columns visible
+			if (samoGoodreadsUtility['shelvesViewer']
+			&& samoGoodreadsUtility['shelvesViewer'].columns
+			&& samoGoodreadsUtility['shelvesViewer'].columns[_BSD.shelfAnalyzeCurrent.shelf]){
+				$('#shelfSettings input[type="checkbox"][name^="shelf[display_fields]"]:visible').each(function(index,el){
+					var identifier,
+						isVisible;
+					el=$el;
+					identifier=el.prop('alt');	//ex: "date_added"
+					isVisible=el.prop('checked');
+					if (samoGoodreadsUtility['shelvesViewer'].columns[_BSD.shelfAnalyzeCurrent.shelf].indexOf(identifier)===-1){
+						if (isVisible){el.click();}
+					}else{
+						if (!isVisible){el.click();}
+					}
+				});
 			}
 		},
 
@@ -1839,24 +1891,23 @@ evidenziare eventuale libro che è la pagina attualmente aperta
 						pagination=myBooksPage.find('#reviewPagination').last(),
 						lastPage;
 
-					//GET COLUMN CONFIGURATIONS
+					//COLUMN HEADER
 					if (_BSD.columnsHeader===null){	//only first time
 						_BSD.columnsHeader=booksList.find('#booksHeader').clone();
 						_BSD.columnsHeader.find('th').each(function(){
 							var column=$(this),
 								classes=this.className.split(/\s+/),
 								text='';
-							//get visible columns
+/*
+							//get columns
 							for (var i=0;i<classes.length;i++){
 								if (classes[i]!=='header'
 								&& classes[i]!=='field'
 								){
-/*TODO
-bisogna aggiungere "if" che sia visibile in questo momento
-*/
-									_BSD.visibleColumns.push(classes[i]);
+
 								}
 							}
+*/
 
 							//remove original "changing sort" links
 							column.find('a').each(function(){
@@ -2106,6 +2157,10 @@ bisogna aggiungere "if" che sia visibile in questo momento
 						'background: #00635d;',
 						'color: #fff;',
 					'}',
+					'body.samoBSD_SearchNoFilters #shelvesSection,',
+					'body.samoBSD_SearchNoFilters #reviewPagination > div:not(.samoAuthorsContainers){',
+						'opacity: 0.4',
+					'}',
 					'#booksBody > tr td.field.actions .samoCounter{',
 						'position: absolute;',
 						'top: 50%;',
@@ -2149,18 +2204,12 @@ bisogna aggiungere "if" che sia visibile in questo momento
 			if (!_BSD.bookShowed.length){
 				_BSD.bookShowed=$('<span/>',{'class':'h1Shelf'}).appendTo(header.find('h1'));
 				header.css('position','relative');
-				header.append(
-					$('<div/>',{'style':'position: absolute;bottom: -13px;color: red;font-size: 12px;'})
-					.html(_BSD.shelfAnalyzeCurrent.name)	//ex: "Want to Read"
-				);
+				header.append($('<div/>',{'class':'samoShelfViewed','style':'position: absolute;bottom: -13px;color: red;font-size: 12px;'}));
 			}
+			header.find('.samoShelfViewed').html(_BSD.shelfAnalyzeCurrent.name)	//ex: "Want to Read"
 			_BSD.bookShowed.html(_BSD.books.length).css('padding-right','5px');
 			//search book: remove original version and add new one
 			controls.find('.myBooksSearch').empty();
-/*TODO
-	search
-		modificare
-*/
 			//remove links "Batch edit, Stats, Print, View mode" (remaining only "Settings")
 			controls.find('a:not(#shelfSettingsLink)').remove();
 			//add "Exclude shelves"
@@ -2263,12 +2312,13 @@ bisogna aggiungere "if" che sia visibile in questo momento
 				_BSD.fSearch.input=$('<input/>',{'type':'text','style':'width: 120px;'})
 				.css({
 					'display': 'block',
-					'background-image': 'url("https://s.gr-assets.com/assets/layout/magnifying_glass-a2d7514….png")',
+					'background-image': 'url("https://s.gr-assets.com/assets/layout/magnifying_glass-a2d7514d50bcee1a0061f1ece7821750.png")',
 					'background-repeat': 'no-repeat',
 					'background-position': 'right center'
 				})
 				.on("keydown cut paste",_debounced(150,function(){
 					var value=_BSD.fSearch.input.val().trim();
+					_bookshelvesViewer_searchBook_setFiltersOpacity();
 					_BSD.fSearch.input.val(value);
 					if (value){
 						_BSD.fSearch.input.addClass('active');
@@ -2279,7 +2329,7 @@ bisogna aggiungere "if" che sia visibile in questo momento
 				}));
 				_BSD.fSearch.insideAppliedFilters=$('<input/>',{'type':'checkbox','id':'samoSearchBookInsideAppliedFilters'})
 				.change(function(){
-					$('#reviewPagination,#shelvesSection').css('opacity',$(this).prop('checked') ? 1 : 0.4)
+					_bookshelvesViewer_searchBook_setFiltersOpacity();
 					_bookshelvesViewer_filterBooks();
 				});
 				controls
@@ -2481,7 +2531,7 @@ bisogna aggiungere "if" che sia visibile in questo momento
 			_BSD.f.AUTHORS.DOManchors=filterDOM.find('a');
 			_BSD.f.AUTHORS.DOMcontainer=$('<div/>',{'style':'display:table-row'})
 			.append(
-				$('<div/>',{'style':'display:table-cell;min-width: 70px;'})
+				$('<div/>',{'style':'display:table-cell;min-width: 70px;','class':'samoAuthorsContainers'})
 				.append(
 					$('<a/>',{'id':'samoAuthorsButton'})
 					.html('Authors')
@@ -2529,6 +2579,15 @@ aggiungere
 			setTimeout(function(){
 				_menuSamoButton.click();	//automatically open menu
 			},500);
+		},
+
+		//BOOKSHELVES VIEWER: set filters container opacity when searching books
+		_bookshelvesViewer_searchBook_setFiltersOpacity=function(){
+			if (_BSD.fSearch.input.val().trim() && !_BSD.fSearch.insideAppliedFilters.prop('checked')){
+				_body.addClass('samoBSD_SearchNoFilters');
+			}else{
+				_body.removeClass('samoBSD_SearchNoFilters');
+			}
 		},
 
 		//BOOKSHELVES VIEWER: display shelves
@@ -2901,7 +2960,7 @@ la libreria "read" si potrebbe spostare sopra a filtri years
 			var container=$('<div/>',{'style':'border-bottom:3px solid #fff;font-size:10px'});
 			//create console on DOM
 			if (_bDebugConsole===null){
-				_bDebugConsole=$('<div/>',{'style':'background:#a0e6a0;margin-top:100px'}).prependTo($('body')).append($('<div/>').html('CONSOLE LOG DEBUG'))
+				_bDebugConsole=$('<div/>',{'style':'background:#a0e6a0;margin-top:100px'}).prependTo(_body).append($('<div/>').html('CONSOLE LOG DEBUG'))
 			}
 			//output console
 			for (var i=0;i<arguments.length;i++){
@@ -3092,8 +3151,9 @@ verifica di richiamo una volta sola, a meno che non vada in errore (es: per conn
 				MENU_CLASS_OPENED='dropdown__menu--show',
 				citazione,
 				version,
-				options=$('<div/>',{'class':'samoOptions gr-notifications gr-box gr-box gr-box--forceScrollBar'}).css('max-height','600px'),
-				body=$('body');
+				options=$('<div/>',{'class':'samoOptions gr-notifications gr-box gr-box gr-box--forceScrollBar'}).css('max-height','600px');
+
+			_body=$('body');
 
 			//check for debug on browser: add on url ?samodebug=true
 			if (window.location.search.indexOf('samodebug=true')>-1){_bDebug=true;}
@@ -3113,14 +3173,14 @@ verifica di richiamo una volta sola, a meno che non vada in errore (es: per conn
 				options.append(_menuOptionsButton('bookEditionsLanguage'));
 
 			//PAGE "Goodreads Choice Awards"; ex: https://www.goodreads.com/choiceawards/best-books-2018
-			}else if (body.prop('id')==='gcaLanding'){
+			}else if (_body.prop('id')==='gcaLanding'){
 				_pageType=_PAGE_TYPE_GOODREADS_CHOICE_AWARDS;
 
 				//replace book
 				options.append(_menuOptionsButton('booksListLanguage'));
 
 			//PAGE "Goodreads Choice Awards Category": ex: https://www.goodreads.com/choiceawards/best-nonfiction-books-2018
-			}else if (body.prop('id').startsWith('gca')){	//ex: "gca2018"
+			}else if (_body.prop('id').startsWith('gca')){	//ex: "gca2018"
 				_pageType=_PAGE_TYPE_GOODREADS_CHOICE_AWARDS_CATEGORY;
 
 				//replace book
