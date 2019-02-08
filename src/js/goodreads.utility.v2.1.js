@@ -919,27 +919,28 @@ move to external .js file
 
 		//Throttling and debouncing; https://codeburst.io/throttling-and-debouncing-in-javascript-646d076d0a44
 		_debounced=function(delay,fn){
-			let timerId;
-			return function(...args){
+			var timerId;
+			return function(){
+				for (var _len=arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++){
+					args[_key]=arguments[_key];
+				}
 				if (timerId){
 					clearTimeout(timerId);
 				}
-				timerId=setTimeout(() => {
-					fn(...args);
+				timerId=setTimeout(function(){
+					fn.apply(void 0,args);
 					timerId=null;
 				},delay);
-			}
+			};
 		},
 		_throttled=function(delay,fn){
-			let lastCall=0;
-			return function(...args){
-				const now=(new Date).getTime();
-				if (now - lastCall < delay){
-					return;
-				}
+			var lastCall=0;
+			return function(){
+				var now=new Date().getTime();
+				if (now - lastCall < delay){return;}
 				lastCall=now;
-				return fn(...args);
-			}
+				return fn.apply(void 0,arguments);
+			};
 		},
 
 		//RETURN <IMG> LOADING
