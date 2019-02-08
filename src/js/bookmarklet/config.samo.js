@@ -28,7 +28,7 @@ var samoGoodreadsUtility={
   shelvesViewer:{
     analyzeShelfDefault:'to-read',
     shelvesNames:[
-                  'my_favorites|&#9829;',
+                  'my_favorites|&#9829;My favorites',
                   'f_audiobook|audiobook',
                   'f_ebook|ebook',
                   'o_biblioteca_mlol|MLOL',
