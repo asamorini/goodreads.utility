@@ -82,7 +82,7 @@ var samoGoodreadsUtility={
 			,'title'
 //			,'votes'
 		],
-		to-read:[
+		'to-read':[
 //			'asin'
 			'author'
 //			,'avg_rating'
