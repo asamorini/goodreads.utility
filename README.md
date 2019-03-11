@@ -130,6 +130,7 @@ Bookmarklet that add some utilities to Goodreads site https://www.goodreads.com/
 | 2019.01.24  | 1.9 | Search for book editions on specific language (possibility to filter book format, ex: paperback\ebook\audiobook\...)
 | 2019.02.03  | 2.0 | Bookshelves viewer (added conditions between shelves buttons "AND\OR", and possibility to and customizazion of shelves names display, added rating and authors filters)
 | 2019.02.08  | 2.1 | Bookshelves viewer (added num pages filter, and search book and reset filter buttons)
+| 2019.03.11  | 2.2 | Bookshelves viewer (authors sorted by books number and then by name)
 ***
 
 
