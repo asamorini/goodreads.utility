@@ -37,6 +37,7 @@ var samoGoodreadsUtility={
                   'h___|STORICO ',
                   'h__|TEMA ',
                   'h_|WAR ',
+	          'w_|&#9873;',
                   'y_|',
                   'a_toread-next|&#10004;Read next',
                   'a_toread-owned|&#9787; ',
