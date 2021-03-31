@@ -40,13 +40,13 @@ var samoGoodreadsUtility={
 	          'w_|&#9873;',
                   'y_|',
                   'a_toread-next|&#10004;Read next',
-                  'a_toread-owned|&#9787; ',
+                  'a_toread-owned|&#9787; OWNED',
 	          'a_toread-tobuy|&#9981; To buy',
 	          'htemp-|&#9995; ',
                   'aaa-to-check|&#10067;To check',
                   'storico-|STORICO ',
-                  'bio_|BIO',
-                  't_|OTHER'
+                  'bio_|BIO ',
+                  't_|OTHER '
     ].join(','),
     excludeShelves:{
       read:{s:'p_',c:'',e:''},
