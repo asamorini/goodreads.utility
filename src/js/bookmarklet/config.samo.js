@@ -33,6 +33,7 @@ var samoGoodreadsUtility={
                   'f_ebook|ebook',
                   'b_biblioteca_mlol|MLOL',
                   'b_biblioteca|BIBLIOTECA ',
+	          'b-biblio-faenza-consultazio-temp|BIBLIOTECA consultazione',
 	          'g_|GENERE ',
                   'h___|STORICO ',
                   'h__|TEMA ',
