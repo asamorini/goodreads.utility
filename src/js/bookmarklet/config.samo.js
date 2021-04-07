@@ -43,10 +43,10 @@ var samoGoodreadsUtility={
                   'a_toread-next|&#10004;Read next',
                   'a_toread-owned|&#9787; OWNED',
 	          'a_toread-tobuy|&#9981; To buy',
-	          'htemp-|&#9995; ',
+	          'htemp-bio_|&#9995; ',
+	          'htemp-|&#128100; BIO ',
                   'aaa-to-check|&#10067;To check',
                   'storico-|STORICO ',
-                  'bio_|BIO ',
                   't_|OTHER '
     ].join(','),
     excludeShelves:{
