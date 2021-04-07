@@ -43,8 +43,8 @@ var samoGoodreadsUtility={
                   'a_toread-next|&#10004;Read next',
                   'a_toread-owned|&#9787; OWNED',
 	          'a_toread-tobuy|&#9981; To buy',
-	          'htemp-bio_|&#9995; ',
-	          'htemp-|&#128100; BIO ',
+	          'htemp-bio_|&#128100; BIO ',
+	          'htemp-|&#9995; ',
                   'aaa-to-check|&#10067;To check',
                   'storico-|STORICO ',
                   't_|OTHER '
