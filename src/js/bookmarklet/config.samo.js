@@ -12,6 +12,10 @@ https://www.w3schools.com/charsets/ref_utf_symbols.asp
 &#10106;	numero 5
 &#10107;	numero 6
 &#10108;	numero 7
+&#10084;       cuore rosso
+&#9899;        tondo nero
+&#9775;        Yin Yang
+&#9200;		Alarm Clock
 &#9873;	bandiera nera	w_
 &#9787;		smile Nero		authors
 &Eta;		H				history
@@ -41,7 +45,7 @@ var samoGoodreadsUtility={
 	          'w_|&#9873;',
                   'y_|',
                   'a_toread-next|&#10004;Read next',
-                  'a_toread-owned|&#9787; OWNED',
+                  'a_toread-owned|&#9899; OWNED',
 	          'a_toread-tobuy|&#9981; To buy',
 	          'htemp-bio_|&#128100; BIO ',
 	          'htemp-|&#9995; ',
