@@ -132,6 +132,7 @@ Bookmarklet that add some utilities to Goodreads site https://www.goodreads.com/
 | 2019.02.08  | 2.1 | Bookshelves viewer (added num pages filter, and search book and reset filter buttons)
 | 2019.03.11  | 2.2 | Bookshelves viewer (authors sorted by books number and then by name)
 | 2021.12.30  | 2.3 | Bookshelves viewer (added "Create report by year" functionality)
+| 2022.01.01  | 2.4 | Bookshelves viewer (substitution of num.pages from other editions for audiobook\undedined pages)
 ***
 
 
