@@ -120,5 +120,50 @@ var samoGoodreadsUtility={
 //			,'votes'
 		]
 	}
+  },
+  reportByYear:{
+    excludedShelvesStartsWith:[
+        'a_',    //ex: "a_toread-next-0_now"
+        'p_',    //ex: "p_mondadori"
+        'w_',    //ex: "w_africa_algeria"
+        'y_'    //ex: "y_1945-1970"
+    ],
+    rows_merge:{
+    	'b_biblioteca_indaco': 'b_biblioteca'
+    },
+    rows_nameReplace_RegEx:[
+    	[/^read$/, '  READ  '],
+    	[/^undefined$/, '  undefined  '],
+    	[/^h___historic$/, ' HISTORIC '],
+    	[/^h___true_story$/, ' TRUE STORY '],
+    	[/^1-100$/, ' 1\\100 '],
+    	[/^101-200$/, ' 101\\200 '],
+    	[/^201-400$/, ' 201\\400 '],
+    	[/^401-1000$/, ' 401\\1000 '],
+    	[/^1001+$/, ' 1001\\+ '],
+    	[/^my_favorites$/, 'My Favorites'],
+    	[/^b_biblioteca_mlol/, 'MLOL'],
+    	[/^b_biblioteca/, ' Public library'],
+    	[/^f_/, ''],
+    	[/^g_/, ''],
+    	[/^b_/, ''],
+    	[/^h___/, ''],
+    	[/^h__/, ''],
+    	[/^h_/, ''],
+    	[/-/g, ' '],
+    	[/_/g, ' ']
+    ],
+    groups_equals:{
+    	'f_audiobook':'format',
+    	'f_ebook':    'format',
+    	'b_biblioteca':        'source',
+    	'b_biblioteca_mlol':   'source'
+    },
+    groups_startsWith:{
+    	'g_':  'genre',
+    	'h___':'history',
+    	'h__':'topic',
+    	'h_':'history'
+    }
   }
 };
