@@ -1,4 +1,4 @@
-# :books: "SAMO" Goodreads Utility (version 2.5)
+# :books: "SAMO" Goodreads Utility (version 2.5.1)
 Bookmarklet that add some utilities to Goodreads site https://www.goodreads.com/
 
 ## Table of contents
@@ -134,6 +134,7 @@ Bookmarklet that add some utilities to Goodreads site https://www.goodreads.com/
 | 2021.12.30  | 2.3 | Bookshelves viewer (added "Create report by year" functionality)
 | 2022.01.01  | 2.4 | Bookshelves viewer (substitution of num.pages from other editions for audiobook\undedined pages)
 | 2022.01.03  | 2.5 | Bookshelves viewer (added color scale background on counters)
+| 2022.01.30  | 2.5.1 | Bookshelves viewer (analyze bookshelves of other user, with the exception of shelves distribution)
 ***
 
 
