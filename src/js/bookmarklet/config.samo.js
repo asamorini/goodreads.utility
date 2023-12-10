@@ -42,7 +42,18 @@ var samoGoodreadsUtility={
                   'h___|STORICO ',
                   'h__|TEMA ',
                   'h_|WAR ',
-	          'w_|&#9873;',
+	          'waf-|&#9873;',
+	          'wamc-|&#9873;',
+	          'wamn-|&#9873;',
+	          'wams-|&#9873;',
+	          'wasc-|&#9873;',
+	          'wase-|&#9873;',
+	          'waso-|&#9873;',
+	          'wass-|&#9873;',
+	          'wasse-|&#9873;',
+	          'we-|&#9873;',
+	          'wo-|&#9873;',
+	          'wp-|&#9873;',
                   'y_|',
                   'a_toread-next|&#10004;Read next',
                   'a_toread-owned|&#9899; OWNED',
@@ -125,7 +136,7 @@ var samoGoodreadsUtility={
     excludedShelvesStartsWith:[
         'a_',    //ex: "a_toread-next-0_now"
         'p_',    //ex: "p_mondadori"
-        'w_',    //ex: "w_africa_algeria"
+        'w',    //ex: "we-" -> world europe
         'y_'    //ex: "y_1945-1970"
     ],
     rows_merge:{
