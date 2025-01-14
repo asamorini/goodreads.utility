@@ -1,4 +1,4 @@
-# :books: "SAMO" Goodreads Utility (version 2.6.2)
+# :books: "SAMO" Goodreads Utility (version 2.6.3)
 Bookmarklet that add some utilities to Goodreads site https://www.goodreads.com/
 
 ## Table of contents
@@ -139,6 +139,7 @@ Bookmarklet that add some utilities to Goodreads site https://www.goodreads.com/
 | 2023.01.29  | 2.6 | Book page (Find Italian[other languages] Editions of current book -> now compatible with new goodreads book page version)
 | 2023.02.06  | 2.6.1 | Book page (Find Italian[other languages] Editions of current book -> button "Switch to" available also on "Current readings books")
 | 2023.02.07  | 2.6.2 | Authors  page (Find Italian[other languages] Editions of current books -> enabled with the new goodreads book version
+| 2025.01.14  | 2.6.3 | Bookshelves viewer (improvement on substitution of num.pages from other editions for audiobook\undedined pages)
 ***
 
 
