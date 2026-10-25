@@ -1,4 +1,4 @@
-# :books: "SAMO" Goodreads Utility (version 2.6.4)
+# :books: "SAMO" Goodreads Utility (version 2.6.5)
 Bookmarklet that add some utilities to Goodreads site https://www.goodreads.com/
 
 ## Table of contents
@@ -141,6 +141,7 @@ Bookmarklet that add some utilities to Goodreads site https://www.goodreads.com/
 | 2023.02.07  | 2.6.2 | Authors  page (Find Italian[other languages] Editions of current books -> enabled with the new goodreads book version
 | 2025.01.14  | 2.6.3 | Bookshelves viewer (improvement on substitution of num.pages from other editions for audiobook\undedined pages)
 | 2026.10.24  | 2.6.4 | Bookshelves viewer (support for decimal ratings, rounded down to the lower integer)
+| 2026.10.25  | 2.6.5 | Citations (alphabetical order, sequential navigation, cookie persistence, author selector and expandable list; JSON embedded in minified distribution)
 ***
 
 
@@ -161,3 +162,15 @@ Bookmarklet that add some utilities to Goodreads site https://www.goodreads.com/
    * intenazionalization messages and labels
    * create a Chrome extension
    * write ES6 code
+
+
+## Build (developers)
+
+The editable citation data is stored in `src/js/CITAZIONI.json`. To keep the JSON separate from the source while distributing one JavaScript file, install the development dependency and run:
+
+```sh
+npm install
+npm run build
+```
+
+The build embeds `CITAZIONI.json` into `src/js/goodreads.utility.v2.6.5.js` and minifies the result to `dist/goodreads.utility.min.js`. Newlines in citation strings are preserved and rendered with `white-space: pre-line`.
