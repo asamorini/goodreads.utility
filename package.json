@@ -1,0 +1,11 @@
+{
+  "name": "goodreads-utility",
+  "version": "2.6.5",
+  "private": true,
+  "scripts": {
+    "build": "node scripts/build.js"
+  },
+  "devDependencies": {
+    "terser": "^5.36.0"
+  }
+}
